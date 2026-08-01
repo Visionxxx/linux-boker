@@ -1,0 +1,19 @@
+# Kun bøkene publiseres: alt er ignorert med mindre det er eksplisitt tillatt under
+/*
+!/README.md
+!/.gitignore
+!/nybegynner
+/nybegynner/*
+!/nybegynner/linux-for-nybegynnere-2026-samlet.md
+!/nybegynner/linux-for-nybegynnere-2026.epub
+!/nybegynner/linux-for-nybegynnere-2026.pdf
+!/viderekommende
+/viderekommende/*
+!/viderekommende/linux-for-viderekommende-2026-samlet.md
+!/viderekommende/linux-for-viderekommende-2026.epub
+!/viderekommende/linux-for-viderekommende-2026.pdf
+!/ekspert
+/ekspert/*
+!/ekspert/linux-for-eksperter-2027-samlet.md
+!/ekspert/linux-for-eksperter-2027.epub
+!/ekspert/linux-for-eksperter-2027.pdf

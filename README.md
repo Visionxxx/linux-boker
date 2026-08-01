@@ -2,9 +2,10 @@
 
 En norsk bokserie om Linux i tre trinn – skrevet for vanlige folk, uten unødvendig teknisk sjargong. Fra din aller første installasjon til å drifte egen infrastruktur som en proff.
 
-Hver bok finnes i to formater:
+Hver bok finnes i tre formater:
 
 - **EPUB** – den komplette, illustrerte utgaven (skjermbilder, diagrammer, omslag). Åpnes i alle e-boklesere, Calibre, Apple Books, Thorium m.fl.
+- **PDF** – ferdig ombrukket A4-utgave med omslag, klar til utskrift eller lesebrett.
 - **Markdown** – hele boken som ren, søkbar tekst.
 
 ---
@@ -16,7 +17,8 @@ Hver bok finnes i to formater:
 Fra «hva er egentlig Linux?» til en fungerende maskin du er trygg på: velg distribusjon, lag oppstarts-USB, installer trygt (dual boot), og gjør de daglige tingene – nettbank, BankID, Vipps, kontor, bilder, spill. Med norsk hverdagskontekst hele veien.
 
 - 📥 [Last ned EPUB](nybegynner/linux-for-nybegynnere-2026.epub)
-- 📄 [Les som tekst (Markdown)](nybegynner/linux-for-nybegynnere-2026.md)
+- 📕 [Last ned PDF](nybegynner/linux-for-nybegynnere-2026.pdf)
+- 📄 [Les som tekst (Markdown)](nybegynner/linux-for-nybegynnere-2026-samlet.md)
 
 ## 📘 Bok 2 – Linux for Viderekommende 2026
 
@@ -25,7 +27,8 @@ Fra «hva er egentlig Linux?» til en fungerende maskin du er trygg på: velg di
 Fra å *bruke* Linux til å *forstå* det: terminalen for alvor (grep, sed, awk), rettigheter, pakker, disker og fstab, skripting, systemd, nettverk, SSH, containere, selvhosting, backup og feilsøking som metode – og Git.
 
 - 📥 [Last ned EPUB](viderekommende/linux-for-viderekommende-2026.epub)
-- 📄 [Les som tekst (Markdown)](viderekommende/linux-for-viderekommende-2026.md)
+- 📕 [Last ned PDF](viderekommende/linux-for-viderekommende-2026.pdf)
+- 📄 [Les som tekst (Markdown)](viderekommende/linux-for-viderekommende-2026-samlet.md)
 
 ## 📙 Bok 3 – Linux for Eksperter 2027
 
@@ -34,7 +37,8 @@ Fra å *bruke* Linux til å *forstå* det: terminalen for alvor (grep, sed, awk)
 Fra å forstå til å bygge: kjernen, prosesser og cgroups, ytelse og observability (strace, bpftrace, perf), lagring (RAID/LVM/ZFS), infrastruktur som kode (Ansible, egen Git-server, NixOS), drift (nftables, reverse proxy, Prometheus/Grafana), sikkerhet, og en interaktiv «Mesterprøve». Den røde tråden: en hjemmelab som bygges kapittel for kapittel.
 
 - 📥 [Last ned EPUB](ekspert/linux-for-eksperter-2027.epub)
-- 📄 [Les som tekst (Markdown)](ekspert/linux-for-eksperter-2027.md)
+- 📕 [Last ned PDF](ekspert/linux-for-eksperter-2027.pdf)
+- 📄 [Les som tekst (Markdown)](ekspert/linux-for-eksperter-2027-samlet.md)
 
 ---
 
