@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="640" viewBox="0 0 1180 640" font-family="DejaVu Sans Mono, monospace">
+<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a97ad"/></marker></defs>
+<rect width="1180" height="640" rx="14" fill="#0e1526" stroke="#2b3a55" stroke-width="2"/>
+<text x="590.0" y="42" fill="#4ec9b0" font-size="22" font-weight="bold" text-anchor="middle">LVM: fra fysiske disker til fleksible volumer</text>
+<rect x="120" y="80" width="940" height="60" rx="8" fill="#243f22" stroke="#4ec9b0" stroke-width="1.6"/>
+<text x="590.0" y="115.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">Filsystem:  ext4 · xfs · btrfs</text>
+<text x="590.0" y="168" fill="#4ec9b0" font-size="14" text-anchor="middle" font-style="italic">↑ formateres på hvert logisk volum</text>
+<rect x="150" y="185" width="260" height="58" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="280.0" y="209.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">lv_root</text>
+<text x="280.0" y="228.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">40 GB</text>
+<rect x="460" y="185" width="260" height="58" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="590.0" y="209.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">lv_home</text>
+<text x="590.0" y="228.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">200 GB</text>
+<rect x="770" y="185" width="260" height="58" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="900.0" y="209.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">lv_data</text>
+<text x="900.0" y="228.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">kan vokse →</text>
+<text x="590.0" y="280" fill="#8a97ad" font-size="14" text-anchor="middle" font-style="italic">↑ logiske volumer (LV) – utvides/krympes/snapshottes mens systemet kjører</text>
+<rect x="120" y="320" width="940" height="62" rx="8" fill="#1e3550" stroke="#4a90d9" stroke-width="1.6"/>
+<text x="590.0" y="356.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">Volume Group:  vg_main   (én samlet pool på ~750 GB)</text>
+<text x="590.0" y="420" fill="#8a97ad" font-size="14" text-anchor="middle" font-style="italic">↑ volumgruppen samler all plass fra de fysiske volumene</text>
+<rect x="150" y="450" width="400" height="58" rx="8" fill="#243a24" stroke="#4e7a3a" stroke-width="1.6"/>
+<text x="350.0" y="484.0" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">PV: /dev/nvme0n1p2</text>
+<rect x="630" y="450" width="400" height="58" rx="8" fill="#243a24" stroke="#4e7a3a" stroke-width="1.6"/>
+<text x="830.0" y="484.0" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">PV: /dev/sdb1</text>
+<rect x="150" y="545" width="400" height="54" rx="8" fill="#1a2336" stroke="#455574" stroke-width="1.6"/>
+<text x="350.0" y="576.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">NVMe-SSD  500 GB</text>
+<rect x="630" y="545" width="400" height="54" rx="8" fill="#1a2336" stroke="#455574" stroke-width="1.6"/>
+<text x="830.0" y="576.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">HDD  1 TB</text>
+<line x1="350" y1="545" x2="350" y2="508" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="350" y1="450" x2="350" y2="382" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="830" y1="545" x2="830" y2="508" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="830" y1="450" x2="830" y2="382" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="280" y1="320" x2="280" y2="243" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="590" y1="320" x2="590" y2="243" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="900" y1="320" x2="900" y2="243" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="590.0" y1="185" x2="590.0" y2="140" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+</svg>

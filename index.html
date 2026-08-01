@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux-bøkene</title>
+  <style>
+    :root { --accent: #2c5f2d; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #f8f5f0;
+      color: #222;
+      line-height: 1.7;
+    }
+    .innhold {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    h1 { color: var(--accent); font-size: 2.2rem; margin-bottom: 0.2em; }
+    .undertittel { color: #555; margin-bottom: 2.5rem; }
+    .kort {
+      background: white;
+      border: 1px solid #d4c9b8;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .kort h2 { color: var(--accent); margin-top: 0; }
+    .knapp {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-right: 8px;
+      margin-top: 6px;
+    }
+    .knapp:hover { background: #234b24; }
+    .knapp.sekundaer {
+      background: white;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+    .knapp.sekundaer:hover { background: #eef4ea; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="innhold">
+    <h1>Linux-bøkene</h1>
+    <p class="undertittel">Tre praktiske og vennlige bøker på norsk – fra første installasjon til egen infrastruktur som proff.</p>
+      <div class="kort">
+        <h2>Linux for Nybegynnere 2026</h2>
+        <p>En praktisk og vennlig guide for deg som vil bytte fra Windows til Linux.</p>
+        <p>
+          <a class="knapp" href="nybegynner/index.html">Les i nettleseren</a>
+          <a class="knapp sekundaer" href="nybegynner/linux-for-nybegynnere-2026.epub" download>&#128214; Last ned EPUB</a>
+          <a class="knapp sekundaer" href="nybegynner/linux-for-nybegynnere-2026.pdf" download>&#128196; Last ned PDF</a>
+        </p>
+      </div>
+      <div class="kort">
+        <h2>Linux for Viderekommende 2026</h2>
+        <p>Oppfølgeren – for deg som har brukt Linux en stund og vil forstå og mestre systemet ditt.</p>
+        <p>
+          <a class="knapp" href="viderekommende/index.html">Les i nettleseren</a>
+          <a class="knapp sekundaer" href="viderekommende/linux-for-viderekommende-2026.epub" download>&#128214; Last ned EPUB</a>
+          <a class="knapp sekundaer" href="viderekommende/linux-for-viderekommende-2026.pdf" download>&#128196; Last ned PDF</a>
+        </p>
+      </div>
+      <div class="kort">
+        <h2>Linux for Eksperter 2027</h2>
+        <p>Tredje bok i serien – for deg som vil mestre systemet på kildenivå og drifte egen infrastruktur som en proff.</p>
+        <p>
+          <a class="knapp" href="ekspert/index.html">Les i nettleseren</a>
+          <a class="knapp sekundaer" href="ekspert/linux-for-eksperter-2027.epub" download>&#128214; Last ned EPUB</a>
+          <a class="knapp sekundaer" href="ekspert/linux-for-eksperter-2027.pdf" download>&#128196; Last ned PDF</a>
+        </p>
+      </div>
+    <footer>Generert automatisk med <code>bygg.py</code>.</footer>
+  </div>
+</body>
+</html>

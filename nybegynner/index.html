@@ -1,0 +1,3804 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux for Nybegynnere 2026</title>
+  <style>
+    :root {
+      --bg: #f8f5f0;
+      --text: #222;
+      --accent: #2c5f2d;
+      --sidebar: #f0e9df;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.7;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .container {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      padding: 20px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      border-right: 1px solid #d4c9b8;
+      font-size: 0.95rem;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin: 6px 0;
+    }
+    .sidebar a {
+      color: #333;
+      text-decoration: none;
+      display: block;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .sidebar a:hover {
+      background: #e6dccd;
+    }
+    .main {
+      flex: 1;
+      max-width: 780px;
+      padding: 40px 50px;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      min-height: 100vh;
+    }
+    h1, h2, h3 {
+      color: var(--accent);
+      line-height: 1.3;
+    }
+    h1 {
+      font-size: 2.1rem;
+      border-bottom: 3px solid #d4c9b8;
+      padding-bottom: 10px;
+      margin-top: 1.5em;
+    }
+    h2 { font-size: 1.5rem; margin-top: 1.8em; }
+    h3 { font-size: 1.2rem; }
+    p, li {
+      max-width: 70ch;
+    }
+    pre, code {
+      background: #f4f1e9;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: ui-monospace, monospace;
+    }
+    pre {
+      padding: 14px;
+      overflow-x: auto;
+    }
+    pre code {
+      /* code-paddingen over gjelder inline-kode; inni en blokk gir den
+         første linje et falskt innrykk – nullstill den der */
+      padding: 0;
+      background: none;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background: #f4f1e9;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 1em 0;
+    }
+    .chapter {
+      margin-bottom: 3rem;
+    }
+    .toc-header {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    .book-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .book-subtitle {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: static; }
+      .main { padding: 20px; }
+    }
+    .nav-top {
+      background: #2c5f2d;
+      color: white;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-top a {
+      color: white;
+      text-decoration: none;
+    }
+    .info-box {
+      background: #eef4ea;
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin: 1.2em 0;
+    }
+    .info-box p { margin: 0 0 6px 0; }
+    .info-box ul, .info-box ol { margin: 0; padding-left: 1.2em; }
+    .warn-box {
+      background: #fdeeee;
+      border-left: 4px solid #b3382c;
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin: 1.2em 0;
+    }
+    .warn-box p { margin: 0 0 6px 0; }
+    .warn-box p strong { color: #b3382c; }
+    .warn-box ul, .warn-box ol { margin: 0; padding-left: 1.2em; }
+    .kryss-lenke {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    .kryss-lenke a { color: var(--accent); font-weight: 600; }
+    .epub-btn {
+      display: inline-block;
+      background: white;
+      color: var(--accent) !important;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .epub-btn:hover { background: #e6dccd; }
+    .sidebar .epub-btn {
+      background: var(--accent);
+      color: white !important;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .sidebar .epub-btn:hover { background: #234b24; }
+    .hjem-lenke {
+      display: block;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      color: var(--accent) !important;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top">
+    <div>
+      <strong>Linux for Nybegynnere 2026</strong>
+    </div>
+    <div>
+      <a href="linux-for-nybegynnere-2026.epub" download class="epub-btn">&#128214; Last ned EPUB</a>
+      &nbsp;&nbsp;
+      <a href="linux-for-nybegynnere-2026.pdf" download class="epub-btn">&#128196; Last ned PDF</a>
+      &nbsp;&nbsp;
+      <a href="../index.html">&#128218; Alle b&oslash;kene</a>
+      &nbsp;&nbsp;
+      <a href="#top">Til toppen</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav class="sidebar">
+      <div class="book-title">Linux for Nybegynnere</div>
+      <div class="book-subtitle">2026</div>
+      <a href="linux-for-nybegynnere-2026.epub" download class="epub-btn">&#128214; Last ned EPUB</a>
+      <a href="linux-for-nybegynnere-2026.pdf" download class="epub-btn">&#128196; Last ned PDF</a>
+      <a href="../index.html" class="hjem-lenke">&#128218; Alle b&oslash;kene i serien</a>
+
+      <h2 class="toc-header">Innhold</h2>
+      <ul>
+        <li><a href="#forord">Forord</a></li>
+        <li><a href="#kap01">1. Innledning</a></li>
+        <li><a href="#kap02">2. Hva er egentlig Linux?</a></li>
+        <li><a href="#kap03">3. Hvilken Linux skal jeg velge?</a></li>
+        <li><a href="#kap04">4. Forberedelse og installasjon</a></li>
+        <li><a href="#kap05">5. Første gang du starter Linux</a></li>
+        <li><a href="#kap06">6. Daglig bruk</a></li>
+        <li><a href="#kap07">7. Terminalen</a></li>
+        <li><a href="#kap08">8. Vanlige problemer de første ukene</a></li>
+        <li><a href="#kap09">9. Tilpasning og finpuss</a></li>
+        <li><a href="#kap10">10. Sikkerhet, backup og gode vaner</a></li>
+        <li><a href="#kap11">11. Hva nå? Neste steg og ressurser</a></li>
+        <li><a href="#kap12">Bonus: Ofte stilte spørsmål og myter om Linux</a></li>
+        <li><a href="#kap13">Hurtigreferanse</a></li>
+        <li><a href="#kap14">Ordliste</a></li>
+      </ul>
+      <p class="kryss-lenke">
+        Ferdig med boka?<br>
+        <a href="../viderekommende/index.html">Linux for Viderekommende &rarr;</a>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+        Alle kapitler samlet på én side.
+      </p>
+    </nav>
+
+    <main class="main" id="top">
+      <h1 style="text-align:center; margin-bottom: 0.3em;">Linux for Nybegynnere 2026</h1>
+      <p style="text-align:center; font-size:1.1rem; color:#444; margin-top:0;">
+        En praktisk og vennlig guide for deg som vil bytte fra Windows til Linux.
+      </p>
+<section id="forord" class="chapter">
+<h1 id="forord">Forord</h1>
+<p>Velkommen til <em>Linux for Nybegynnere 2026</em>.</p>
+<p>Denne boken er skrevet for deg som har vurdert å bytte fra Windows
+til Linux, men som har vært litt usikker. Kanskje du har hørt at Linux
+er “vanskelig”, “bare for programmerere”, eller at “ingenting fungerer”.
+Kanskje du har sett en venn bruke det og lurt på om det kan passe for
+deg også.</p>
+<p>Jeg har skrevet denne boken fordi jeg tror at 2026 er et av de beste
+tidspunktene noensinne å bytte til Linux på. Maskinvaren støttes bedre
+enn før, spill fungerer overraskende bra, og de mest nybegynnervennlige
+distribusjonene har aldri vært mer polerte.</p>
+<h2 id="hvem-er-denne-boken-for">Hvem er denne boken for?</h2>
+<p>Denne boken er for:</p>
+<ul>
+<li>Deg som er lei av reklame, sporing og unødvendige “funksjoner” i
+Windows</li>
+<li>Deg som vil ha et raskere og mer stabilt system på en eldre
+maskin</li>
+<li>Deg som er nysgjerrig og liker å forstå tingene du bruker</li>
+<li>Deg som vil ha et operativsystem som respekterer deg som bruker</li>
+</ul>
+<p>Den er <strong>ikke</strong> skrevet for folk som allerede er erfarne
+Linux-brukere, eller for de som vil ha den mest tekniske og avanserte
+veiledningen. Det finnes masse andre bøker og ressurser for dem.</p>
+<h2 id="hvordan-bruke-denne-boken">Hvordan bruke denne boken</h2>
+<p>Du kan lese den fra perm til perm, men det er ikke nødvendig. De
+fleste kapitlene kan leses uavhengig av hverandre når du først har
+installert systemet.</p>
+<p>De første fire kapitlene anbefaler jeg at du leser i rekkefølge:</p>
+<ol type="1">
+<li>Innledning (hvorfor du kanskje vil bytte)</li>
+<li>Hva Linux egentlig er</li>
+<li>Hvilken distribusjon du bør velge</li>
+<li>Installasjon</li>
+</ol>
+<p>Deretter kan du hoppe til de kapitlene som er mest relevante akkurat
+nå.</p>
+<h2 id="hva-du-kan-forvente">Hva du kan forvente</h2>
+<p>Du vil lære nok til å:</p>
+<ul>
+<li>Installere Linux trygt (enten som dual boot eller alene)</li>
+<li>Bruke datamaskinen til dagligdagse ting</li>
+<li>Installere og bruke de programmene du trenger</li>
+<li>Løse de fleste vanlige problemene selv</li>
+<li>Tilpasse systemet slik at det føles som ditt eget</li>
+</ul>
+<p>Du vil <em>ikke</em> lære alt. Det er heller ikke meningen. Linux er
+stort, og det er helt greit å lære ting etter hvert som du trenger
+dem.</p>
+<h2 id="en-liten-oppfordring">En liten oppfordring</h2>
+<p>Det beste rådet jeg kan gi deg er dette:</p>
+<p><strong>Vær tålmodig med deg selv de første ukene.</strong></p>
+<p>Alt vil føles litt annerledes. Noen ting vil være bedre. Noen ting
+vil være verre. Det er helt normalt. De fleste som har byttet til Linux
+sier at det tok mellom to og fire uker før det føltes helt naturlig.</p>
+<p>Hvis noe ikke fungerer, pust rolig. Nesten alle problemer har en
+løsning, og det finnes et veldig hjelpsomt fellesskap der ute.</p>
+<h2 id="takk">Takk</h2>
+<p>Takk for at du har valgt å gi Linux en sjanse. Jeg håper denne boken
+gjør overgangen litt enklere og mye mer behagelig.</p>
+<p>Lykke til!</p>
+<p>— Forfatteren</p>
+</section>
+<section id="kap01" class="chapter">
+<h1 id="innledning-hvorfor-i-det-hele-tatt-bytte-til-linux">1.
+Innledning – Hvorfor i det hele tatt bytte til Linux?</h1>
+<p><em>Sist oppdatert: 2026-07-11</em></p>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>De vanligste grunnene til å bytte til Linux i 2026</li>
+<li>Hvorfor boken er skrevet for helt vanlige mennesker</li>
+<li>Hvordan boken er bygget opp og hvordan du får mest ut av den</li>
+</ul></div>
+<hr />
+<h3 id="innledning">Innledning</h3>
+<p>Velkommen! Du har kanskje hørt om Linux før. Kanskje en venn har
+nevnt det, eller du har sett det nevnt i en YouTube-video. Kanskje du er
+lei av at Windows føles tregt, eller at du får stadig flere
+reklameinnslag i operativsystemet ditt. Uansett hvorfor du er her – du
+er på rett sted.</p>
+<p>Denne boken er skrevet for deg som er nybegynner. Du trenger ikke å
+være teknisk. Du trenger ikke å kunne kode. Du trenger bare
+nysgjerrighet og litt tålmodighet.</p>
+<h2 id="hvorfor-bytte-i-det-hele-tatt">Hvorfor bytte i det hele
+tatt?</h2>
+<p>De fleste som bytter til Linux gjør det ikke fordi de “må”. De gjør
+det fordi de oppdager at det finnes et bedre alternativ for dem.</p>
+<p>Her er noen av de vanligste grunnene i 2026:</p>
+<h3 id="personvern-du-eier-maskinen-din">1. Personvern – du eier
+maskinen din</h3>
+<p>Windows samler mye data om deg. Microsoft vet hva du søker etter,
+hvilke apper du bruker, hvor lenge du bruker dem, og mye mer. I nyere
+versjoner av Windows har det kommet stadig flere funksjoner som “Recall”
+(som tar skjermbilder av alt du gjør) og integrasjon med Copilot som
+analyserer aktiviteten din.</p>
+<p>Linux derimot er bygget på en helt annen filosofi: <strong>Du eier
+maskinen din</strong>. Ingen storbedrift sporer deg som standard. Ingen
+skjulte telemetri-tjenester som sender data hjem til selskapet uten at
+du vet om det.</p>
+<h3 id="ingen-reklame-i-operativsystemet">2. Ingen reklame i
+operativsystemet</h3>
+<p>Har du lagt merke til at Windows 11 har stadig flere forslag,
+widgets, “anbefalte” apper og reklame i Start-menyen? Mange brukere
+opplever at operativsystemet selv begynner å føles som en
+reklameplattform.</p>
+<p>Linux har ikke det. Skrivebordet ditt er ditt. Punktum. Ingen “Get
+Microsoft 365” som dukker opp hver gang du åpner et dokument. Ingen
+“Prøv Edge”-meldinger.</p>
+<h3 id="det-er-gratis-og-vil-alltid-være-det">3. Det er gratis – og vil
+alltid være det</h3>
+<p>Du betaler ingenting for Linux. Ikke for selve systemet, ikke for
+oppdateringer, og ikke for de fleste programmene du trenger. Det er
+ingen “Pro”-versjon som plutselig dukker opp etter noen måneder, og
+ingen abonnement du må fornye.</p>
+<p>Dette gjelder også de fleste programmene: LibreOffice, VLC, GIMP,
+Firefox – alt er gratis uten begrensninger.</p>
+<h3 id="du-lærer-hvordan-datamaskinen-din-faktisk-fungerer">4. Du lærer
+hvordan datamaskinen din faktisk fungerer</h3>
+<p>Med Windows blir du ofte behandlet som en passiv bruker. Du skal bare
+klikke på ting og håpe at det fungerer. Med Linux blir du invitert inn
+bak kulissene. Du lærer hvordan ting henger sammen. Det føles både
+befriende og nyttig – spesielt når noe går galt og du faktisk forstår
+hvorfor.</p>
+<p>Mange som har brukt Linux en stund sier at de føler seg mer “i
+kontroll” over maskinen sin.</p>
+<h3 id="motstand-mot-store-tech-selskaper">5. Motstand mot store
+tech-selskaper</h3>
+<p>Mange er lei av å være låst inn i økosystemer. Du skal ikke trenge å
+ha en Microsoft-konto for å bruke PC-en din. Du skal ikke bli presset
+til å bruke OneDrive eller Edge. Linux gir deg tilbake kontrollen.</p>
+<p>Du bestemmer selv hvilke tjenester du vil bruke – og hvilke du ikke
+vil bruke.</p>
+<h3 id="det-er-overraskende-stabilt-og-lett">6. Det er overraskende
+stabilt og lett</h3>
+<p>Mange som prøver Linux for første gang blir overrasket over hvor
+raskt og stabilt det føles – selv på eldre maskiner.</p>
+<p>Ingen tvungne omstarter midt i arbeidet. Ingen “Oppdatering pågår,
+vennligst ikke slå av maskinen” når du skal rekke en deadline. Mange
+opplever at eldre bærbare som har blitt trege på Windows plutselig føles
+raske igjen.</p>
+<h3 id="norske-forhold-fungerer-godt">7. Norske forhold fungerer
+godt</h3>
+<p>I 2026 fungerer de fleste norske tjenestene utmerket på Linux:</p>
+<ul>
+<li>BankID og BankID-appen (via nettleser eller app)</li>
+<li>Vipps</li>
+<li>Altinn</li>
+<li>NRK TV og NRK Radio</li>
+<li>DNB, Nordea, Sparebank1 nettbanking</li>
+<li>Posten, Bring, Vy, etc.</li>
+</ul>
+<p>De fleste ting som er viktige i hverdagen i Norge fungerer uten
+problemer.</p>
+<h2 id="men-er-ikke-linux-bare-for-nerds">“Men er ikke Linux bare for
+nerds?”</h2>
+<p>Dette er den største myten. For 15–20 år siden var det kanskje delvis
+sant. I 2026 er det ikke det.</p>
+<p>I dag finnes det Linux-distribusjoner som er laget spesielt for folk
+som kommer fra Windows. De ser ut og føles nesten identisk med det du er
+vant til. Du kan bruke musen akkurat som før. Du kan ha flere vinduer
+åpne. Du kan installere apper med noen få klikk.</p>
+<p>Du trenger ikke å bruke terminalen hvis du ikke vil (selv om det er
+gøy å lære seg litt etter hvert).</p>
+<h2 id="er-linux-noe-for-deg-ærlig-sjekkliste">Er Linux noe for deg?
+(ærlig sjekkliste)</h2>
+<p>Før du kaster deg ut i det, vær ærlig med deg selv:</p>
+<p><strong>Linux passer ekstra godt hvis du:</strong></p>
+<ul>
+<li>Har en eldre PC som ikke støttes av Windows 11 lenger (Windows 10
+mistet støtte i 2025)</li>
+<li>Er lei av reklame og sporing i operativsystemet</li>
+<li>Vil ha et stabilt og raskt system uten tvungne oppdateringer midt i
+arbeidet</li>
+<li>Bruker mest nettleser, kontor, musikk/video og norske tjenester som
+Vipps og BankID</li>
+</ul>
+<p><strong>Vurder å vente hvis du:</strong></p>
+<ul>
+<li>Er helt avhengig av Adobe-pakken (Photoshop, Premiere) til jobb</li>
+<li>Spiller kun nyere multiplayer-spill med streng anti-cheat</li>
+<li>Har en helt splitter ny ARM-laptop (f.eks. nyeste Snapdragon eller
+Apple Silicon) og ikke vil risikere problemer</li>
+</ul>
+<p>Hvis du er i tvil: Start med å prøve Linux fra en USB-pinne uten å
+installere noe. Da mister du ingenting.</p>
+<h2 id="personlige-grunner-hva-er-dine">Personlige grunner – hva er
+dine?</h2>
+<p>Før du fortsetter, ta et øyeblikk og tenk:</p>
+<ul>
+<li>Hva irriterer deg mest med Windows akkurat nå?</li>
+<li>Hva håper du å få ut av å prøve Linux?</li>
+<li>Er det personvern? Hastighet? Kostnad? Nysgjerrighet? Mindre
+reklame?</li>
+</ul>
+<p>Skriv det gjerne ned. Det vil hjelpe deg å holde motivasjonen oppe
+når ting føles litt uvant de første dagene.</p>
+<p>Her er noen eksempler på hva andre har sagt:</p>
+<blockquote>
+<p>“Jeg var lei av at Windows 11 føltes som en reklameplattform.”
+“Maskinen min fra 2018 ble så treg at jeg nesten kjøpte ny. Etter Linux
+Mint føles den rask igjen.” “Jeg vil ikke at Microsoft skal vite alt jeg
+gjør på datamaskinen min.”</p>
+</blockquote>
+<p><strong>Norsk case:</strong> Kari (62) fra Bergen hadde en 8 år
+gammel laptop som ble treig på Windows 10. Hun installerte Linux Mint
+med hjelp av barnebarnet. Nå bruker hun den til e-post, aviser, Vipps og
+NRK. “Den føles ny igjen, og jeg slipper alle de irriterende
+meldingene,” sier hun.</p>
+<h2 id="hva-du-kan-forvente-av-denne-boken">Hva du kan forvente av denne
+boken</h2>
+<p>Denne boken er ikke en tykk lærebok full av kommandoer. Den er en
+praktisk følgesvenn som tar deg gjennom hele reisen – fra valg av
+distribusjon til daglig bruk – slik forordet beskriver. Og viktigst av
+alt: Du vil lære at det er helt greit å ikke vite alt med en gang.</p>
+<h2 id="hvorfor-mange-angrer-på-at-de-ikke-byttet-tidligere">Hvorfor
+mange angrer på at de ikke byttet tidligere</h2>
+<p>Etter noen uker eller måneder med Linux hører man ofte følgende:</p>
+<ul>
+<li>“Hvorfor føltes dette så skummelt før?”</li>
+<li>“Maskinen min har aldri vært så rask”</li>
+<li>“Jeg merker nesten ikke at jeg bruker et annet operativsystem
+lenger”</li>
+<li>“Jeg savner ingenting fra Windows bortsett fra et par programmer jeg
+har erstattet”</li>
+</ul>
+<p>Overgangen er ofte mindre dramatisk enn folk frykter.</p>
+<h2 id="en-liten-advarsel">En liten advarsel</h2>
+<p>Det vil være dager der ting ikke fungerer som forventet. Det er en
+del av prosessen. Forskjellen fra Windows er at når du først har lært
+hvordan du løser ting, føler du deg mye mer i stand til å håndtere
+fremtidige problemer selv.</p>
+<h2 id="klar-for-å-starte">Klar for å starte?</h2>
+<p>Da setter vi i gang.</p>
+<p>Neste kapittel handler om det mest grunnleggende: <strong>Hva er
+egentlig Linux?</strong> – forklart på en måte som alle kan forstå.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Linux gir deg mer kontroll, bedre personvern og færre reklameinnslag
+enn Windows.</li>
+<li>Du kan ikke ta feil valg – alle anbefalte distribusjoner er gode for
+nybegynnere.</li>
+<li>Boken er laget for å være beroligende og praktisk – ta det i ditt
+eget tempo.</li>
+</ul></div>
+</section>
+<section id="kap02" class="chapter">
+<h1 id="hva-er-egentlig-linux-enkelt-forklart-uten-teknisk-tull">2. Hva
+er egentlig Linux? (enkelt forklart, uten teknisk tull)</h1>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Forskjellen på Linux-kjernen, distribusjoner og
+skrivebordsmiljøer</li>
+<li>Hvorfor det finnes så mange ulike Linux-varianter</li>
+<li>Enkel metafor for å forstå hvordan Linux henger sammen</li>
+</ul></div>
+<hr />
+<h3 id="innledning">Innledning</h3>
+<p>La oss starte med det viktigste: Linux er ikke ett enkelt program.
+Det er ikke “et alternativ til Windows” på samme måte som en app er et
+alternativ til en annen app.</p>
+<p>Linux er en hel familie av operativsystemer.</p>
+<h2 id="den-enkleste-forklaringen">Den enkleste forklaringen</h2>
+<p>Tenk på det slik:</p>
+<ul>
+<li><strong>Windows</strong> er et ferdig produkt laget av Microsoft. Du
+kjøper (eller får) hele pakken.</li>
+<li><strong>Linux</strong> er som en motor som mange forskjellige
+produsenter bruker til å bygge sine egne biler.</li>
+</ul>
+<p>Motoren (kjernen) kalles <strong>Linux-kjernen</strong>. Men det du
+faktisk bruker – det du ser på skjermen – er laget av mange forskjellige
+mennesker og organisasjoner rundt om i verden.</p>
+<p>Når folk sier “jeg bruker Linux”, mener de nesten alltid en hel pakke
+som kalles en <strong>distribusjon</strong> (eller “distro” for
+kort).</p>
+<h2 id="hva-er-en-distribusjon">Hva er en distribusjon?</h2>
+<p>En distribusjon er en komplett pakke som inneholder:</p>
+<ul>
+<li>Linux-kjernen (motoren)</li>
+<li>Et skrivebordsmiljø (det du ser og klikker på)</li>
+<li>Programmer og verktøy</li>
+<li>Installasjonsprogram</li>
+<li>Oppdateringssystem</li>
+<li>Utseende og innstillinger</li>
+</ul>
+<p>Eksempler på populære distribusjoner i 2026:</p>
+<ul>
+<li>Linux Mint</li>
+<li>Ubuntu</li>
+<li>Pop!_OS</li>
+<li>Zorin OS</li>
+<li>Fedora</li>
+<li>Debian</li>
+</ul>
+<p>Alle bruker den samme Linux-kjernen, men de er satt sammen på
+forskjellige måter – akkurat som ulike bilmerker kan bruke samme motor,
+men ha forskjellig karosseri, interiør og kjørefølelse.</p>
+<h2 id="hvorfor-finnes-det-så-mange">Hvorfor finnes det så mange?</h2>
+<p>Fordi folk har forskjellige behov og preferanser:</p>
+<ul>
+<li>Noen vil ha noe som ligner mest mulig på Windows</li>
+<li>Noen vil ha noe som er veldig moderne og minimalistisk</li>
+<li>Noen vil ha maksimal stabilitet</li>
+<li>Noen vil ha det nyeste av det nyeste</li>
+</ul>
+<p>Det fine er at du kan prøve flere uten å ødelegge noe. De fleste
+distribusjoner kan kjøres direkte fra en USB-pinne før du installerer
+dem.</p>
+<h2 id="open-source-hva-betyr-det-egentlig">Open Source – hva betyr det
+egentlig?</h2>
+<p>Linux er <strong>åpen kildekode</strong> (open source). Det betyr at
+alle kan se hvordan det er laget, endre det, og dele endringene
+sine.</p>
+<p>Hvorfor er dette viktig for deg som nybegynner?</p>
+<ul>
+<li>Tusenvis av mennesker jobber med å forbedre det hele tiden</li>
+<li>Det er ingen skjult agenda eller reklame</li>
+<li>Hvis noe er galt, kan hvem som helst fikse det (og mange gjør
+det)</li>
+<li>Det er ekstremt vanskelig å putte skadelig programvare inn i
+systemet uten at noen oppdager det</li>
+</ul>
+<p>Open source betyr ikke at det er ustabilt eller “amatørmessig”. Tvert
+imot: Mye av internett, supermaskiner, telefoner (Android) og til og med
+mange biler kjører på Linux.</p>
+<h2 id="skrivebordsmiljøer-det-du-ser-og-klikker-på">Skrivebordsmiljøer
+– det du ser og klikker på</h2>
+<p>Når du installerer Linux, velger du ofte også et
+<strong>skrivebordsmiljø</strong>. Dette er det visuelle laget – hvordan
+vinduer ser ut, hvordan oppgavelinjen fungerer, hvordan du bytter mellom
+apper.</p>
+<p>Noen populære:</p>
+<ul>
+<li><strong>Cinnamon</strong> – Klassisk og Windows-lignende (brukes i
+Linux Mint)</li>
+<li><strong>GNOME</strong> – Moderne og ryddig (brukes i Ubuntu)</li>
+<li><strong>COSMIC</strong> – Nytt og raskt, laget av System76 (brukes i
+Pop!_OS)</li>
+<li><strong>KDE Plasma</strong> – Svært tilpasningsdyktig, kan se ut som
+nesten hva som helst</li>
+<li><strong>XFCE</strong> – Lett og raskt, bra på eldre maskiner</li>
+</ul>
+<p>Slik kan to av dem se ut – samme Linux, helt forskjellig
+interiør:</p>
+<figure>
+<img src="bilder/GNOME_Shell.png"
+alt="GNOME-skrivebordet (Ubuntu): oversiktsvisningen med søkefelt øverst, åpne vinduer midt på og en app-linje nederst – moderne og ryddig" />
+<figcaption aria-hidden="true">GNOME-skrivebordet (Ubuntu):
+oversiktsvisningen med søkefelt øverst, åpne vinduer midt på og en
+app-linje nederst – moderne og ryddig</figcaption>
+</figure>
+<figure>
+<img
+src="bilder/Pop!_OS_24.04_LTS_COSMIC_Files_0.1.0_about_-_English.png"
+alt="COSMIC-skrivebordet (Pop!_OS): filbehandleren i mørkt tema med panel øverst og dokk nederst – nytt, raskt og bygget fra bunnen av" />
+<figcaption aria-hidden="true">COSMIC-skrivebordet (Pop!_OS):
+filbehandleren i mørkt tema med panel øverst og dokk nederst – nytt,
+raskt og bygget fra bunnen av</figcaption>
+</figure>
+<p>Du kan bytte skrivebordsmiljø senere hvis du vil – det er en av de
+kuleste tingene med Linux.</p>
+<h2 id="kort-oppsummert">Kort oppsummert</h2>
+<ul>
+<li>Linux = kjernen (motoren)</li>
+<li>Distribusjon = hele bilen (det du installerer og bruker)</li>
+<li>Skrivebordsmiljø = interiøret og dashbordet</li>
+</ul>
+<p>Du trenger ikke å huske alt dette akkurat nå. Det viktigste å ta med
+seg er:</p>
+<p><strong>Linux er ikke ett ting. Det er mange forskjellige måter å
+kjøre datamaskinen din på – og du kan velge den som passer deg
+best.</strong></p>
+<h2 id="prøv-selv">Prøv selv</h2>
+<p>Neste gang du ser en omtale av Linux på nettet eller YouTube: prøv å
+finne ut hvilken distribusjon og hvilket skrivebordsmiljø det handler
+om. Nå kan du nemlig skille motoren (kjernen), bilen (distribusjonen) og
+interiøret (skrivebordsmiljøet) fra hverandre – og det er mer enn de
+fleste kan.</p>
+<h2 id="hva-skjer-videre">Hva skjer videre?</h2>
+<p>I neste kapittel skal vi se på de beste distribusjonene for
+nybegynnere i 2026, og hjelpe deg å velge den rette.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Linux er ikke ett program, men en hel familie av operativsystemer
+(distribusjoner).</li>
+<li>Du velger distribusjon og skrivebordsmiljø – akkurat som å velge
+bilmerke og interiør.</li>
+<li>Du trenger ikke huske alt teknisk – det viktigste er å velge noe som
+føles kjent.</li>
+</ul></div>
+</section>
+<section id="kap03" class="chapter">
+<h1 id="hvilken-linux-skal-jeg-velge">3. Hvilken Linux skal jeg
+velge?</h1>
+<p><em>Sist oppdatert: 2026-07-11</em></p>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>De fire beste distribusjonene for nybegynnere i 2026</li>
+<li>Fordeler og ulemper ved hver av dem</li>
+<li>En klar anbefaling basert på din situasjon</li>
+</ul></div>
+<hr />
+<p>Dette er et av de vanligste spørsmålene – og det er helt forståelig.
+Det finnes hundrevis av distribusjoner, og det kan føles
+overveldende.</p>
+<p>Den gode nyheten: For de fleste nybegynnere i 2026 finnes det
+egentlig bare noen få gode alternativer å vurdere.</p>
+<p>Her er mine klare anbefalinger, rangert etter hvem de passer best
+for.</p>
+<h2 id="linux-mint-det-tryggeste-valget-for-de-fleste">1. Linux Mint –
+Det tryggeste valget for de fleste</h2>
+<p><strong>Best for:</strong> De fleste som kommer rett fra Windows og
+vil ha minst mulig sjokk.</p>
+<p>Linux Mint er kjent for å være det mest “Windows-lignende”
+alternativet. Det bruker Cinnamon-skrivebordet som har en klassisk
+oppgavelinje nederst, en Start-meny, og støtte for mapper på
+skrivebordet.</p>
+<figure>
+<img src="bilder/Linux_Mint_22.2_Cinnamon_eng.webp.png"
+alt="Linux Mint 22 med Cinnamon-skrivebordet: oppgavelinje nederst og en åpen meny nede til venstre – kjente omgivelser for den som kommer fra Windows" />
+<figcaption aria-hidden="true">Linux Mint 22 med Cinnamon-skrivebordet:
+oppgavelinje nederst og en åpen meny nede til venstre – kjente
+omgivelser for den som kommer fra Windows</figcaption>
+</figure>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Ser og føles kjent</li>
+<li>Svært stabilt</li>
+<li>Inneholder det meste du trenger fra starten av</li>
+<li>Veldig bra dokumentasjon og fellesskap</li>
+<li>Lett å installere drivere og multimedia-kodeker</li>
+<li>Oppdateringer er konservative og trygge</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>Ser litt “tradisjonell” ut (noen synes det er kjedelig)</li>
+<li>Ikke alltid det aller nyeste av programvare</li>
+</ul>
+<p><strong>Anbefales hvis:</strong> Du vil ha noe som “bare funker” og
+minner mest mulig om Windows 10/11.</p>
+<p>Mange nordmenn begynner med Linux Mint Cinnamon.</p>
+<h2 id="zorin-os-når-du-vil-ha-det-aller-mest-windows-aktige">2. Zorin
+OS – Når du vil ha det aller mest Windows-aktige</h2>
+<p><strong>Best for:</strong> De som er redde for endring og vil ha noe
+som ligner Windows 11 mest mulig.</p>
+<p>Zorin OS er bygget på Ubuntu, men er designet for å føles kjent for
+Windows-brukere. Den har flere forskjellige “utseender” du kan bytte
+mellom – inkludert et som ligner veldig på Windows 11.</p>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Kan se ut som Windows 11, Windows 10 eller macOS</li>
+<li>Svært nybegynnervennlig</li>
+<li>God støtte for Windows-programmer via Wine/Bottles</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>Litt mer “ferdigpakket” enn andre</li>
+<li>Fellesskapet er mindre enn Mint og Ubuntu</li>
+</ul>
+<p><strong>Anbefales hvis:</strong> Du vil ha minst mulig “nytt” å
+forholde deg til visuelt.</p>
+<h2 id="pop_os-utmerket-for-nyere-maskiner-og-gaming">3. Pop!_OS –
+Utmerket for nyere maskiner og gaming</h2>
+<p><strong>Best for:</strong> Deg som har en relativt ny PC, kanskje med
+NVIDIA-grafikkort, eller som er interessert i gaming.</p>
+<p>Pop!_OS lages av System76 (et selskap som selger Linux-PC-er). Det er
+basert på Ubuntu, men har mange forbedringer – spesielt når det gjelder
+grafikk, drivere og produktivitet.</p>
+<p>Siden versjon 24.04 har Pop!_OS sitt eget skrivebordsmiljø,
+<strong>COSMIC</strong>, som System76 har bygget helt fra bunnen av i
+programmeringsspråket Rust – det gjør det raskt og moderne. COSMIC ble
+lansert som stabilt i slutten av 2025 og er trygt for daglig bruk, men
+er fortsatt et ungt prosjekt under aktiv utvikling. Det skiller seg fra
+GNOME og Cinnamon ved innebygd <strong>vindusflislegging</strong>
+(automatisk organisering av vinduer) og et fleksibelt panel-system – en
+av grunnene til at mange velger nettopp Pop.</p>
+<figure>
+<img src="bilder/Pop!_OS_24.04_LTS_Installation_1_-_English.png"
+alt="Pop!_OS-installereren: språkvalg i et ryddig mørkt grensesnitt – installasjonen er like enkel som Mints, bare med et annet utseende" />
+<figcaption aria-hidden="true">Pop!_OS-installereren: språkvalg i et
+ryddig mørkt grensesnitt – installasjonen er like enkel som Mints, bare
+med et annet utseende</figcaption>
+</figure>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Ekstremt god støtte for NVIDIA og ny maskinvare</li>
+<li>Fantastiske veiledninger og videoer</li>
+<li>Innebygd støtte for Flatpak</li>
+<li>Veldig bra for gaming (Steam + Proton)</li>
+<li>Ren og moderne utseende</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>COSMIC-skrivebordet er nytt og kan føles litt annerledes enn
+Windows</li>
+<li>Litt mer “moderne” enn Mint</li>
+</ul>
+<p><strong>Anbefales hvis:</strong> Du har ny maskin, gamer, eller liker
+et ryddig og moderne utseende.</p>
+<h2 id="ubuntu-det-mest-brukte-alternativet">4. Ubuntu – Det mest brukte
+alternativet</h2>
+<p><strong>Best for:</strong> Deg som vil ha det største fellesskapet og
+mest mulig dokumentasjon.</p>
+<p>Ubuntu er den mest kjente og mest brukte Linux-distribusjonen i
+verden. Nesten alt du finner av veiledninger på internett fungerer på
+Ubuntu.</p>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Størst fellesskap</li>
+<li>Mest støtte fra programvareutviklere</li>
+<li>Svært mange guider og videoer</li>
+<li>Langsiktig støtte (LTS-versjoner)</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>Har blitt litt mer “moderne” de siste årene</li>
+<li>Noen synes Canonical legger til for mye “egne ting”</li>
+</ul>
+<p><strong>Anbefales hvis:</strong> Du vil ha det “tryggeste” valget i
+betydningen “alle andre bruker dette også”.</p>
+<h2 id="kort-sammenligning-2026">Kort sammenligning (2026)</h2>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribusjon</th>
+<th>Windows-lignende</th>
+<th>Ny maskin/gaming</th>
+<th>Størst fellesskap</th>
+<th>Lett å komme i gang</th>
+<th>Anbefalt for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linux Mint</td>
+<td>★★★★★</td>
+<td>★★★</td>
+<td>★★★★</td>
+<td>★★★★★</td>
+<td>De fleste</td>
+</tr>
+<tr class="even">
+<td>Zorin OS</td>
+<td>★★★★★</td>
+<td>★★★</td>
+<td>★★★</td>
+<td>★★★★★</td>
+<td>De som er redde for endring</td>
+</tr>
+<tr class="odd">
+<td>Pop!_OS</td>
+<td>★★★</td>
+<td>★★★★★</td>
+<td>★★★★</td>
+<td>★★★★</td>
+<td>Ny maskin + gaming</td>
+</tr>
+<tr class="even">
+<td>Ubuntu</td>
+<td>★★★</td>
+<td>★★★★</td>
+<td>★★★★★</td>
+<td>★★★★</td>
+<td>De som vil ha mest støtte</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mitt-råd-til-deg">Mitt råd til deg</h2>
+<ul>
+<li><strong>Har du aldri brukt Linux før?</strong> → Start med
+<strong>Linux Mint</strong> eller <strong>Zorin OS</strong>.</li>
+<li><strong>Har du en nyere PC eller gamer?</strong> → Gå for
+**Pop!_OS**.</li>
+<li><strong>Vil du ha det mest populære?</strong> → Velg
+<strong>Ubuntu</strong>.</li>
+</ul>
+<p>Du kan ikke ta feil valg her. Alle disse fire er utmerkede for
+nybegynnere.</p>
+<h2 id="hvordan-teste-før-du-bestemmer-deg">Hvordan teste før du
+bestemmer deg?</h2>
+<p>De fleste distribusjoner har en “Try” eller “Live” modus:</p>
+<ol type="1">
+<li>Last ned .iso-filen fra den offisielle nettsiden (og velger du
+Pop!_OS, trenger du ikke lete etter noen LTS-knapp – Pop!_OS har bare én
+aktuell utgave, ta den)</li>
+<li>Lag en bootbar USB (vi går gjennom dette i neste kapittel)</li>
+<li>Start PC-en fra USB-en</li>
+<li>Prøv systemet uten å installere det</li>
+</ol>
+<p>Du kan surfe på nettet, åpne filer, teste programvare – alt uten å
+endre noe på harddisken din.</p>
+<p>Dette er den beste måten å finne ut om en distribusjon føles riktig
+for deg.</p>
+<h2 id="andre-distribusjoner-bare-hvis-du-blir-nysgjerrig-senere">Andre
+distribusjoner (bare hvis du blir nysgjerrig senere)</h2>
+<ul>
+<li><strong>Fedora</strong> – Moderne og “ren”, bra for utviklere</li>
+<li><strong>Debian</strong> – Ekstremt stabil, men litt mer
+konservativ</li>
+<li><strong>Manjaro</strong> eller <strong>EndeavourOS</strong> – Basert
+på Arch (mer avansert)</li>
+<li><strong>Bazzite</strong> eller <strong>Nobara</strong> – Bygget
+spesielt for gaming; verdt en titt hvis spill er hovedprioriteten
+din</li>
+</ul>
+<p>For nybegynnere anbefaler jeg at du holder deg til de fire jeg nevnte
+øverst.</p>
+<h2 id="neste-steg">Neste steg</h2>
+<p>Nå som du har en idé om hvilken distribusjon du vil prøve, skal vi gå
+gjennom hvordan du forbereder installasjonen på en trygg måte.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>De fleste bør starte med Linux Mint eller Zorin OS.</li>
+<li>Har du ny maskin eller gamer? Velg Pop!_OS.</li>
+<li>Du kan ikke ta feil valg – alle anbefalte alternativer er
+trygge.</li>
+</ul></div>
+</section>
+<section id="kap04" class="chapter">
+<h1 id="forberedelse-og-installasjon">4. Forberedelse og
+installasjon</h1>
+<p><em>Sist oppdatert: 2026-07-11</em></p>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvordan ta sikker backup før installasjon</li>
+<li>Hvordan lage en bootbar USB med Rufus</li>
+<li>Forskjellen på dual boot og full erstatning</li>
+<li>Steg-for-steg installasjon med vanlige fallgruver</li>
+</ul></div>
+<hr />
+<p>Dette er det kapittelet de fleste er litt nervøse for. Det er helt
+normalt.</p>
+<p>Den gode nyheten er at installasjon av Linux i dag er mye enklere enn
+de fleste tror – spesielt hvis du følger stegene nøye. Vi skal ta det
+rolig og trygt.</p>
+<h2 id="hva-du-bør-ha-klart-før-du-begynner">Hva du bør ha klart før du
+begynner</h2>
+<ul>
+<li>Ekstern harddisk eller stor USB for backup</li>
+<li>Notat med hvilke programmer du bruker mest i dag</li>
+<li>Passordene dine (eller passordbehandler eksportert)</li>
+<li>Litt tid (sett av 1–2 timer første gang)</li>
+<li>En kopp kaffe eller te</li>
+</ul>
+<h2 id="først-ta-backup-viktigst-av-alt">Først: Ta backup! (Viktigst av
+alt)</h2>
+<p>Dette kan ikke sies ofte nok:</p>
+<p><strong>Ta backup av viktige filer før du begynner.</strong></p>
+<p>Selv om du bare skal prøve Linux fra en USB først, er det lurt å ha
+en kopi av:</p>
+<ul>
+<li>Dokumenter og prosjekter</li>
+<li>Bilder og videoer</li>
+<li>Passord (bruk en passordbehandler som Bitwarden eller
+KeePassXC!)</li>
+<li>E-postinnstillinger og viktige e-poster</li>
+<li>Nedlastinger du vil beholde</li>
+<li>Eventuelle viktige programmer du har kjøpt (lisensnøkler)</li>
+</ul>
+<p>Den enkleste måten er å kopiere alt viktig til en ekstern harddisk
+eller en stor USB-pinne. Du kan også bruke OneDrive, Google Drive,
+Proton Drive eller iCloud som midlertidig backup.</p>
+<p><strong>Pro tips:</strong></p>
+<ul>
+<li>Ta backup av mapper som “Dokumenter”, “Bilder”, “Nedlastinger” og
+“Skrivebord”.</li>
+<li>Eksporter passordene dine fra nettleseren til en fil (du kan
+importere dem igjen senere).</li>
+<li>Noter deg hvilke programmer du bruker mest, så du vet hva du skal
+installere på Linux.</li>
+</ul>
+<h3 id="slik-flytter-du-filene-dine-fra-windows-steg-for-steg">Slik
+flytter du filene dine fra Windows (steg for steg)</h3>
+<p>Når Linux er installert:</p>
+<ol type="1">
+<li>Koble til den eksterne harddisken eller USB-en du brukte til
+backup.</li>
+<li>Åpne filbehandleren (Nemo i Mint).</li>
+<li>Finn den eksterne disken i venstre side (ofte under “Andre
+steder”).</li>
+<li>Kopier mappene dine til “Dokumenter”, “Bilder” osv. i Linux.</li>
+<li>Åpne Firefox → Innstillinger → Personvern og sikkerhet → Bokmerker →
+Importer bokmerker og passord.</li>
+</ol>
+<p>Dette er ofte den første oppgaven folk gjør etter installasjon. Ta
+deg god tid her.</p>
+<h2 id="velg-distribusjon-og-last-ned">Velg distribusjon og last
+ned</h2>
+<p>Gå til den offisielle nettsiden for distribusjonen du har valgt:</p>
+<ul>
+<li><strong>Linux Mint</strong>: <a
+href="https://linuxmint.com">https://linuxmint.com</a> (direkte
+nedlasting: <a
+href="https://linuxmint.com/download.php">https://linuxmint.com/download.php</a>)</li>
+<li><strong>Zorin OS</strong>: <a
+href="https://zorin.com/os">https://zorin.com/os</a> (nedlasting: <a
+href="https://zorin.com/os/download/">https://zorin.com/os/download/</a>)</li>
+<li>**Pop!_OS**: <a
+href="https://system76.com/pop">https://system76.com/pop</a></li>
+<li><strong>Ubuntu</strong>: <a
+href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a></li>
+</ul>
+<p>Last ned den nyeste <strong>LTS</strong>-versjonen (Long Term
+Support). Det er den mest stabile utgaven som får oppdateringer i mange
+år (vanligvis 5 år).</p>
+<p>Filen du laster ned heter vanligvis noe som
+<code>linuxmint-22-cinnamon-64bit.iso</code> eller lignende. Dette
+kalles en <strong>ISO-fil</strong>.</p>
+<p><strong>Viktig:</strong> Last alltid ned fra den offisielle
+nettsiden. Unngå tilfeldige nedlastingssider.</p>
+<p>🟡 Valgfritt: Verifiser nedlastingen med sjekksum (anbefales hvis du
+er ekstra forsiktig). På Linux Mint-siden finner du SHA256-verdien.
+Etter nedlasting:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sha256sum</span> linuxmint-<span class="pp">*</span>.iso</span></code></pre></div>
+<p>Sammenlign tallet med det som står på nettsiden. Hvis det matcher, er
+filen ekte og uendret.</p>
+<h2 id="lag-en-bootbar-usb-pinne">Lag en bootbar USB-pinne</h2>
+<p>Dette er det viktigste steget for å installere Linux.</p>
+<p>Du trenger:</p>
+<ul>
+<li>En USB-pinne på minst 8 GB (helst 16 GB eller mer). Alt på den vil
+bli slettet.</li>
+<li>Et program som kan lage en “bootbar” USB.</li>
+</ul>
+<h3 id="anbefalte-programmer-2026">Anbefalte programmer (2026)</h3>
+<p><strong>Hvis du fortsatt er på Windows:</strong></p>
+<ul>
+<li><strong>Rufus</strong> (gratis, populært og enkelt) – <a
+href="https://rufus.ie">https://rufus.ie</a></li>
+<li><strong>balenaEtcher</strong> – <a
+href="https://www.balena.io/etcher">https://www.balena.io/etcher</a>
+(veldig brukervennlig)</li>
+<li><strong>Ventoy</strong> (avansert, men veldig praktisk – kan ha
+flere ISO-filer på samme pinne)</li>
+</ul>
+<p><strong>Hvis du allerede er på Linux:</strong></p>
+<ul>
+<li>Bruk <code>dd</code>-kommandoen eller verktøy som
+<code>gnome-disks</code> / balenaEtcher.</li>
+</ul>
+<h3 id="slik-lager-du-bootbar-usb-med-rufus-enklest-for-de-fleste">Slik
+lager du bootbar USB med Rufus (enklest for de fleste):</h3>
+<ol type="1">
+<li>Last ned og åpne Rufus (trenger ikke installasjon).</li>
+<li>Sett inn USB-pinnen.</li>
+<li>I Rufus:
+<ul>
+<li>Velg USB-pinnen under “Device”</li>
+<li>Klikk på pilen ved “Boot selection” og velg ISO-filen du lastet
+ned</li>
+<li>La resten stå på standardinnstillinger. Rufus foreslår vanligvis det
+riktige for din maskin (GPT + UEFI på moderne PC-er).</li>
+</ul></li>
+<li>Klikk <strong>Start</strong>.</li>
+</ol>
+<figure>
+<img src="bilder/04-rufus.png"
+alt="Skjermbilde av Rufus med valgt USB-pinne og ISO-fil" />
+<figcaption aria-hidden="true">Skjermbilde av Rufus med valgt USB-pinne
+og ISO-fil</figcaption>
+</figure>
+<p>Vent til prosessen er ferdig. Det kan ta 5–15 minutter avhengig av
+USB-pinnen din.</p>
+<blockquote>
+<p><strong>Viktig:</strong> Alt på USB-pinnen vil bli slettet. Ta backup
+hvis det er noe der fra før.</p>
+</blockquote>
+<p>Etter at USB-en er ferdig, kan du la den stå i maskinen.</p>
+<h2 id="ekstra-tips-for-en-vellykket-installasjon">Ekstra tips for en
+vellykket installasjon</h2>
+<h3 id="velg-riktig-usb-pinne">Velg riktig USB-pinne</h3>
+<p>Bruk en USB 3.0 eller nyere hvis mulig. Eldre USB 2.0-pinner er
+tregere, men fungerer fortsatt.</p>
+<h3 id="lagre-nedlastingslenken">Lagre nedlastingslenken</h3>
+<p>Det er lurt å notere deg hvor du lastet ned ISO-filen fra, slik at du
+kan laste ned ny versjon senere hvis du trenger den.</p>
+<h3 id="lag-flere-usb-pinner">Lag flere USB-pinner</h3>
+<p>Mange lager en ekstra “rednings-USB” med samme distribusjon. Da har
+du alltid en måte å starte maskinen på hvis noe går galt.</p>
+<h3 id="prøv-try-before-install-grundig">Prøv “Try before install”
+grundig</h3>
+<p>Bruk minst 15–30 minutter i Live-modus før du installerer. Test: -
+WiFi - Lyd (spill av en YouTube-video) - Skjermoppløsning -
+Berøringsskjerm hvis du har det - Ekstern skjerm hvis du bruker det</p>
+<h3
+id="partisjonering-for-viderekomne-valgfritt-avansert-hopp-gjerne-over">Partisjonering
+for viderekomne (valgfritt) 🔴 Avansert – hopp gjerne over</h3>
+<p>Hvis du velger “Noe annet” under installasjon, kan du manuelt lage
+partisjoner. En vanlig oppsett er: - <code>/</code> (root) – 30–50 GB -
+<code>/home</code> – resten av plassen (dine personlige filer) - swap –
+4–8 GB (avhengig av hvor mye RAM du har)</p>
+<figure>
+<img src="bilder/installer-partitions.webp"
+alt="Manuell partisjonering – slik ser “Noe annet”-visningen ut i installasjonsprogrammet" />
+<figcaption aria-hidden="true">Manuell partisjonering – slik ser “Noe
+annet”-visningen ut i installasjonsprogrammet</figcaption>
+</figure>
+<p>For nybegynnere anbefales det å la installasjonsprogrammet håndtere
+partisjoneringen.</p>
+<h2 id="dual-boot-eller-erstatt-windows-helt">Dual boot eller erstatt
+Windows helt?</h2>
+<p>Nå kommer et viktig valg.</p>
+<h3 id="dual-boot-anbefalt-for-de-fleste-nybegynnere">Dual boot
+(anbefalt for de fleste nybegynnere)</h3>
+<p>Du beholder Windows, og kan velge hvilket operativsystem du vil
+starte når du skrur på PC-en.</p>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Du kan gå tilbake til Windows når som helst</li>
+<li>Trygt å eksperimentere</li>
+<li>Perfekt hvis du er usikker eller trenger Windows til noe spesifikt
+(f.eks. visse programmer eller spill)</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>Tar plass på harddisken (du må dele opp disken)</li>
+<li>Litt mer komplisert å sette opp</li>
+<li>Noen ganger kan Windows-oppdateringer rote til bootloaderen (men
+dette er sjeldent i 2026)</li>
+</ul>
+<h3 id="erstatt-windows-helt">Erstatt Windows helt</h3>
+<p>Du sletter Windows og har bare Linux.</p>
+<p><strong>Fordeler:</strong></p>
+<ul>
+<li>Ren og ryddig installasjon</li>
+<li>Hele disken tilgjengelig for Linux</li>
+<li>Ingen konflikter med Windows</li>
+</ul>
+<p><strong>Ulemper:</strong></p>
+<ul>
+<li>Du mister Windows (må reinstallere senere hvis du angrer)</li>
+<li>Mer risikabelt hvis du ikke er sikker</li>
+</ul>
+<p><strong>Mitt råd:</strong> Start med <strong>dual boot</strong>. Du
+kan alltid slette Windows senere når du er komfortabel med Linux.</p>
+<h2
+id="steg-for-steg-installasjon-linux-mint-som-eksempel">Steg-for-steg
+installasjon (Linux Mint som eksempel)</h2>
+<p>Hver distribusjon har litt forskjellige installatører, men prinsippet
+er det samme. Her bruker vi Linux Mint som eksempel – prosessen er
+veldig lik i Zorin OS, Pop!_OS og Ubuntu.</p>
+<h3 id="start-fra-usb-en">1. Start fra USB-en</h3>
+<ul>
+<li>Sett inn USB-pinnen</li>
+<li>Start PC-en på nytt</li>
+<li>Trykk gjentatte ganger på en tast for å komme til oppstartsmenyen.
+Vanlige taster:
+<ul>
+<li><strong>F12</strong> (Dell, mange andre)</li>
+<li><strong>F10</strong> eller <strong>Esc</strong> (HP)</li>
+<li><strong>F2</strong> eller <strong>Del</strong> (noen andre
+merker)</li>
+<li>Prøv <strong>Esc</strong> først – mange maskiner viser en meny
+der</li>
+</ul></li>
+<li>Velg USB-pinnen fra listen (ofte står det “UEFI: USB” eller bare
+navnet på USB-pinnen)</li>
+</ul>
+<figure>
+<img src="bilder/04-boot-menu.png"
+alt="BIOS/UEFI boot-meny der USB-pinnen er valgt" />
+<figcaption aria-hidden="true">BIOS/UEFI boot-meny der USB-pinnen er
+valgt</figcaption>
+</figure>
+<p><strong>Tips hvis det ikke fungerer:</strong></p>
+<ul>
+<li>Gå inn i BIOS/UEFI (vanligvis Del, F2 eller F10 mens maskinen
+starter)</li>
+<li>Slå på “Boot from USB” hvis det er av</li>
+<li>Prøv å slå av “Secure Boot” midlertidig (se egen forklaring
+under)</li>
+<li>Prøv en annen USB-port (helst en USB 2.0-port hvis du har)</li>
+</ul>
+<h3 id="secure-boot-hva-er-det-og-hvordan-håndterer-du-det">Secure Boot
+– hva er det og hvordan håndterer du det?</h3>
+<p><strong>Hva er Secure Boot?</strong> Secure Boot er en
+sikkerhetsfunksjon i de fleste PC-er fra 2012 og fremover. Den sjekker
+at operativsystemet som starter er “signert” av en godkjent nøkkel.
+Dette hindrer skadelig programvare i å starte før operativsystemet.</p>
+<p><strong>Hvorfor må jeg kanskje slå det av for å installere
+Linux?</strong> Enkelte Linux-distribusjoner har ikke signerte drivere
+for all maskinvare (spesielt NVIDIA-grafikk og enkelte WiFi-kort).
+Derfor kan PC-en nekte å starte fra USB-pinnen med mindre Secure Boot er
+av.</p>
+<p><strong>Slik slår du Secure Boot av (og på igjen):</strong></p>
+<ol type="1">
+<li>Start PC-en og trykk på <strong>F2</strong>, <strong>Del</strong>,
+<strong>F10</strong> eller <strong>Esc</strong> (avhengig av merke) for
+å gå inn i BIOS/UEFI.</li>
+<li>Finn fanen <strong>Security</strong> eller
+<strong>Boot</strong>.</li>
+<li>Finn <strong>Secure Boot</strong> og sett den til
+<strong>Disabled</strong>.</li>
+<li>Lagre og avslutt (vanligvis <strong>F10</strong>).</li>
+</ol>
+<p><strong>Etter installasjon:</strong> De fleste moderne distribusjoner
+(Ubuntu, Linux Mint, Pop!_OS og Zorin OS i nyere versjoner)
+<strong>støtter Secure Boot</strong> med signerte kjerner. Du kan derfor
+slå Secure Boot på igjen etter installasjon: gå tilbake til BIOS/UEFI og
+sett Secure Boot til <strong>Enabled</strong>. Starter ikke maskinen da,
+er det bare å slå den av igjen – ingenting blir ødelagt.</p>
+<blockquote>
+<p><strong>Merk:</strong> Hvis du bruker NVIDIA sine proprietære
+drivere, kan Secure Boot skape trøbbel. Da må du enten beholde Secure
+Boot av, eller signere driverne selv (🔴 avansert – ikke anbefalt for
+nybegynnere).</p>
+</blockquote>
+<h3 id="velg-start-linux-mint-live-modus">2. Velg “Start Linux Mint”
+(Live-modus)</h3>
+<p>Du kommer inn i et levende system. Ingenting er installert ennå. Du
+kan teste alt.</p>
+<figure>
+<img src="bilder/cinnamon.webp"
+alt="Linux Mint i live-modus – legg merke til “Install Linux Mint”-ikonet øverst til venstre" />
+<figcaption aria-hidden="true">Linux Mint i live-modus – legg merke til
+“Install Linux Mint”-ikonet øverst til venstre</figcaption>
+</figure>
+<p>Bruk denne muligheten til å: - Sjekke at WiFi fungerer - Teste lyd -
+Se hvordan mus og tastatur oppfører seg - Åpne nettleseren og surfe
+litt</p>
+<p>Hvis alt føles greit, dobbeltklikk på “Install Linux Mint” på
+skrivebordet.</p>
+<h3 id="følg-installasjonsveiviseren">3. Følg
+installasjonsveiviseren</h3>
+<ol type="1">
+<li><p><strong>Språk</strong> — Velg <strong>Norsk bokmål</strong>
+(eller nynorsk hvis du foretrekker det).</p></li>
+<li><p><strong>Tastatur</strong> — Velg norsk tastaturoppsett.</p></li>
+<li><p><strong>Tilkobling</strong> — Koble til WiFi. Dette er viktig for
+å laste ned oppdateringer under installasjonen.</p></li>
+<li><p><strong>Multimedia-kodeker</strong> — Huk av for «Install
+multimedia codecs» når installereren spør. Da spiller video og musikk
+uten videre.</p></li>
+<li><p><strong>Installasjonstype</strong> (det viktigste steget!):</p>
+<p>Her må du velge forsiktig:</p>
+<ul>
+<li><strong>“Installer Linux Mint ved siden av Windows”</strong> eller
+lignende → Dual boot (anbefalt)</li>
+<li><strong>“Slett disk og installer Linux Mint”</strong> → Erstatt
+alt</li>
+</ul>
+<p>Se nøye på oversikten. Den viser harddiskene dine. Pass på at du ikke
+velger feil disk hvis du har flere.</p>
+<figure>
+<img src="bilder/04-partisjon.png"
+alt="Installasjonsvindu som viser partisjonsvalg og dual boot-alternativ" />
+<figcaption aria-hidden="true">Installasjonsvindu som viser
+partisjonsvalg og dual boot-alternativ</figcaption>
+</figure></li>
+<li><p><strong>Tidssone</strong> — Velg Oslo eller din by.</p></li>
+<li><p><strong>Brukerkonto</strong></p>
+<ul>
+<li>Skriv inn fullt navn</li>
+<li>Velg et brukernavn (vanligvis små bokstaver uten æøå)</li>
+<li>Lag et sterkt passord</li>
+<li>Velg om du vil logge inn automatisk eller kreve passord (jeg
+anbefaler passord)</li>
+</ul></li>
+<li><p><strong>Start installasjonen</strong></p>
+<ul>
+<li>Klikk “Installer”. Dette kan ta 10–40 minutter avhengig av
+maskinen.</li>
+</ul></li>
+</ol>
+<figure>
+<img src="bilder/installer-slideshow.webp"
+alt="Installasjonen kopierer filer – du kan lene deg tilbake" />
+<figcaption aria-hidden="true">Installasjonen kopierer filer – du kan
+lene deg tilbake</figcaption>
+</figure>
+<ol start="9" type="1">
+<li><strong>Ferdig</strong>
+<ul>
+<li>Når installasjonen er ferdig, blir du bedt om å starte på nytt.</li>
+<li><strong>Ta ut USB-pinnen</strong> før du starter på nytt.</li>
+</ul></li>
+</ol>
+<h2 id="ofte-stilte-spørsmål-under-installasjon">Ofte stilte spørsmål
+under installasjon</h2>
+<p><strong>“Hva betyr ‘Slett disk og installer’?”</strong> Det betyr at
+hele harddisken blir slettet og bare Linux blir installert.</p>
+<p><strong>“Kan jeg installere på en ekstern harddisk?”</strong> Ja, men
+det er ikke anbefalt for daglig bruk. Hastigheten blir lavere.</p>
+<p><strong>“Hva hvis jeg har flere harddisker?”</strong> Vær ekstremt
+forsiktig. Velg riktig disk i installasjonsprogrammet. Se på størrelse
+og navn.</p>
+<p><strong>“Må jeg slå av Secure Boot permanent?”</strong> Ofte ikke.
+Prøv å slå den på igjen etter installasjon. De fleste moderne
+distribusjoner støtter Secure Boot.</p>
+<h2 id="vanlige-feil-å-unngå-under-installasjon">Vanlige feil å unngå
+under installasjon</h2>
+<ol type="1">
+<li><strong>Ikke fortsett hvis du er usikker på hvilken disk som blir
+brukt.</strong> Gå tilbake og dobbeltsjekk.</li>
+<li><strong>Ikke fjern USB-pinnen for tidlig.</strong> Vent til
+installasjonsprogrammet sier at det er trygt.</li>
+<li><strong>Ikke hopp over oppdateringer etter installasjon.</strong> De
+første oppdateringene er ofte viktige.</li>
+<li><strong>Ikke installer for mange ting de første dagene.</strong> La
+systemet stabilisere seg først.</li>
+</ol>
+<h2 id="første-omstart-grub-menyen">Første omstart – GRUB-menyen</h2>
+<p>Når PC-en starter på nytt, vil du se en meny som heter
+<strong>GRUB</strong>. Her kan du velge:</p>
+<ul>
+<li>Linux (vanligvis øverst eller “Linux Mint”)</li>
+<li>Windows Boot Manager</li>
+</ul>
+<p>Bruk piltastene og Enter for å velge.</p>
+<p>Linux står øverst og starter automatisk etter noen sekunder hvis du
+ikke velger noe. Standardvalget kan endres senere i innstillingene.</p>
+<h2 id="vanlige-problemer-under-installasjon">Vanlige problemer under
+installasjon</h2>
+<ul>
+<li><strong>Kan ikke starte fra USB</strong>: Se tipsene over om
+BIOS/UEFI og Secure Boot.</li>
+<li><strong>Svart skjerm etter valg av USB</strong>: Prøv en annen
+USB-port, eller legg til <code>nomodeset</code> i oppstartsparametrene
+(avansert).</li>
+<li><strong>Ingen WiFi i live-modus</strong>: Noen ganger må du
+installere drivere etter installasjon (se kapittel 8).</li>
+<li><strong>Feilmelding om partisjonering</strong>: Ikke få panikk. Du
+kan gå tilbake og velge igjen. Aldri fortsett hvis du er usikker på
+hvilken disk som blir slettet.</li>
+</ul>
+<h2 id="etter-installasjonen-første-ting-å-gjøre">Etter installasjonen –
+første ting å gjøre</h2>
+<ol type="1">
+<li>La systemet laste ned alle oppdateringer.</li>
+<li>Start på nytt.</li>
+<li>Sett opp Flatpak (hvis ikke allerede på plass):</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flatpak</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> remote-add <span class="at">--if-not-exists</span> flathub https://flathub.org/repo/flathub.flatpakrepo</span></code></pre></div>
+<p>(På Ubuntu vises ikke Flatpak-apper i programvaresenteret uten pakken
+<code>gnome-software-plugin-flatpak</code> – installer den med
+<code>sudo apt install gnome-software-plugin-flatpak</code>.)</p>
+<ol start="4" type="1">
+<li>Installer <strong>Timeshift</strong> (system-snapshots):</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span></code></pre></div>
+<ol start="5" type="1">
+<li>Ta ditt første system-snapshot (anbefales sterkt!).</li>
+</ol>
+<h2 id="etter-installasjonen-de-første-48-timene">Etter installasjonen –
+de første 48 timene</h2>
+<ol type="1">
+<li>Installer alle oppdateringer og start på nytt</li>
+<li>Installer Timeshift og ta første snapshot</li>
+<li>Installer de 5–6 programmene du bruker mest</li>
+<li>Test at alt du trenger til daglig fungerer (spesielt norske
+tjenester)</li>
+<li>Ta en ny backup av viktige filer til ekstern disk</li>
+</ol>
+<p>Hvis alt dette fungerer, har du kommet godt i gang.</p>
+<h2 id="gratulerer">Gratulerer!</h2>
+<p>Du har nå installert Linux. Neste kapittel handler om hva du ser når
+du logger inn for første gang.</p>
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Ta alltid backup før du begynner.</li>
+<li>Prøv Linux fra USB først (Live-modus) – det er trygt.</li>
+<li>Velg dual boot hvis du er usikker.</li>
+<li>Installer Timeshift og ta første snapshot umiddelbart etter
+installasjon.</li>
+<li>Ha mobilen klar som støtte under installasjonen.</li>
+</ul></div>
+</section>
+<section id="kap05" class="chapter">
+<h1 id="første-gang-du-starter-linux">5. Første gang du starter
+Linux</h1>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvordan skrivebordet ser ut og fungerer</li>
+<li>Hvordan finne og installere programmer</li>
+<li>Grunnleggende navigasjon og oppdateringer</li>
+</ul></div>
+<hr />
+<p>Gratulerer! Du har nå startet Linux for første gang. La oss se på
+hvordan ting fungerer.</p>
+<h2 id="skrivebordet-førsteinntrykket">Skrivebordet –
+førsteinntrykket</h2>
+<p>Når du logger inn, ser du noe som ligner et vanlig skrivebord, men
+med noen forskjeller avhengig av hvilken distribusjon du valgte.</p>
+<h3 id="typiske-elementer">Typiske elementer:</h3>
+<p><strong>Oppgavelinje / Panel</strong></p>
+<ul>
+<li>Vanligvis nederst (Linux Mint Cinnamon) eller øverst (Ubuntu GNOME,
+Pop!_OS)</li>
+<li>Viser åpne vinduer</li>
+<li>Har en “Start-meny” eller “Activities” / “Oversikt”</li>
+</ul>
+<p><strong>Skrivebordet</strong></p>
+<ul>
+<li>Kan ha ikoner (avhengig av distribusjon)</li>
+<li>Høyreklikk for alternativer (bakgrunn, innstillinger, etc.)</li>
+</ul>
+<p><strong>Systemstatus</strong></p>
+<ul>
+<li>Klokke</li>
+<li>WiFi, lyd, batteri, oppdateringer</li>
+<li>Brukermeny (avlogging, avslutning, innstillinger)</li>
+</ul>
+<figure>
+<img src="bilder/05-skrivebord.png"
+alt="Eksempel på Linux Mint Cinnamon skrivebord" />
+<figcaption aria-hidden="true">Eksempel på Linux Mint Cinnamon
+skrivebord</figcaption>
+</figure>
+<h2 id="viktige-forskjeller-fra-windows">Viktige forskjeller fra
+Windows</h2>
+<ul>
+<li><strong>Super-tasten</strong> (Windows-tasten) åpner ofte oversikten
+eller startmenyen.</li>
+<li>Høyreklikk er fortsatt din beste venn.</li>
+<li>Det finnes ingen “Kontrollpanel” som heter det – alt ligger i
+<strong>Innstillinger</strong>.</li>
+<li>Lukk-, minimer- og maksimer-knappene er vanligvis øverst til høyre
+(noen distribusjoner har dem til venstre).</li>
+<li>Du kan ha flere arbeidsområder (virtuelle skrivebord) – veldig
+nyttig!</li>
+</ul>
+<h3 id="windows-linux-hva-heter-tingene">Windows → Linux: hva heter
+tingene?</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Windows</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Programmer og funksjoner</td>
+<td>Programvaresenter</td>
+</tr>
+<tr class="even">
+<td>Kontrollpanel</td>
+<td>Innstillinger</td>
+</tr>
+<tr class="odd">
+<td>Oppgavebehandling</td>
+<td>Systemovervåker (eller <code>htop</code> i terminalen)</td>
+</tr>
+<tr class="even">
+<td>Filutforsker</td>
+<td>Filbehandler (Nemo, Nautilus, Dolphin)</td>
+</tr>
+<tr class="odd">
+<td>C:\</td>
+<td><code>/</code> (roten av filsystemet)</td>
+</tr>
+<tr class="even">
+<td>C:</td>
+<td><code>/home/brukernavn</code></td>
+</tr>
+<tr class="odd">
+<td>.exe-filer</td>
+<td>.deb, Flatpak eller AppImage</td>
+</tr>
+<tr class="even">
+<td>MS Office</td>
+<td>LibreOffice</td>
+</tr>
+<tr class="odd">
+<td>Paint</td>
+<td>Pinta</td>
+</tr>
+<tr class="even">
+<td>Notepad</td>
+<td>Tekstredigerer (Gedit, Kate, Xed)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hvordan-finne-og-installere-programmer">Hvordan finne og
+installere programmer</h2>
+<p>Dette er en av de største forskjellene fra Windows – og en av de
+beste.</p>
+<p>I stedet for å gå til nettsider og laste ned .exe-filer, har Linux et
+innebygd <strong>programvarelager</strong> (repository).</p>
+<h3 id="to-hovedmåter-å-installere-programmer-på">To hovedmåter å
+installere programmer på:</h3>
+<ol type="1">
+<li><strong>Programvaresenter / Software Center / Discover</strong></li>
+<li><strong>Flatpak</strong> (moderne og anbefalt metode i 2026)</li>
+</ol>
+<h3 id="programvaresenteret">Programvaresenteret</h3>
+<p>Avhengig av distribusjon har det forskjellige navn:</p>
+<ul>
+<li><strong>Linux Mint</strong>: “Programvaresenter”</li>
+<li>**Pop!_OS / Ubuntu**: “Ubuntu Software” eller “App Center”</li>
+<li><strong>Zorin OS</strong>: “Software”</li>
+</ul>
+<p>Slik fungerer det vanligvis:</p>
+<ol type="1">
+<li>Åpne Programvaresenteret fra startmenyen eller oppgavelinjen.</li>
+<li>Søk etter programmet du vil ha (f.eks. “VLC”, “GIMP”,
+“Firefox”).</li>
+<li>Klikk <strong>Installer</strong>.</li>
+</ol>
+<p>Programmet installeres automatisk, inkludert alle avhengigheter.</p>
+<figure>
+<img src="bilder/05-programvaresenter.png"
+alt="Programvaresenteret / Software Center" />
+<figcaption aria-hidden="true">Programvaresenteret / Software
+Center</figcaption>
+</figure>
+<h3 id="flatpak-den-moderne-måten">Flatpak – den moderne måten</h3>
+<p>Flatpak er en nyere teknologi som gjør at programmer kjører likt på
+alle Linux-distribusjoner. Fordelene:</p>
+<ul>
+<li>Alltid nyeste versjon</li>
+<li>Bedre sikkerhet (programmer er isolert)</li>
+<li>Fungerer på tvers av distribusjoner</li>
+</ul>
+<p>Mange distribusjoner har Flatpak støtte innebygd.</p>
+<h3 id="alle-metodene-i-én-oversikt-valgfritt">Alle metodene i én
+oversikt 🟡 Valgfritt</h3>
+<p>Du kommer til å møte flere begreper for å installere programmer. Her
+er hele bildet, så du kjenner igjen navnene:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 32%" />
+<col style="width: 25%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metode</th>
+<th>Hva det er</th>
+<th>Fordeler</th>
+<th>Ulemper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Programvaresenter</strong></td>
+<td>Grafisk «app-butikk»</td>
+<td>Enkelt, trygt, krever ingen kunnskap</td>
+<td>Kan ha eldre versjoner</td>
+</tr>
+<tr class="even">
+<td><strong>apt</strong></td>
+<td>Kommandolinje-verktøy (Debian/Ubuntu-familien)</td>
+<td>Raskt, offisielle pakker</td>
+<td>Krever terminal</td>
+</tr>
+<tr class="odd">
+<td><strong>Flatpak</strong></td>
+<td>Moderne, isolerte apper fra Flathub</td>
+<td>Alltid nyeste versjon, trygt, fungerer på alle distroer</td>
+<td>Bruker mer diskplass</td>
+</tr>
+<tr class="even">
+<td><strong>Snap</strong></td>
+<td>Canonical (Ubuntu) sitt alternativ til Flatpak</td>
+<td>Enkelt, godt integrert i Ubuntu</td>
+<td>Omdiskutert – lukket baksystem, tregere oppstart</td>
+</tr>
+<tr class="odd">
+<td><strong>AppImage</strong></td>
+<td>Én fil – last ned og kjør</td>
+<td>Ingen installasjon, bærbart</td>
+<td>Ingen automatiske oppdateringer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anbefaling for nybegynnere:</strong></p>
+<ul>
+<li>Bruk <strong>Programvaresenteret</strong> for de fleste apper.</li>
+<li>Velg <strong>Flatpak</strong>-versjonen når det er mulig (ofte
+merket «Flathub» i Programvaresenteret).</li>
+<li><strong>Snap</strong> møter du mest på Ubuntu – der er den standard,
+og programvaresenteret gir deg gjerne Snap-versjonen uansett. Det
+fungerer helt fint, og du kan fint bruke Flatpak i tillegg. Utenfor
+Ubuntu er Flatpak det vanlige valget.</li>
+<li><strong>AppImage</strong> er greit for enkeltprogrammer du bare vil
+teste.</li>
+</ul>
+<h2 id="viktige-programmer-du-bør-installere-med-en-gang">Viktige
+programmer du bør installere med en gang</h2>
+<p>Her er noen anbefalinger for nybegynnere:</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 35%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kategori</th>
+<th>Anbefalt program</th>
+<th>Merknad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nettleser</td>
+<td>Firefox eller Chromium</td>
+<td>Ofte forhåndsinstallert</td>
+</tr>
+<tr class="even">
+<td>Kontor</td>
+<td>LibreOffice</td>
+<td>Gratis og veldig bra</td>
+</tr>
+<tr class="odd">
+<td>Bilder</td>
+<td>GIMP eller Shotwell</td>
+<td>GIMP for avansert</td>
+</tr>
+<tr class="even">
+<td>Video</td>
+<td>VLC</td>
+<td>Spiller nesten alt</td>
+</tr>
+<tr class="odd">
+<td>Musikk</td>
+<td>Spotify eller Lollypop</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>E-post</td>
+<td>Thunderbird</td>
+<td>Svært bra</td>
+</tr>
+<tr class="odd">
+<td>Passord</td>
+<td>KeePassXC eller Bitwarden</td>
+<td>Anbefales sterkt</td>
+</tr>
+<tr class="even">
+<td>Skjermklipp</td>
+<td>Flameshot</td>
+<td>Mye bedre enn standard</td>
+</tr>
+<tr class="odd">
+<td>System-backup</td>
+<td>Timeshift</td>
+<td>Viktig! Installer tidlig</td>
+</tr>
+</tbody>
+</table>
+<h2 id="oppdateringer">Oppdateringer</h2>
+<p>Linux oppdaterer seg selv mye mer sømløst enn Windows.</p>
+<p>Du vil se et ikon for oppdateringer i oppgavelinjen. Klikk på det og
+installer oppdateringer regelmessig.</p>
+<p>I begynnelsen kan det komme mange oppdateringer – det er helt
+normalt.</p>
+<p><strong>Anbefalt rutine:</strong></p>
+<ol type="1">
+<li>Åpne Programvaresenter eller bruk terminal</li>
+<li>Installer alle oppdateringer</li>
+<li>Start på nytt hvis det blir bedt om det</li>
+</ol>
+<p>Kapittel 10 samler hele den anbefalte vedlikeholdsrutinen
+(oppdateringer, Timeshift og backup) på ett sted.</p>
+<h2 id="arbeidsområder-virtuelle-skrivebord">Arbeidsområder (virtuelle
+skrivebord)</h2>
+<p>En av de kuleste funksjonene i Linux:</p>
+<ul>
+<li>Du kan ha flere “skrivebord” samtidig</li>
+<li>Bytt med Super + Page Up/Down eller Super + tall</li>
+<li>Flytt vinduer mellom arbeidsområder</li>
+<li>Perfekt for å skille jobb og privat, eller ulike prosjekter</li>
+</ul>
+<h2 id="avslutte-og-starte-på-nytt">Avslutte og starte på nytt</h2>
+<ul>
+<li>Klikk på av/på-ikonet eller brukermenyen</li>
+<li>Velg “Avslutt”, “Start på nytt” eller “Logg ut”</li>
+</ul>
+<p>De fleste distribusjoner spør ikke “Hvorfor avslutter du?” som
+Windows gjør.</p>
+<h2 id="tips-for-de-første-timene">Tips for de første timene</h2>
+<ul>
+<li>Klikk deg rundt. Det er vanskelig å ødelegge noe når du bare
+klikker.</li>
+<li>Høyreklikk overalt – du blir overrasket over hvor mange alternativer
+som dukker opp.</li>
+<li>Ikke vær redd for å lukke vinduer eller flytte ting rundt.</li>
+<li>Alt du installerer kan du også avinstallere like lett.</li>
+<li>Prøv å lage et nytt arbeidsområde og flytt noen vinduer dit.</li>
+</ul>
+<h2 id="neste-steg">Neste steg</h2>
+<p>Nå som du er inne og har orientert deg, skal vi gå gjennom det du
+faktisk bruker til daglig: nettlesing, kontor, bilder, musikk og
+filbehandling.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Høyreklikk er din beste venn.</li>
+<li>Bruk Programvaresenteret for de fleste apper, og Flatpak for nyere
+versjoner.</li>
+<li>Installer Timeshift tidlig.</li>
+<li>Prøv flere arbeidsområder (virtuelle skrivebord) – det sparer mye
+rot.</li>
+</ul></div>
+<p><strong>Prøv selv:</strong> Åpne terminalen med Ctrl+Alt+T, skriv
+<code>ls</code>, trykk Enter, og lukk vinduet. Det var det.</p>
+</section>
+<section id="kap06" class="chapter">
+<h1 id="daglig-bruk-det-du-faktisk-trenger">6. Daglig bruk – det du
+faktisk trenger</h1>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvordan bruke nettleser, e-post og streaming</li>
+<li>LibreOffice og andre dagligdagse programmer</li>
+<li>Filbehandling og norske tjenester (Vipps, BankID, Altinn osv.)</li>
+</ul></div>
+<hr />
+<p>Nå kommer det viktigste kapittelet for de fleste: Hvordan bruker du
+Linux til det du gjør hver dag?</p>
+<p>Den korte versjonen: Du kan gjøre nesten alt det samme som på Windows
+– bare på litt andre måter. Og i 2026 fungerer de fleste norske
+tjenester du bruker i hverdagen utmerket.</p>
+<h2 id="nettlesing">Nettlesing</h2>
+<h3 id="nettlesere">Nettlesere</h3>
+<p>De fleste distribusjoner kommer med <strong>Firefox</strong> eller
+<strong>Chromium</strong> forhåndsinstallert. Begge fungerer
+utmerket.</p>
+<ul>
+<li>YouTube fungerer perfekt</li>
+<li>Netflix, Viaplay, HBO Max, Disney+, TV 2 Play fungerer godt i både
+Firefox og Chrome (støtte for Widevine er innebygd)</li>
+<li>NRK TV og NRK Radio fungerer utmerket</li>
+</ul>
+<p>Hvis du savner Chrome: Du kan installere Google Chrome eller
+Microsoft Edge fra de offisielle nettsidene, eller bruke Chromium (den
+åpne versjonen).</p>
+<p><strong>Tips:</strong> Bruk Firefox hvis du bryr deg om personvern.
+Den er standard i de fleste distribusjoner og fungerer veldig bra.</p>
+<p>Hvis du vil installere Firefox via Flatpak (ofte nyere versjon):</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span></code></pre></div>
+<p><strong>Norske nettsteder som fungerer godt:</strong></p>
+<ul>
+<li>vg.no, dagbladet.no, aftenposten.no</li>
+<li>finn.no</li>
+<li>nabobil.no, hyre.no</li>
+<li>alle de store bankene</li>
+</ul>
+<h2 id="e-post">E-post</h2>
+<p>Du har flere gode alternativer:</p>
+<ol type="1">
+<li><strong>Bruk nettleseren</strong> (Gmail, Outlook, Proton Mail,
+etc.)</li>
+<li><strong>Thunderbird</strong> – Et utmerket, gratis og åpen kildekode
+e-postprogram som kommer forhåndsinstallert i mange distribusjoner.
+Støtter IMAP, kalender og kontakter.</li>
+<li><strong>Evolution</strong> – Et alternativ som ligner litt på
+Outlook.</li>
+</ol>
+<p>De fleste anbefaler å starte med Thunderbird.</p>
+<h2 id="norske-hverdags-tjenester">Norske hverdags-tjenester</h2>
+<p>Dette er viktig for mange som vurderer Linux i Norge.</p>
+<p>De fleste ting som er viktige i hverdagen i Norge fungerer uten
+problemer. Her er en ærlig oversikt i tre kategorier:</p>
+<h3 id="fungerer-utmerket-i-nettleseren">Fungerer utmerket i
+nettleseren</h3>
+<table>
+<colgroup>
+<col style="width: 79%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tjeneste</th>
+<th>Tips</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BankID</td>
+<td>Kodebrikke eller BankID-app via nettleser. Støttes av nesten alle
+banker.</td>
+</tr>
+<tr class="even">
+<td>Altinn</td>
+<td>Full støtte i moderne nettlesere.</td>
+</tr>
+<tr class="odd">
+<td>Helsenorge</td>
+<td>Utmerket opplevelse.</td>
+</tr>
+<tr class="even">
+<td>NRK TV / Radio</td>
+<td>Svært god kvalitet.</td>
+</tr>
+<tr class="odd">
+<td>Ruter, Vy, AtB</td>
+<td>Billetter og reiseinfo fungerer fint.</td>
+</tr>
+<tr class="even">
+<td>Posten / Bring</td>
+<td>Sporing og bestilling uten problemer.</td>
+</tr>
+<tr class="odd">
+<td>Skatteetaten</td>
+<td>Offentlige tjenester generelt fungerer bra.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fungerer-men-med-begrensninger">Fungerer, men med
+begrensninger</h3>
+<p><strong>Vipps</strong> – Vipps sin web-løsning (<a
+href="https://vipps.no">vipps.no</a>) fungerer i Firefox og Chrome, men
+er <strong>begrenset til enkelte funksjoner</strong>: logge inn, se
+transaksjonshistorikk og starte betalinger som fullføres på mobilen. For
+å <strong>sende penger, betale i butikk eller bruke Vipps som
+betalingsmiddel på nett</strong> trenger du fortsatt mobilappen. Dette
+er ikke en Linux-begrensning – Vipps-web er bevisst begrenset av Vipps
+selv, og det er akkurat likt på en Windows-PC.</p>
+<h3 id="krever-mobilappen">Krever mobilappen</h3>
+<p>Tjenester som BankID-appen (selve appen), Vipps-betaling i butikk og
+enkelte bank-apper bor på telefonen din uansett operativsystem på PC-en.
+Telefonen og Linux-PC-en jobber fint sammen – se avsnittet om KDE
+Connect lenger ned.</p>
+<p>Hvis noe ikke fungerer perfekt, er det nesten alltid løsbart med en
+annen nettleser eller en liten innstilling.</p>
+<h2 id="youtube-netflix-og-streaming">YouTube, Netflix og streaming</h2>
+<p>Alt dette fungerer direkte i nettleseren.</p>
+<p>Hvis du vil ha en bedre opplevelse:</p>
+<ul>
+<li><strong>FreeTube</strong> (YouTube uten reklame og tracking)</li>
+<li><strong>Jellyfin</strong> eller <strong>Plex</strong> klienter hvis
+du har egen medieserver</li>
+</ul>
+<h2 id="kontorarbeid-libreoffice">Kontorarbeid – LibreOffice</h2>
+<p><strong>LibreOffice</strong> er det programmet du vil bruke for
+dokumenter, regneark og presentasjoner.</p>
+<p>Det er gratis, åpen kildekode, og svært kraftfullt.</p>
+<figure>
+<img src="bilder/06-libreoffice.png" alt="LibreOffice Writer i bruk" />
+<figcaption aria-hidden="true">LibreOffice Writer i bruk</figcaption>
+</figure>
+<h3 id="hva-tilsvarer-hva">Hva tilsvarer hva?</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Windows-program</th>
+<th>Linux-alternativ</th>
+<th>Merknad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Microsoft Word</td>
+<td>LibreOffice Writer</td>
+<td>Svært likt, støtter .docx</td>
+</tr>
+<tr class="even">
+<td>Microsoft Excel</td>
+<td>LibreOffice Calc</td>
+<td>God støtte for de fleste regneark</td>
+</tr>
+<tr class="odd">
+<td>Microsoft PowerPoint</td>
+<td>LibreOffice Impress</td>
+<td>Fungerer bra for de fleste presentasjoner</td>
+</tr>
+<tr class="even">
+<td>OneNote</td>
+<td>Joplin, Logseq eller Notes</td>
+<td>Joplin er utmerket for notater</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Viktig:</strong> LibreOffice kan åpne og lagre filer i
+Microsoft Office-format (.docx, .xlsx, .pptx). Noen ganger kan
+formatering se litt annerledes ut, men det har blitt mye bedre de siste
+årene.</p>
+<p><strong>Tips:</strong> Hvis du samarbeider mye med folk som bruker
+Microsoft 365, kan du fortsatt bruke nettapplikasjonene i nettleseren
+(Word Online, Excel Online) parallelt.</p>
+<h2 id="bilder">Bilder</h2>
+<ul>
+<li><strong>Enkel visning og organisering:</strong> Shotwell (ofte
+forhåndsinstallert) eller GNOME Bilder</li>
+<li><strong>Redigering:</strong> <strong>GIMP</strong> (gratis og veldig
+kraftfullt)</li>
+<li><strong>Enklere redigering:</strong> Pinta eller Krita</li>
+</ul>
+<p>De fleste som bare vil beskjære bilder, justere lys og legge til
+tekst, klarer seg fint med GIMP eller nettapplikasjoner som Photopea (i
+nettleseren).</p>
+<h2 id="musikk-og-video">Musikk og video</h2>
+<h3 id="musikk">Musikk</h3>
+<ul>
+<li><strong>Lokal musikk:</strong> Lollypop, Rhythmbox, eller
+Strawberry</li>
+<li><strong>Streaming:</strong> Spotify (offisiell klient via Flatpak:
+<code>flatpak install flathub com.spotify.Client</code>), Tidal, eller
+Deezer via nettleser</li>
+</ul>
+<h3 id="video">Video</h3>
+<ul>
+<li><strong>VLC Media Player</strong> – fortsatt kongen. Spiller nesten
+alt du kaster på den.</li>
+<li><strong>MPV</strong> – lett og moderne alternativ</li>
+</ul>
+<p><strong>Videoredigering:</strong> <strong>Kdenlive</strong> (gratis,
+finnes i programvaresenteret) dekker fint hverdagsklipping som
+ferievideoer og småprosjekter. For de ambisiøse finnes også
+<strong>DaVinci Resolve</strong> for Linux – FAQ-en sier mer om den.</p>
+<h2 id="filbehandling-og-organisering">Filbehandling og
+organisering</h2>
+<p>Dette er en av de områdene hvor Linux ofte føles bedre enn
+Windows.</p>
+<h3 id="filbehandlere-avhengig-av-distribusjon">Filbehandlere (avhengig
+av distribusjon)</h3>
+<ul>
+<li><strong>Linux Mint (Cinnamon):</strong> Nemo – veldig lik Windows
+Utforsker</li>
+<li>**Ubuntu / Pop!_OS:** Nautilus (Files)</li>
+<li><strong>KDE:</strong> Dolphin – ekstremt kraftfull</li>
+</ul>
+<figure>
+<img src="bilder/nautilus-list.png"
+alt="Filbehandleren Files (Nautilus) i listevisning: hjemmemappen med Dokumenter, Bilder og de andre standardmappene i sidepanelet – Nemo i Linux Mint ser tilsvarende ut" />
+<figcaption aria-hidden="true">Filbehandleren Files (Nautilus) i
+listevisning: hjemmemappen med Dokumenter, Bilder og de andre
+standardmappene i sidepanelet – Nemo i Linux Mint ser tilsvarende
+ut</figcaption>
+</figure>
+<h3 id="nyttige-ting-du-kan-gjøre">Nyttige ting du kan gjøre:</h3>
+<ul>
+<li><strong>Faner</strong> i filbehandleren (åpne flere mapper i samme
+vindu)</li>
+<li><strong>Søk</strong> direkte i mappen (ofte bare begynn å
+skrive)</li>
+<li><strong>Høyreklikk → Egenskaper</strong> for detaljert info</li>
+<li><strong>Kopier sti</strong> (veldig nyttig)</li>
+<li><strong>Flere visninger:</strong> Ikoner, liste, detaljer</li>
+</ul>
+<h3 id="anbefalt-mappestruktur">Anbefalt mappestruktur</h3>
+<p>De fleste distribusjoner har disse standardmappene:</p>
+<ul>
+<li>Dokumenter</li>
+<li>Nedlastinger</li>
+<li>Bilder</li>
+<li>Musikk</li>
+<li>Videoer</li>
+<li>Skrivebord</li>
+</ul>
+<p>Du kan lage dine egne mapper under “Hjem” (ditt personlige
+område).</p>
+<p><strong>Tips:</strong> Unngå å lagre ting direkte på skrivebordet
+hvis du vil ha det ryddig. Bruk heller mapper.</p>
+<h2 id="skrive-ut-og-skanne">Skrive ut og skanne</h2>
+<p>De fleste skrivere fungerer uten ekstra innsats i 2026.</p>
+<ul>
+<li>Gå til <strong>Innstillinger → Skrivere</strong></li>
+<li>Ofte gjenkjennes skrivere automatisk</li>
+<li>For eldre skrivere kan du trenge å installere drivere via
+Programvaresenteret (søk etter merke + modell)</li>
+</ul>
+<p>Får du ikke skriveren til å fungere? Kapittel 8 har en grundig
+steg-for-steg-veiledning for skrivere.</p>
+<h2 id="mobiltelefon-og-filer">Mobiltelefon og filer</h2>
+<ul>
+<li>Koble telefonen med USB – den dukker ofte opp som en ekstern
+enhet</li>
+<li>For Android: Mange bruker <strong>KDE Connect</strong> eller
+<strong>GSConnect</strong> for å sende filer, se varsler og kontrollere
+musikk trådløst. Dette er et av de mest populære verktøyene blant
+Linux-brukere.</li>
+</ul>
+<h2 id="vanlige-daglige-snarveier">Vanlige daglige snarveier</h2>
+<ul>
+<li><strong>Super (Windows-tast) + tall</strong> – bytt til program nr.
+X i oppgavelinjen</li>
+<li><strong>Super + D</strong> – vis skrivebordet</li>
+<li><strong>Alt + Tab</strong> – bytt mellom vinduer</li>
+<li><strong>Super + Tab</strong> eller <strong>Super + `</strong> – bytt
+mellom vinduer i samme program</li>
+</ul>
+<h2 id="du-er-allerede-i-gang">Du er allerede i gang</h2>
+<p>Hvis du kan gjøre alt dette, bruker du allerede Linux til det meste
+av det du trenger i hverdagen – inkludert de fleste norske
+tjenestene.</p>
+<h2 id="ekstra-tips-for-daglig-bruk">Ekstra tips for daglig bruk</h2>
+<h3 id="organisering-av-filer">Organisering av filer</h3>
+<p>Lag mapper som “Arkiv”, “Aktive prosjekter” og “Ferdig” under
+Dokumenter. Bruk datoer i filnavn når det er nyttig (f.eks.
+<code>2026-07-11-møtenotater.txt</code>).</p>
+<h3 id="flere-skjermer">Flere skjermer</h3>
+<p>De fleste distribusjoner håndterer flere skjermer veldig bra. Gå til
+Innstillinger → Skjerm for å arrangere dem.</p>
+<h3 id="nattmodus-mørk-modus">Nattmodus / mørk modus</h3>
+<p>De fleste skrivebordsmiljøer har innebygd mørk modus. Dette er
+skånsomt for øynene på kvelden.</p>
+<h3 id="automatisk-oppdatering-av-apper">Automatisk oppdatering av
+apper</h3>
+<p>Mange Flatpak-apper oppdaterer seg selv. Du kan også sette opp
+automatiske systemoppdateringer hvis du vil.</p>
+<h3 id="synkronisering-mellom-enheter">Synkronisering mellom
+enheter</h3>
+<p>Verktøy som Syncthing lar deg synkronisere filer mellom Linux,
+Windows, Mac og telefon uten å bruke sky-tjenester.</p>
+<h2 id="vanlige-norske-bruksområder-som-fungerer-bra">Vanlige norske
+bruksområder som fungerer bra</h2>
+<ul>
+<li>Skrive CV og jobbsøknader i LibreOffice</li>
+<li>Redigere bilder til sosiale medier i GIMP eller Pinta</li>
+<li>Se NRK, TV2, Viaplay og Netflix</li>
+<li>Sjekke Vipps-historikk via nettleser (selve betalingene skjer på
+mobilen)</li>
+<li>Føre regnskap i LibreOffice Calc</li>
+<li>Delta i videomøter via Zoom, Teams (nett) eller Jitsi</li>
+<li>Lage presentasjoner</li>
+</ul>
+<h2 id="hvordan-håndtere-filer-fra-windows">Hvordan håndtere filer fra
+Windows</h2>
+<p>De fleste filtyper fungerer uten problemer: - Bilder (jpg, png, etc.)
+- Dokumenter (docx, pdf, odt) - Musikk og video (mp3, mp4, etc.) -
+Excel-filer (xlsx)</p>
+<p>Noen ganger kan formatering i Office-filer se litt annerledes ut.
+Lagre som .odt hvis du vil ha best kompatibilitet mellom
+LibreOffice-brukere.</p>
+<h2 id="tips-for-å-føle-seg-hjemme-raskere">Tips for å føle seg hjemme
+raskere</h2>
+<ul>
+<li>Endre bakgrunnsbilde til noe du liker første dag</li>
+<li>Installer de 3 programmene du bruker mest med en gang</li>
+<li>Lær deg 2–3 snarveier du bruker daglig</li>
+<li>Prøv å ikke sammenligne for mye med Windows de første ukene</li>
+</ul>
+<p>I neste kapittel skal vi se på terminalen – ikke fordi du må, men
+fordi den er overraskende nyttig når du først lærer de viktigste
+kommandoene.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>De fleste norske tjenester fungerer utmerket i nettleseren.</li>
+<li>LibreOffice er et solid og gratis alternativ til Microsoft
+Office.</li>
+<li>Bruk faner i filbehandleren – det er mye bedre enn i Windows
+Utforsker.</li>
+</ul></div>
+<p><strong>Prøv selv:</strong> Koble til en ekstern USB eller harddisk
+og kopier en mappe over til “Dokumenter”. Åpne den i filbehandleren.</p>
+</section>
+<section id="kap07" class="chapter">
+<h1 id="terminalen-ikke-vær-redd-for-den">7. Terminalen – ikke vær redd
+for den</h1>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvorfor terminalen er nyttig (selv om du ikke må bruke den)</li>
+<li>De 10–15 viktigste kommandoene</li>
+<li>Hvordan installere apper fra terminalen trygt</li>
+</ul></div>
+<hr />
+<p>Mange som kommer fra Windows får frysninger når de hører ordet
+“terminal” eller “kommandolinje”. Det er helt forståelig.</p>
+<p>Den gode nyheten: Du trenger ikke terminalen for å bruke Linux. Mange
+bruker Linux i årevis uten å åpne den en eneste gang.</p>
+<p>Men… når du først lærer de viktigste kommandoene, blir terminalen et
+av de mest nyttige verktøyene du har.</p>
+<h2 id="hvorfor-er-terminalen-nyttig">Hvorfor er terminalen nyttig?</h2>
+<ul>
+<li>Den er raskere enn å klikke gjennom menyer for mange ting</li>
+<li>Den fungerer likt på nesten alle Linux-systemer (og Mac)</li>
+<li>Den kan gjøre ting som er nesten umulig med mus og tastatur
+alene</li>
+<li>Den hjelper deg å forstå hva som egentlig skjer</li>
+<li>Den er gull verdt når noe går galt og du finner en løsning på
+internett</li>
+</ul>
+<p>Tenk på det som en fjernkontroll til datamaskinen din. Du kan gjøre
+mye uten den, men noen ganger er det den enkleste måten.</p>
+<h2 id="de-viktigste-kommandoene-de-fleste-nybegynnere-trenger">De
+viktigste kommandoene de fleste nybegynnere trenger</h2>
+<p>Her er de viktigste. Du trenger ikke lære alle på en gang.</p>
+<h3 id="navigasjon">Navigasjon</h3>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 51%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kommando</th>
+<th>Hva den gjør</th>
+<th>Eksempel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Viser hvor du er akkurat nå</td>
+<td><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>Lister filer og mapper</td>
+<td><code>ls</code></td>
+</tr>
+<tr class="odd">
+<td><code>ls -la</code></td>
+<td>Lister alt, inkludert skjulte filer</td>
+<td><code>ls -la</code></td>
+</tr>
+<tr class="even">
+<td><code>cd</code></td>
+<td>Bytt mappe</td>
+<td><code>cd Dokumenter</code></td>
+</tr>
+<tr class="odd">
+<td><code>cd ..</code></td>
+<td>Gå ett nivå opp</td>
+<td><code>cd ..</code></td>
+</tr>
+<tr class="even">
+<td><code>cd ~</code></td>
+<td>Gå til hjemmemappen din</td>
+<td><code>cd ~</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="filer-og-mapper">Filer og mapper</h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 50%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kommando</th>
+<th>Hva den gjør</th>
+<th>Eksempel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mkdir</code></td>
+<td>Lag ny mappe</td>
+<td><code>mkdir bilder/ferie</code></td>
+</tr>
+<tr class="even">
+<td><code>cp</code></td>
+<td>Kopier fil eller mappe</td>
+<td><code>cp bilde.jpg bilder/</code></td>
+</tr>
+<tr class="odd">
+<td><code>mv</code></td>
+<td>Flytt eller gi nytt navn</td>
+<td><code>mv gammelt.txt nytt.txt</code></td>
+</tr>
+<tr class="even">
+<td><code>rm</code></td>
+<td>Slett fil (forsiktig!)</td>
+<td><code>rm fil.txt</code></td>
+</tr>
+<tr class="odd">
+<td><code>rm -r</code></td>
+<td>Slett mappe og alt inni (veldig forsiktig!)</td>
+<td><code>rm -r gammel-mappe</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Viktig advarsel om <code>rm</code>:</strong> 🟡 Valgfritt å
+lære tidlig, men viktig. Det finnes ingen “Papirkurv” i terminalen. Når
+noe er slettet, er det borte for alltid. Bruk med omhu.</p>
+<h3 id="se-innhold-i-filer">Se innhold i filer</h3>
+<ul>
+<li><code>cat filnavn</code> — Viser hele innholdet av en fil</li>
+<li><code>less filnavn</code> — Viser innholdet side for side (trykk Q
+for å avslutte)</li>
+</ul>
+<h3 id="oppdateringer-veldig-nyttig">Oppdateringer (veldig nyttig)</h3>
+<p>**Debian-baserte systemer (Linux Mint, Ubuntu, Pop!_OS, Zorin
+OS):**</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span></code></pre></div>
+<p><strong>Flatpak-oppdateringer (anbefalt å kjøre
+regelmessig):</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update</span></code></pre></div>
+<p><code>sudo</code> betyr “kjør dette som administrator”. Du blir bedt
+om passordet ditt. Du ser ikke stjernene mens du skriver – det er helt
+normalt.</p>
+<h3 id="andre-nyttige-kommandoer">Andre nyttige kommandoer</h3>
+<ul>
+<li><code>clear</code> — tømmer terminalvinduet</li>
+<li><code>history</code> — viser kommandoer du har brukt tidligere</li>
+<li><code>exit</code> eller <code>Ctrl + D</code> — lukker
+terminalen</li>
+</ul>
+<h2 id="praktiske-eksempler">Praktiske eksempler</h2>
+<h3 id="oppdatere-hele-systemet-raskt">Oppdatere hele systemet
+raskt</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span> <span class="kw">&amp;&amp;</span> <span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<h3 id="lage-en-mappe-og-flytte-en-fil-inn-i-den">Lage en mappe og
+flytte en fil inn i den</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Prosjekter</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> viktig-dokument.pdf Prosjekter/</span></code></pre></div>
+<h3 id="finne-ut-hvor-du-er-og-hva-som-ligger-der">Finne ut hvor du er
+og hva som ligger der</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div>
+<h2 id="hvordan-åpne-terminalen">Hvordan åpne terminalen</h2>
+<ul>
+<li><strong>Linux Mint / Cinnamon:</strong> Høyreklikk på skrivebordet →
+“Åpne i terminal”, eller søk etter “Terminal”</li>
+<li><strong>De fleste andre:</strong> Trykk <code>Ctrl + Alt + T</code>
+eller søk etter “Terminal” / “Konsole”</li>
+</ul>
+<h2 id="et-praktisk-eksempel-installere-noe-via-terminalen">Et praktisk
+eksempel: Installere noe via terminalen</h2>
+<p>La oss si du vil installere VLC via Flatpak:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span></code></pre></div>
+<p>Eller oppdatere alt på en gang:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<p>Du kan kopiere og lime inn kommandoer fra veiledninger på internett –
+det er helt vanlig og trygt så lenge du stoler på kilden. (Mer om det i
+Terminalregelen mot slutten av kapittelet.)</p>
+<h2 id="vanlige-installasjonskommandoer-debian-baserte-distroer">Vanlige
+installasjonskommandoer (Debian-baserte distroer)</h2>
+<p>Her er de mest nyttige kommandoene du vil bruke i starten:</p>
+<h3 id="først-sørg-for-at-flatpak-er-satt-opp-viktig">Først: Sørg for at
+Flatpak er satt opp (viktig!)</h3>
+<p>Mange distribusjoner har det allerede, men for å være sikker:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flatpak</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> remote-add <span class="at">--if-not-exists</span> flathub https://flathub.org/repo/flathub.flatpakrepo</span></code></pre></div>
+<h3 id="installer-programmer-via-apt-raskt-og-offisielt">Installer
+programmer via apt (raskt og offisielt)</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Systemverktøy</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift          <span class="co"># System-backup (svært anbefalt)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw        <span class="co"># Bedre batteritid på laptop</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ufw                <span class="co"># Brannmur (valgfritt)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Vanlige programmer</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install vlc                <span class="co"># Beste videoavspiller</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gimp               <span class="co"># Bildebehandling</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install thunderbird        <span class="co"># E-post</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install keepassxc          <span class="co"># Passordbehandler</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flameshot          <span class="co"># Bedre skjermklipp</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install neofetch           <span class="co"># Vis systeminfo (kult)</span></span></code></pre></div>
+<p>(I nyere distroversjoner heter etterfølgeren <code>fastfetch</code> –
+prøv gjerne <code>sudo apt install fastfetch</code> først hvis du er på
+noe nyere enn Mint 22 / Ubuntu 24.04.)</p>
+<h3
+id="installer-via-flatpak-anbefalt-for-mange-moderne-apper">Installer
+via Flatpak (anbefalt for mange moderne apper)</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Populære apper</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.spotify.Client</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.discordapp.Discord</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.valvesoftware.Steam</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.gimp.GIMP</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.keepassxc.KeePassXC</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.github.tchx84.Flatseal   <span class="co"># Kontroller Flatpak-tillatelser</span></span></code></pre></div>
+<p><strong>Tips:</strong> Du kan installere flere samtidig:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC com.spotify.Client</span></code></pre></div>
+<p><strong>Hvordan finne riktig Flatpak ID?</strong><br />
+Gå til <a href="https://flathub.org">https://flathub.org</a>, søk etter
+appen, og kopier installasjonskommandoen som vises der. Det er den mest
+pålitelige måten.</p>
+<h2 id="slik-avinstallerer-du-ting">Slik avinstallerer du ting</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Via apt</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove vlc</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Via Flatpak</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> uninstall org.videolan.VLC</span></code></pre></div>
+<h2 id="slik-søker-du-etter-et-program">Slik søker du etter et
+program</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Via apt</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> search gimp</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Via Flatpak</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> search discord</span></code></pre></div>
+<h2 id="du-bestemmer-tempoet">Du bestemmer tempoet</h2>
+<p>Noen lærer seg disse kommandoene de første ukene. Andre venter i
+måneder. Begge deler er helt greit.</p>
+<p>Mitt råd:</p>
+<ol type="1">
+<li>Åpne terminalen en gang i blant</li>
+<li>Prøv <code>ls</code> og <code>cd</code> bare for å se hvordan det
+føles</li>
+<li>Når du finner en veiledning som sier “kjør denne kommandoen”, kopier
+den inn og se hva som skjer</li>
+</ol>
+<h2 id="en-siste-viktig-ting">En siste viktig ting</h2>
+<p>Terminalen er kraftfull. Det betyr også at du kan gjøre feil som får
+konsekvenser.</p>
+<p>Men: De fleste feil er lette å rette opp. Og du lærer fort hva du
+ikke skal gjøre.</p>
+<p>Den verste feilen de fleste nybegynnere gjør er å kopiere en kommando
+fra internett uten å forstå hva den gjør. Derfor får du én regel med på
+veien – den er så viktig at den fortjener et eget navn:</p>
+<blockquote>
+<p><strong>Terminalregelen:</strong> les kommandoen før du trykker Enter
+– og kjør bare det du henter fra kilder du stoler på.</p>
+</blockquote>
+<p>Husk den ved navn. Den dukker opp igjen senere, og den er alt du
+trenger for å bruke terminalen trygt.</p>
+<p>Hvis du er usikker, spør på Reddit (r/linux4noobs) eller i
+distribusjonens forum.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Du trenger ikke terminalen for daglig bruk, men den gjør mange ting
+raskere.</li>
+<li>Husk Terminalregelen: les kommandoen før du trykker Enter – og kjør
+bare det du stoler på.</li>
+<li>Bruk <code>sudo apt update &amp;&amp; sudo apt upgrade</code> og
+<code>flatpak update</code> regelmessig.</li>
+</ul></div>
+<p><strong>Prøv selv:</strong></p>
+<ol type="1">
+<li>Åpne terminal.</li>
+<li>Skriv <code>pwd</code> og trykk Enter.</li>
+<li>Skriv <code>ls</code> og trykk Enter.</li>
+<li>Skriv <code>cd Dokumenter</code> og trykk Enter.</li>
+<li>Skriv <code>ls</code> igjen.</li>
+<li>Skriv <code>cd ~</code> for å gå tilbake.</li>
+</ol>
+<p><strong>Norsk tastatur i terminalen:</strong> Tegn som
+<code>@ $ ~ | \</code> får du med AltGr-tasten (høyre Alt). Prøv AltGr +
+2 for @ og AltGr + 4 for $. Tilde (<code>~</code>) er litt lurere: den
+ligger på en såkalt dødtast. Trykk AltGr + <code>¨</code> (tasten til
+høyre for Å), og deretter mellomrom – da dukker <code>~</code> opp.
+Omvendt skråstrek (<code>\</code>) får du med AltGr + <code>+</code>, og
+loddrett strek (<code>|</code>) med AltGr + <code>&lt;</code>. Det er en
+vanlig nybegynnerfelle, så ikke bli overrasket om det tar et par
+forsøk.</p>
+</section>
+<section id="kap08" class="chapter">
+<h1
+id="vanlige-problemer-de-første-ukene-dette-kapitlet-blir-gull-verdt">8.
+Vanlige problemer de første ukene (dette kapitlet blir gull verdt)</h1>
+<p><em>Sist oppdatert: 2026-07-11</em></p>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>De vanligste maskinvareproblemene og hvordan du fikser dem</li>
+<li>Hva du gjør med Windows-programmer og spill</li>
+<li>En “førstehjelp”-side når noe går galt</li>
+</ul></div>
+<hr />
+<p><strong>Noe gikk galt – start her (panikk-side)</strong></p>
+<ol type="1">
+<li>Pust rolig. De fleste problemer er lette å fikse.</li>
+<li>Start PC-en på nytt.</li>
+<li>Koble til strøm og internett.</li>
+<li>Sjekk om Timeshift har et snapshot du kan gå tilbake til.</li>
+<li>Formuler spørsmålet godt når du spør om hjelp: “Jeg har Linux Mint
+22, prøvde å [gjøre dette], og fikk denne feilmeldingen: [lim
+inn].”</li>
+</ol>
+<p>Dette kapitlet er kanskje det viktigste i boken.</p>
+<p>De første 1–3 ukene med Linux vil du sannsynligvis støte på noen ting
+som ikke fungerer helt som forventet. Det er helt normalt.</p>
+<p>Det fine er at nesten alle disse problemene har enkle løsninger – og
+de fleste har opplevd det samme før deg.</p>
+<h2 id="maskinvareproblemer">Maskinvareproblemer</h2>
+<h3 id="wifi-fungerer-ikke">WiFi fungerer ikke</h3>
+<p>Dette er det vanligste problemet etter installasjon.</p>
+<p><strong>Hva du kan prøve først:</strong></p>
+<ol type="1">
+<li>Start på nytt (noen ganger bare fikser det seg)</li>
+<li>Sjekk at flymodus ikke er på</li>
+<li>Gå til Innstillinger → WiFi og se om adapteren blir oppdaget</li>
+</ol>
+<p><strong>Hvis det fortsatt ikke fungerer:</strong></p>
+<p>De fleste WiFi-problemer løses ved å installere ekstra drivere.</p>
+<p>For Ubuntu-baserte systemer:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install linux-firmware</span></code></pre></div>
+<p>Mer info om drivere finner du ofte på distribusjonens forum eller ved
+å søke etter din eksakte WiFi-modell.</p>
+<p>Start på nytt etterpå.</p>
+<p>Hvis du har en nyere maskin med Intel AX, MediaTek eller Broadcom
+WiFi, søk etter “din distro + WiFi-modell + driver”.</p>
+<h3 id="ingen-wifi-og-ingen-drivere-høna-og-egget-problemet">Ingen WiFi
+og ingen drivere – “høna og egget”-problemet</h3>
+<p>Hvordan laster du ned WiFi-drivere når du ikke har nett? Her er
+redningsplanen:</p>
+<ol type="1">
+<li><strong>Koble til med nettverkskabel</strong> (Ethernet) hvis
+maskinen har en port – enkleste løsning.</li>
+<li><strong>USB-tethering fra mobilen:</strong>
+<ul>
+<li>Koble mobilen til PC-en med USB-kabel.</li>
+<li><strong>Android:</strong> Innstillinger → Nettverk →
+Deling/Tethering → USB-tethering.</li>
+<li><strong>iPhone:</strong> Innstillinger → Personlig hotspot (på
+enkelte iOS-versjoner heter det «Deling av internett»; slå på, og godta
+på PC-en).</li>
+<li>PC-en får da internett via mobilen – helt uten oppsett på
+Linux-siden.</li>
+</ul></li>
+<li><strong>Installer driverne</strong> mens du har nett:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install linux-firmware</span></code></pre></div>
+<ol start="4" type="1">
+<li><strong>Start på nytt</strong> – WiFi skal nå fungere.</li>
+</ol>
+<h3 id="lyd-fungerer-ikke-eller-er-lav">Lyd fungerer ikke eller er
+lav</h3>
+<p>De fleste har lyd som fungerer umiddelbart i 2026. Hvis ikke, ta det
+steg for steg:</p>
+<p><strong>Hva er PipeWire?</strong> PipeWire er lydserveren de fleste
+moderne distribusjoner bruker (den erstattet PulseAudio). Den håndterer
+lyd og video i bakgrunnen – du trenger normalt aldri tenke på den.</p>
+<ol type="1">
+<li><strong>Sjekk at riktig enhet er valgt</strong> i Innstillinger →
+Lyd (høyttalere vs. hodetelefoner vs. HDMI).</li>
+<li><strong>Sjekk at lyden ikke er dempet</strong> – klikk på
+høyttalerikonet i oppgavelinjen.</li>
+<li><strong>Start lydsystemet på nytt:</strong></li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> restart pipewire pipewire-pulse</span></code></pre></div>
+<ol start="4" type="1">
+<li><strong>Installer <code>pavucontrol</code></strong> for mer
+detaljert kontroll (fungerer også med PipeWire):</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install pavucontrol</span></code></pre></div>
+<p>Åpne pavucontrol og sjekk at riktig enhet er valgt og at nivåene ikke
+står på 0.</p>
+<ol start="5" type="1">
+<li><strong>Sjekk at lydkortet blir oppdaget:</strong></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lspci</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> audio</span></code></pre></div>
+<ol start="6" type="1">
+<li><strong>Hvis alt annet feiler:</strong> Start maskinen på nytt – det
+løser overraskende mye.</li>
+</ol>
+<h3 id="skjermoppløsning-og-ekstern-skjerm">Skjermoppløsning og ekstern
+skjerm</h3>
+<ul>
+<li>Gå til <strong>Innstillinger → Skjerm</strong></li>
+<li>De fleste moderne skjermer og grafikkort fungerer uten
+problemer</li>
+</ul>
+<p><strong>Hvis den eksterne skjermen ikke vises eller har feil
+oppløsning:</strong></p>
+<ol type="1">
+<li>Gå til <strong>Innstillinger → Skjerm</strong> og sjekk at skjermen
+er aktivert (ikke slått av).</li>
+<li>Prøv en annen kabel eller port – HDMI-kabler er en klassisk
+synder.</li>
+<li>Sjekk hva systemet ser (🔴 avansert, gjelder X11 – på Wayland bruker
+du bare Innstillinger → Skjerm):</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xrandr</span></span></code></pre></div>
+<p>Dette lister alle tilkoblede skjermer. Vises den ikke her, er det
+kabel eller driver som er problemet.</p>
+<ol start="4" type="1">
+<li>Tving oppløsning og oppdateringsfrekvens manuelt (🔴 avansert,
+X11):</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xrandr</span> <span class="at">--output</span> HDMI-1 <span class="at">--mode</span> 1920x1080 <span class="at">--rate</span> 144</span></code></pre></div>
+<ol start="5" type="1">
+<li>Opplever du “tearing” (bildet revner) med skjermer i ulik hastighet
+(60 Hz + 144 Hz), avhenger løsningen av hvilket skrivebordsmiljø du
+bruker:
+<ul>
+<li>**Ubuntu/GNOME, KDE Plasma og Pop!_OS/COSMIC** kjører Wayland som
+standard – der er tearing sjelden et problem i utgangspunktet.</li>
+<li><strong>Linux Mint Cinnamon</strong> bruker fortsatt X11 som
+standard (Cinnamons Wayland-økt er foreløpig eksperimentell). Ikke let
+etter en Wayland-bryter – sett i stedet alle skjermene til samme
+oppdateringsfrekvens i Innstillinger → Skjerm, og aktiver eventuelt
+VSYNC i Cinnamon-innstillingene. Det løser det aller meste.</li>
+</ul></li>
+</ol>
+<h3 id="nvidia-drivere-slik-installerer-du-dem">NVIDIA-drivere – slik
+installerer du dem</h3>
+<p>Har du NVIDIA-grafikkort og hakkete grafikk eller feil oppløsning, er
+det nesten alltid driveren:</p>
+<p><strong>Linux Mint:</strong></p>
+<ol type="1">
+<li>Åpne <strong>Driverbehandling</strong> (søk i startmenyen)</li>
+<li>Velg den anbefalte NVIDIA-driveren</li>
+<li>Start på nytt</li>
+</ol>
+<p><strong>Ubuntu:</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ubuntu-drivers autoinstall</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<p>**Pop!_OS:** Velg NVIDIA-utgaven av ISO-en når du laster ned, så er
+driverne på plass fra start.</p>
+<p><strong>Andre Debian-baserte distroer:</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu-drivers</span> list                  <span class="co"># finn nyeste anbefalte versjon</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install nvidia-driver-550   <span class="co"># eller nyeste tilgjengelige versjon</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<h3
+id="hybrid-grafikk-bytt-mellom-gpu-er-på-bærbar-valgfritt">Hybrid-grafikk
+– bytt mellom GPU-er på bærbar 🟡 Valgfritt</h3>
+<p>Mange bærbare har både Intel-grafikk (strømgjerrig) og NVIDIA
+(kraftig). Slik bytter du:</p>
+<p><strong>Ubuntu / Linux Mint:</strong></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select on-demand   <span class="co"># Standard og beste kompromiss: NVIDIA brukes kun når appen ber om det</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select nvidia      <span class="co"># Bruk NVIDIA hele tiden (ytelse)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select intel       <span class="co"># Bruk Intel hele tiden (batteritid)</span></span></code></pre></div>
+<p><code>on-demand</code> er standarden og det beste kompromisset for de
+fleste – du får batteritid i hverdagen og ytelse når du trenger den.
+Start på nytt etter bytte.</p>
+<p>**Pop!_OS:** Har innebygd veksling – klikk på batteri-/strømmenyen
+øverst til høyre og velg grafikkmodus.</p>
+<p><strong>Sjekk hvilken GPU som er i bruk:</strong></p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">glxinfo</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;OpenGL renderer&quot;</span></span></code></pre></div>
+<h3 id="batteritid-på-bærbar-pc">Batteritid på bærbar PC</h3>
+<p>Linux har tradisjonelt hatt dårligere batteritid på noen maskiner,
+men det har blitt mye bedre.</p>
+<p><strong>Tips for bedre batteritid:</strong></p>
+<ul>
+<li>Installer <code>tlp</code>:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable tlp</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start tlp</span></code></pre></div>
+<p>Du kan sjekke status med <code>tlp-stat</code>.</p>
+<ul>
+<li>Bruk “Power saving” eller “Balanced” modus i strøminnstillinger</li>
+<li>Senk skjermens lysstyrke</li>
+<li>Lukk lokket når du ikke bruker maskinen</li>
+</ul>
+<h3 id="skrivere-steg-for-steg">Skrivere – steg for steg</h3>
+<p>De fleste moderne skrivere fungerer plug-and-play, men her er hele
+stigen hvis den ikke gjør det:</p>
+<p><strong>Trinn 1: Automatisk oppdagelse</strong> De fleste moderne
+skrivere (spesielt nettverksskrivere) oppdages automatisk. Gå til
+<strong>Innstillinger → Skrivere</strong>, klikk “Legg til” og se om
+skriveren dukker opp.</p>
+<p><strong>Trinn 2: Manuell installasjon</strong> Hvis skriveren ikke
+blir oppdaget:</p>
+<ul>
+<li>Søk etter skrivermerket i Programvaresenteret (f.eks. “Brother”
+eller “Epson”)</li>
+<li>Mange produsenter tilbyr Linux-drivere på sine nettsider</li>
+</ul>
+<p><strong>Trinn 3: HP-skrivere</strong> For HP-skrivere (også eldre)
+fungerer <strong>HPLIP</strong> nesten alltid:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install hplip</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hp-setup</span></span></code></pre></div>
+<p><strong>Trinn 4: Andre eldre skrivere</strong> Mange eldre skrivere
+støttes av <strong>Gutenprint</strong>-driverne:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install printer-driver-gutenprint</span></code></pre></div>
+<blockquote>
+<p><strong>Tips:</strong> Har du en skriver som er eldre enn 10 år, søk
+på “modellnavn + linux” – det finnes nesten alltid en løsning. Og skal
+du kjøpe ny: Brother og HP har best Linux-rykte.</p>
+</blockquote>
+<h2 id="hvor-er-programmene-mine-fra-windows">“Hvor er programmene mine
+fra Windows?”</h2>
+<p>Dette er et av de største spørsmålene.</p>
+<h3 id="finn-et-linux-alternativ-anbefalt">1. Finn et Linux-alternativ
+(anbefalt)</h3>
+<p>De fleste vanlige programmer har gode alternativer:</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 52%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Windows-program</th>
+<th>Linux-alternativ</th>
+<th>Merknad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Photoshop</td>
+<td>GIMP, Photopea (nett)</td>
+<td>GIMP er kraftfullt</td>
+</tr>
+<tr class="even">
+<td>Office</td>
+<td>LibreOffice</td>
+<td>Svært bra</td>
+</tr>
+<tr class="odd">
+<td>OneNote</td>
+<td>Joplin, Logseq</td>
+<td>Joplin er populært</td>
+</tr>
+<tr class="even">
+<td>Spotify</td>
+<td>Spotify (Flatpak)</td>
+<td>Offisiell klient</td>
+</tr>
+<tr class="odd">
+<td>Zoom</td>
+<td>Zoom (offisiell)</td>
+<td>Fungerer bra</td>
+</tr>
+<tr class="even">
+<td>Notepad++</td>
+<td>Kate, VS Code, Gedit</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kjør-windows-programmet-direkte">2. Kjør Windows-programmet
+direkte</h3>
+<ul>
+<li><strong>Bottles</strong> eller <strong>Wine</strong> – lar deg kjøre
+mange Windows-programmer</li>
+<li><strong>CrossOver</strong> (betalt, men bra støtte)</li>
+</ul>
+<h3 id="bruk-nettapplikasjonen">3. Bruk nettapplikasjonen</h3>
+<p>Mange programmer finnes nå som nettapper.</p>
+<h3 id="kjør-windows-i-en-virtuell-maskin">4. Kjør Windows i en virtuell
+maskin</h3>
+<ul>
+<li><strong>GNOME Boxes</strong></li>
+<li><strong>VirtualBox</strong></li>
+<li><strong>VMware</strong></li>
+</ul>
+<p>Dette lar deg kjøre hele Windows inne i Linux. Perfekt for programmer
+du absolutt må ha.</p>
+<h2 id="spill-på-linux-i-2026">Spill på Linux i 2026</h2>
+<p>Dette har blitt overraskende bra.</p>
+<h3 id="steam-proton">Steam + Proton</h3>
+<p>Hvis du installerer <strong>Steam</strong>:</p>
+<ul>
+<li>De fleste spill fra Steam fungerer nå via
+<strong>Proton</strong></li>
+<li>Sjekk rating på <a
+href="https://www.protondb.com">https://www.protondb.com</a> før du
+kjøper</li>
+</ul>
+<p><strong>Før du kjøper et spill på Steam – gjør dette til en
+vane:</strong></p>
+<ol type="1">
+<li>Gå til <a href="https://www.protondb.com">protondb.com</a></li>
+<li>Søk etter spillet</li>
+<li>Sjekk ratingen:
+<ul>
+<li><strong>Platinum</strong> – Fungerer perfekt</li>
+<li><strong>Gold</strong> – Fungerer bra med små justeringer</li>
+<li><strong>Silver</strong> – Fungerer, men med noen problemer</li>
+<li><strong>Bronze</strong> – Fungerer dårlig</li>
+<li><strong>Borked</strong> – Fungerer ikke</li>
+</ul></li>
+</ol>
+<p>Dette tar 30 sekunder og sparer deg for mye frustrasjon.</p>
+<figure>
+<img src="bilder/08-steam-proton.png" alt="Steam med Proton-støtte" />
+<figcaption aria-hidden="true">Steam med Proton-støtte</figcaption>
+</figure>
+<p>Slik setter du det opp:</p>
+<ol type="1">
+<li>Installer Steam</li>
+<li>Gå til Steam → Innstillinger → Steam Play</li>
+<li>Huk av “Enable Steam Play for all other titles”</li>
+<li>Velg Proton Experimental</li>
+</ol>
+<h3 id="andre-spillplattformer">Andre spillplattformer</h3>
+<ul>
+<li><strong>Heroic Games Launcher</strong> – Epic Games Store og
+GOG</li>
+<li><strong>Lutris</strong> – nesten alt annet</li>
+<li><strong>Bottles</strong> – enkeltstående Windows-spill</li>
+</ul>
+<h3 id="hva-fungerer-ikke">Hva fungerer ikke?</h3>
+<p>Noen spill med strenge anti-cheat-systemer (spesielt visse online
+multiplayer-spill). Sjekk alltid ProtonDB.</p>
+<h2 id="andre-vanlige-ting">Andre vanlige ting</h2>
+<h3 id="alt-ser-for-stort-for-lite-ut">“Alt ser for stort / for lite
+ut”</h3>
+<ul>
+<li>Innstillinger → Skjerm → Skalering (prøv 125% eller 150%)</li>
+</ul>
+<h3 id="oppdateringer-som-bryter-ting">Oppdateringer som bryter
+ting</h3>
+<p>Det skjer sjelden, men det kan skje.</p>
+<p><strong>Løsning:</strong></p>
+<ul>
+<li>Ha alltid backup</li>
+<li>Installer <strong>Timeshift</strong> og ta snapshots før store
+endringer</li>
+</ul>
+<h3 id="jeg-savner-windows-tastaturet">“Jeg savner
+Windows-tastaturet”</h3>
+<p>De fleste snarveier er like. Noen nyttige:</p>
+<ul>
+<li><code>Ctrl + Alt + T</code> → Terminal</li>
+<li><code>Super + L</code> → Lås skjermen</li>
+</ul>
+<p>Du kan endre alle snarveier i Innstillinger.</p>
+<h2 id="når-du-ikke-finner-løsningen-selv">Når du ikke finner løsningen
+selv</h2>
+<ol type="1">
+<li>Skriv ned nøyaktig hva som skjer (feilmeldinger hjelper mye)</li>
+<li>Søk på Google: <code>problemet ditt + din distro + 2026</code></li>
+<li>Gode steder:
+<ul>
+<li>Reddit: r/linux4noobs, r/linuxquestions, r/linuxmint, r/pop_os</li>
+<li>Distroens offisielle forum</li>
+<li>AskUbuntu</li>
+</ul></li>
+</ol>
+<p>De fleste problemer har allerede blitt løst av noen andre.</p>
+<h2 id="spesifikke-vanlige-problemer-og-løsninger">Spesifikke vanlige
+problemer og løsninger</h2>
+<h3 id="touchpad-virker-ikke-bra">“Touchpad virker ikke bra”</h3>
+<ul>
+<li>Søk etter “libinput” eller “synaptics” drivere</li>
+<li>Mange løser det med innstillinger under “Mus og touchpad”</li>
+</ul>
+<h3 id="skjermen-flimrer-eller-tårer">“Skjermen flimrer” eller
+“Tårer”</h3>
+<ul>
+<li>Prøv å endre oppdateringsfrekvens i Innstillinger → Skjerm</li>
+<li>Installer proprietære drivere hvis du har NVIDIA. Har du AMD, er
+støtten innebygd i systemet (Mesa) – det finnes ingen proprietær
+skrivebordsdriver å installere. Sørg heller for at systemet er
+oppdatert.</li>
+</ul>
+<h3
+id="programmet-jeg-vil-ha-finnes-ikke-i-programvaresenter">“Programmet
+jeg vil ha finnes ikke i Programvaresenter”</h3>
+<ul>
+<li>Sjekk om det finnes som Flatpak</li>
+<li>Søk på nettet etter “programnavn flatpak” eller “programnavn
+linux”</li>
+<li>Mange programmer har offisiell installasjonsinstruks på sine
+nettsider</li>
+</ul>
+<h3 id="jeg-får-ikke-logget-inn-etter-oppdatering">“Jeg får ikke logget
+inn etter oppdatering”</h3>
+<ul>
+<li>Start maskinen på nytt og velg en eldre kernel fra GRUB-menyen
+(avansert). Vises ikke menyen: hold Shift, eller trykk Esc, under
+oppstart – velg så Advanced options.</li>
+<li>Gjenopprett fra Timeshift</li>
+</ul>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>De fleste problemer løses med omstart + oppdatering eller
+Timeshift.</li>
+<li>Søk etter “ditt problem + din distro”.</li>
+<li>Reddit r/linux4noobs er gull for nybegynnere.</li>
+</ul></div>
+</section>
+<section id="kap09" class="chapter">
+<h1 id="tilpasning-og-finpuss">9. Tilpasning og finpuss</h1>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvordan endre utseende og temaer</li>
+<li>Hvilke apper du kan legge til</li>
+<li>En “gylden sti” for tilpasning uten å overdrive</li>
+</ul></div>
+<hr />
+<p>En av de største gledene med Linux er hvor enkelt det er å gjøre det
+til <strong>ditt</strong> system.</p>
+<p>Du kan endre nesten alt: farger, ikoner, skrifttyper, hvordan vinduer
+ser ut, hvor oppgavelinjen er, og mye mer.</p>
+<h2 id="endre-utseende">Endre utseende</h2>
+<h3 id="linux-mint-cinnamon">Linux Mint (Cinnamon)</h3>
+<p>Cinnamon er veldig lett å tilpasse:</p>
+<ol type="1">
+<li>Høyreklikk på skrivebordet → <strong>Innstillinger</strong></li>
+<li>Gå til <strong>Temaer</strong></li>
+<li>Velg:
+<ul>
+<li><strong>Skrivebord</strong> (utseende)</li>
+<li><strong>Ikoner</strong></li>
+<li><strong>Kontroller</strong> (knapper og vinduer)</li>
+<li><strong>Muspeker</strong></li>
+</ul></li>
+</ol>
+<p>Du kan laste ned flere temaer fra nettet og installere dem ved å
+pakke dem ut i <code>~/.themes</code> og <code>~/.icons</code>.</p>
+<h3 id="gnome-ubuntu-og-mange-andre">GNOME (Ubuntu og mange andre)</h3>
+<p>GNOME er mer minimalistisk, men kan tilpasses med
+<strong>utvidelser</strong> (extensions).</p>
+<ul>
+<li>Installer <strong>Extensions</strong> appen eller “GNOME
+Tweaks”</li>
+<li>Gå til <a
+href="https://extensions.gnome.org">https://extensions.gnome.org</a> i
+Firefox</li>
+<li>Slå på utvidelser som “Dash to Dock”, “User Themes”, “Blur my Shell”
+osv.</li>
+</ul>
+<p><strong>Advarsel for nybegynnere:</strong> Ikke installer for mange
+utvidelser samtidig. De kan skape ustabilitet.</p>
+<h3 id="cosmic-pop_os">COSMIC (Pop!_OS)</h3>
+<p>Pop!_OS bruker sitt eget skrivebordsmiljø, <strong>COSMIC</strong> –
+ikke GNOME. Det betyr at GNOME Tweaks og GNOME-utvidelser ikke gjelder
+her. I stedet:</p>
+<ul>
+<li>Åpne <strong>Innstillinger → Skrivebord</strong> for temaer, farger,
+paneler og dock</li>
+<li>Vindusflislegging (automatisk ordning av vinduer) slås av og på med
+knappen øverst til høyre i panelet</li>
+<li>Det meste av tilpasning er innebygd – du trenger ingen ekstra
+verktøy</li>
+</ul>
+<h3 id="kde-plasma">KDE Plasma</h3>
+<p>KDE er den mest tilpasningsdyktige av dem alle. Du kan endre nesten
+alt via <strong>Systeminnstillinger → Utseende</strong>.</p>
+<h2 id="ikoner-og-temaer">Ikoner og temaer</h2>
+<p>Populære steder å finne temaer og ikoner:</p>
+<ul>
+<li><a href="https://www.pling.com">https://www.pling.com</a></li>
+<li><a
+href="https://www.gnome-look.org">https://www.gnome-look.org</a></li>
+</ul>
+<p><strong>Slik installerer du et tema (generelt):</strong></p>
+<ol type="1">
+<li>Last ned en <code>.tar.xz</code> eller <code>.zip</code> fil</li>
+<li>Pakk den ut</li>
+<li>Flytt mappen til riktig sted:
+<ul>
+<li>Temaer: <code>~/.themes</code> eller
+<code>~/.local/share/themes</code></li>
+<li>Ikoner: <code>~/.icons</code> eller
+<code>~/.local/share/icons</code></li>
+</ul></li>
+<li>Velg temaet i Innstillinger</li>
+</ol>
+<h2 id="bakgrunnsbilder-og-låseskjerm">Bakgrunnsbilder og
+låseskjerm</h2>
+<ul>
+<li>Høyreklikk på skrivebordet → Endre bakgrunn</li>
+<li>Du kan bruke egne bilder</li>
+<li>Noen distribusjoner lar deg endre låseskjerm separat</li>
+</ul>
+<h2 id="legge-til-apper-du-savner">Legge til apper du savner</h2>
+<p>Her er noen populære apper mange vil ha:</p>
+<h3 id="kommunikasjon">Kommunikasjon</h3>
+<ul>
+<li><strong>Discord</strong> –
+<code>flatpak install flathub com.discordapp.Discord</code></li>
+<li><strong>Telegram</strong> –
+<code>flatpak install flathub org.telegram.desktop</code></li>
+<li><strong>Signal</strong> –
+<code>flatpak install flathub org.signal.Signal</code></li>
+<li><strong>Element</strong> (Matrix) –
+<code>flatpak install flathub im.riot.Riot</code></li>
+</ul>
+<h3 id="utvikling-tekst">Utvikling / tekst</h3>
+<ul>
+<li><strong>Visual Studio Code</strong> – Svært populær. Installer via
+Flatpak eller offisiell kilde</li>
+<li><strong>VSCodium</strong> – Samme som VS Code, men uten
+Microsoft-telemetri</li>
+</ul>
+<h3 id="andre-nyttige-apper">Andre nyttige apper</h3>
+<ul>
+<li><strong>OBS Studio</strong> – Skjermopptak og streaming (utmerket på
+Linux)</li>
+<li><strong>Flameshot</strong> eller <strong>Spectacle</strong> – Bedre
+skjermklipp</li>
+<li><strong>KeePassXC</strong> – Passordbehandler (anbefales
+sterkt)</li>
+<li><strong>Bitwarden</strong> – Skybasert passordbehandler</li>
+</ul>
+<h3 id="spillrelaterte">Spillrelaterte</h3>
+<ul>
+<li>Steam</li>
+<li>Heroic Games Launcher</li>
+<li>Lutris</li>
+<li>ProtonUp-Qt</li>
+</ul>
+<h2 id="hvordan-installere-de-fleste-apper-flatpak-anbefales">Hvordan
+installere de fleste apper (Flatpak anbefales)</h2>
+<p>Den enkleste og tryggeste måten i 2026:</p>
+<ol type="1">
+<li>Åpne <strong>Programvaresenter</strong></li>
+<li>Søk etter programmet</li>
+<li>Hvis det finnes flere versjoner, velg
+<strong>Flatpak</strong>-versjonen når mulig</li>
+</ol>
+<figure>
+<img src="bilder/programvarebehandler.png"
+alt="Programvarebehandleren i Linux Mint på norsk: fremhevede apper som Audacity, Steam og Calibre – Flathub-appene er merket med Flatpak-symbolet" />
+<figcaption aria-hidden="true">Programvarebehandleren i Linux Mint på
+norsk: fremhevede apper som Audacity, Steam og Calibre – Flathub-appene
+er merket med Flatpak-symbolet</figcaption>
+</figure>
+<h2 id="lage-snarveier-og-organisere-skrivebordet">Lage snarveier og
+organisere skrivebordet</h2>
+<ul>
+<li>Du kan dra apper til oppgavelinjen / dokken</li>
+<li>Høyreklikk på en app i startmenyen → “Legg til favoritter”</li>
+<li>Mange bruker en “dock” nederst</li>
+</ul>
+<h2
+id="tilgjengelighet-for-eldre-lesere-eller-de-som-trenger-det">Tilgjengelighet
+(for eldre lesere eller de som trenger det)</h2>
+<p>Linux har god støtte for tilgjengelighet:</p>
+<ul>
+<li>Gå til <strong>Innstillinger → Tilgjengelighet</strong> (eller søk
+etter “Universal Access”).</li>
+<li>Øk skriftstørrelse og markørstørrelse.</li>
+<li>Slå på høykontrast eller skjermforstørrer.</li>
+<li>Mange bruker dette for å gjøre det lettere for foreldre eller
+besteforeldre.</li>
+</ul>
+<h2 id="avansert-valgfritt-valgfritt">Avansert (valgfritt) 🟡
+Valgfritt</h2>
+<p>Hvis du blir mer komfortabel senere:</p>
+<ul>
+<li>Endre skrifttyper systemvidt</li>
+<li>Legge til egendefinerte snarveier</li>
+<li>Lage egne skript</li>
+<li>Endre oppstartsapplikasjoner</li>
+</ul>
+<h2 id="viktig-prinsipp">Viktig prinsipp</h2>
+<p><strong>Tilpass gradvis.</strong></p>
+<p>Det er lett å bli revet med og endre alt på en gang. Start med 2–3
+små endringer du liker, og la resten være en stund.</p>
+<p>Når du har brukt systemet i noen uker, vil du vite nøyaktig hva du
+vil endre.</p>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Tilpass gradvis – ikke alt på en gang.</li>
+<li>Flatpak er ofte det enkleste og tryggeste for apper.</li>
+</ul></div>
+<p><strong>Gylden sti for tilpasning:</strong></p>
+<ol type="1">
+<li>Endre bakgrunnsbilde og tema via Innstillinger.</li>
+<li>Installer 3-4 apper du savner via Programvaresenter.</li>
+<li>Legg favoritter til oppgavelinjen.</li>
+<li>Stopp der – resten kommer når du har brukt systemet en stund.</li>
+</ol>
+<p><strong>Prøv selv:</strong> Høyreklikk på skrivebordet og endre
+bakgrunnsbilde til et bilde du liker.</p>
+</section>
+<section id="kap10" class="chapter">
+<h1 id="sikkerhet-backup-og-gode-vaner">10. Sikkerhet, backup og gode
+vaner</h1>
+<p><em>Sist oppdatert: 2026-08-01</em></p>
+<div class="info-box"><p><strong>I dette kapittelet lærer du:</strong></p>
+<ul>
+<li>Hvorfor jevnlige oppdateringer er det viktigste
+sikkerhetstiltaket</li>
+<li>Hvordan ta system-snapshots med Timeshift og backup av personlige
+filer</li>
+<li>Passordbehandler og 2-faktor autentisering (2FA)</li>
+<li>Hvordan slå på brannmuren UFW på 10 sekunder</li>
+<li>Sunn skepsis: hva du bør tenke på før du installerer noe</li>
+<li>En enkel sikkerhetsrutine i fem trinn</li>
+</ul></div>
+<hr />
+<p>Linux er generelt sikrere enn Windows av flere grunner:</p>
+<ul>
+<li>Du kjører ikke som administrator hele tiden</li>
+<li>Programmer installeres gjennom kontrollerte kanaler</li>
+<li>Det er vanskeligere å få skadelig programvare til å kjøre uten at du
+aktivt godkjenner det</li>
+</ul>
+<p>Men: Sikkerhet handler fortsatt om gode vaner.</p>
+<h2 id="hold-systemet-oppdatert">Hold systemet oppdatert</h2>
+<p>Dette er det viktigste du kan gjøre.</p>
+<ul>
+<li>Installer oppdateringer regelmessig (helst ukentlig)</li>
+<li>Bruk både systemoppdateringer og Flatpak-oppdateringer</li>
+</ul>
+<p>Hurtigkommando:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<h2 id="lag-regelmessige-backups">Lag regelmessige backups</h2>
+<p>Det finnes to typer backups du bør tenke på:</p>
+<h3 id="system-snapshots-gjenoppretting-hvis-noe-går-galt">1.
+System-snapshots (gjenoppretting hvis noe går galt)</h3>
+<p><strong>Installer Timeshift</strong> – det beste verktøyet for de
+fleste nybegynnere.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span></code></pre></div>
+<p>Etter installasjon: Åpne Timeshift og ta et første snapshot.</p>
+<ul>
+<li>Ta et snapshot før store endringer</li>
+<li>Du kan gå tilbake til et tidligere fungerende system på noen
+minutter</li>
+</ul>
+<p>Lagre gjerne snapshots på en egen eller ekstern disk hvis du har
+mulighet – et snapshot som ligger på samme disk som dør, hjelper lite
+den dagen disken svikter.</p>
+<p><strong>Anbefaling:</strong> Ta et snapshot etter installasjon og en
+gang i uken.</p>
+<h3 id="personlige-filer">2. Personlige filer</h3>
+<p>Anbefalte enkle løsninger:</p>
+<ul>
+<li><strong>Déjà Dup</strong> (enkel grafisk backup)</li>
+<li>Manuell kopiering til ekstern harddisk</li>
+<li>rsync (kraftig)</li>
+<li>Sky-tjenester du stoler på (Proton Drive, Nextcloud, etc.)</li>
+</ul>
+<p><strong>Regel:</strong> Ha minst én offline backup + én sky-backup
+hvis mulig.</p>
+<h2 id="passord-og-autentisering">Passord og autentisering</h2>
+<ul>
+<li>Bruk en <strong>passordbehandler</strong> (KeePassXC eller
+Bitwarden)</li>
+<li>Lag sterke, unike passord</li>
+<li>Aktiver 2-faktor autentisering (2FA) der det er mulig</li>
+</ul>
+<h2 id="brannmur">Brannmur</h2>
+<p>De fleste Linux-distribusjoner har <strong>ikke</strong> brannmur
+aktivert som standard. Det er som regel greit likevel, fordi du
+sannsynligvis sitter bak en hjemmeruter som allerede stopper innkommende
+trafikk utenfra.</p>
+<p>Men for ekstra sikkerhet – spesielt på bærbar PC som blir med på
+kafé, hotell og offentlige nettverk – anbefaler jeg å slå på UFW
+(Uncomplicated Firewall). Det tar 10 sekunder:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ufw       <span class="co"># Installer (hvis ikke allerede installert)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw enable            <span class="co"># Aktiver brannmur</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw status            <span class="co"># Sjekk at den er aktiv</span></span></code></pre></div>
+<p>UFW blokkerer all uønsket innkommende trafikk, men lar utgående
+trafikk (nettlesing, e-post osv.) passere fritt. Du merker ingen
+forskjell i daglig bruk – den beskytter deg bare mot uautoriserte
+tilkoblinger fra andre maskiner på samme nettverk.</p>
+<h2 id="vær-forsiktig-med-det-du-installerer">Vær forsiktig med det du
+installerer</h2>
+<p>Gode vaner:</p>
+<ul>
+<li>Installer hovedsakelig fra Programvaresenter eller Flatpak
+(flathub.org)</li>
+<li>Vær skeptisk til <code>.deb</code>-filer og <code>.sh</code>-skript
+fra tilfeldige nettsider</li>
+<li>Les alltid hva en kommando gjør før du kjører den med
+<code>sudo</code></li>
+</ul>
+<h2 id="nettlesersikkerhet">Nettlesersikkerhet</h2>
+<ul>
+<li>Bruk Firefox eller en Chromium-basert nettleser</li>
+<li>Installer uBlock Origin</li>
+<li>Vær forsiktig med utvidelser</li>
+</ul>
+<h2 id="hva-med-virus">Hva med virus?</h2>
+<p>Linux har færre virus enn Windows, men de finnes. De fleste problemer
+kommer fra brukere som kjører tilfeldige skript de finner på
+internett.</p>
+<h2 id="anbefalt-sikkerhetsrutine">Anbefalt “sikkerhetsrutine”</h2>
+<ol type="1">
+<li>Ta et Timeshift-snapshot før store endringer</li>
+<li>Installer oppdateringer ukentlig</li>
+<li>Ha en ekstern backup av viktige filer</li>
+<li>Bruk passordbehandler</li>
+<li>Ikke kjør kommandoer du ikke forstår</li>
+</ol>
+<h2 id="hvis-noe-går-galt">Hvis noe går galt</h2>
+<ul>
+<li>Ikke få panikk</li>
+<li>De fleste problemer løses med omstart + oppdatering</li>
+<li>I verste fall: Gjenopprett fra Timeshift</li>
+</ul>
+<hr />
+<div class="info-box"><p><strong>Det viktigste fra dette kapittelet</strong></p>
+<ul>
+<li>Linux er trygt i utgangspunktet – gode vaner gjør det enda
+tryggere.</li>
+<li>Oppdateringer og backup er de to store: hold systemet oppdatert, og
+ha både Timeshift-snapshots og en ekstern kopi av filene dine.</li>
+<li>Passordbehandler og 2FA beskytter kontoene dine; UFW beskytter
+maskinen på offentlige nettverk.</li>
+<li>Sikkerhetsrutinen over er alt du trenger – fem enkle vaner, ikke et
+heltidsprosjekt.</li>
+</ul></div>
+<p><strong>Prøv selv:</strong> Installer Timeshift og ta ditt første
+snapshot i dag. Det tar bare noen minutter – og gir en trygghet det er
+godt å ha.</p>
+</section>
+<section id="kap11" class="chapter">
+<h1 id="hva-nå-neste-steg-og-ressurser">11. Hva nå? Neste steg og
+ressurser</h1>
+<p>Gratulerer! Du har kommet gjennom det viktigste.</p>
+<p>Nå står du ved et punkt mange nybegynnere når: “Hva gjør jeg
+videre?”</p>
+<p>Svaret er: <strong>Ta det med ro.</strong> Du trenger ikke å lære alt
+på en gang.</p>
+<h2 id="hvordan-lære-mer-uten-å-bli-overveldet">Hvordan lære mer uten å
+bli overveldet</h2>
+<p>De fleste som blir overveldet prøver å lære for mye for fort. Her er
+en bedre tilnærming:</p>
+<ol type="1">
+<li><strong>Bruk systemet til det du trenger</strong> i noen uker
+først</li>
+<li><strong>Løs problemer når de dukker opp</strong> – det er den beste
+måten å lære på</li>
+<li><strong>Lær én ting av gangen</strong></li>
+<li><strong>Ikke sammenlign deg med folk som har brukt Linux i 10
+år</strong></li>
+</ol>
+<h2 id="norske-ressurser">Norske ressurser</h2>
+<ul>
+<li><strong>diskusjon.no</strong> – Norsk forum med egen
+Linux-seksjon</li>
+<li><strong>Reddit r/norge</strong> – Noen ganger dukker det opp
+Linux-tråder</li>
+<li>Facebook-grupper: Søk etter “Linux Norge”</li>
+</ul>
+<p>Ærlig talt: Det norske Linux-miljøet på nett er lite, og det finnes
+få faste norske YouTube-kanaler om Linux. De engelske ressursene under
+er derfor der det meste skjer – men norske fora er fine for spørsmål om
+BankID, Vipps og andre særnorske ting.</p>
+<h2 id="engelske-ressurser-disse-er-gull-verdt">Engelske ressurser
+(disse er gull verdt)</h2>
+<h3 id="reddit-anbefales-sterkt">Reddit (anbefales sterkt)</h3>
+<ul>
+<li><strong>r/linux4noobs</strong> – Spesielt laget for nybegynnere.
+Veldig vennlig.</li>
+<li><strong>r/linuxquestions</strong></li>
+<li><strong>r/linuxmint</strong>, <strong>r/pop_os</strong>,
+<strong>r/Ubuntu</strong></li>
+</ul>
+<h3 id="youtube-kanaler-2026">YouTube-kanaler (2026)</h3>
+<ul>
+<li>The Linux Experiment</li>
+<li>Brodie Robertson</li>
+<li>Mental Outlaw</li>
+<li>DistroTube</li>
+<li>System76 (for Pop!_OS)</li>
+<li>Linux Mint offisielle kanal</li>
+</ul>
+<h2 id="veien-videre-i-denne-serien">Veien videre i denne serien</h2>
+<p>Denne boken har en oppfølger. Når terminalen har begynt å føles som
+et verktøy – ikke en trussel – og du er nysgjerrig på hva som egentlig
+skjer under panseret, plukker <strong>Linux for Viderekommende</strong>
+opp nøyaktig der denne boken slipper: terminalen for alvor,
+shell-skripting, SSH og din egen lille hjemmeserver. Alt bygger videre
+på vanene du allerede har lagt deg til her – Timeshift-snapshots,
+oppdateringsrutinen og regelen om å forstå en kommando før du kjører
+den. Og for den som en dag vil helt til bunns, venter <strong>Linux for
+Eksperter</strong> bak den igjen. Men det haster ikke – bruk denne boken
+ut først.</p>
+<h2 id="dokumentasjon-og-læringsverktøy">Dokumentasjon og
+læringsverktøy</h2>
+<ul>
+<li>Den offisielle brukerveiledningen til din distribusjon</li>
+<li><strong><a href="https://linuxjourney.com">Linux
+Journey</a></strong> – gratis, interaktivt nettkurs som tar deg fra
+nybegynner til viderekommende</li>
+<li><strong><a href="https://wiki.archlinux.org">Arch Wiki</a></strong>
+– internettets beste Linux-oppslagsverk. Skrevet for Arch, men det meste
+gjelder alle distribusjoner. Gull når du feilsøker.</li>
+<li><strong><a href="https://explainshell.com">ExplainShell</a></strong>
+– lim inn en terminalkommando og få forklart hva hver del gjør. Perfekt
+før du kjører noe du fant på nettet.</li>
+<li>Man-sider i terminalen (<code>man kommando</code>)</li>
+</ul>
+<h2 id="klar-til-å-fjerne-windows-når-du-er-trygg-valgfritt">Klar til å
+fjerne Windows? (når du er trygg) 🟡 Valgfritt</h2>
+<p>Valgte du dual boot og har nå brukt Linux i noen måneder uten å savne
+Windows? Slik frigjør du plassen:</p>
+<p><strong>Viktig først:</strong> Ta en Timeshift-snapshot OG backup av
+personlige filer. Og start GParted fra <strong>live-USB-en</strong>
+(samme USB du installerte fra) – du kan ikke endre partisjoner mens
+systemet kjører fra dem.</p>
+<p><strong>Steg 1: Slett Windows-partisjonen</strong></p>
+<ol type="1">
+<li>Start maskinen fra live-USB-en (som under installasjonen)</li>
+<li>Åpne <strong>GParted</strong> (følger med i live-miljøet, ellers
+<code>sudo apt install gparted</code>)</li>
+<li>Finn Windows-partisjonen – den er merket <strong>ntfs</strong> og er
+ofte den største</li>
+<li>Høyreklikk → <strong>Delete</strong></li>
+</ol>
+<p><strong>Steg 2: Utvid Linux-partisjonen</strong></p>
+<ol type="1">
+<li>Høyreklikk på Linux-partisjonen (merket <strong>ext4</strong>)</li>
+<li>Velg <strong>Resize/Move</strong> og dra kanten så den fyller den
+ledige plassen</li>
+<li>Klikk <strong>Apply</strong> (kan ta noen minutter)</li>
+</ol>
+<blockquote>
+<p><strong>Tålmodighet:</strong> Ligger den ledige plassen
+<em>foran</em> Linux-partisjonen (det er vanlig – Windows lå gjerne
+først på disken), holder det ikke å dra kanten: GParted må flytte hele
+partisjonen, og det kan ta flere timer. Det er helt normalt. Koble
+laptopen til strøm, ikke avbryt underveis, og la maskinen stå i fred til
+GParted sier seg ferdig.</p>
+</blockquote>
+<p><strong>Steg 3: Rydd opp i oppstartsmenyen</strong></p>
+<p>Start maskinen normalt (uten USB) og kjør:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-grub</span></code></pre></div>
+<p>Da forsvinner Windows fra GRUB-menyen.</p>
+<blockquote>
+<p><strong>Advarsel:</strong> Dobbeltsjekk at du sletter riktig
+partisjon – se på både størrelse og filsystem (ntfs = Windows, ext4 =
+Linux). Er du i tvil, ikke slett.</p>
+</blockquote>
+<h2 id="praktiske-neste-steg-du-kan-ta">Praktiske neste steg du kan
+ta</h2>
+<ul>
+<li>Installer Timeshift og ta ditt første system-snapshot</li>
+<li>Prøv å installere 3–4 apper du savner</li>
+<li>Tilpass skrivebordet litt</li>
+<li>Lær 3 nye terminalkommandoer</li>
+<li>Installer Steam og test ett spill</li>
+<li>Sett opp en automatisk backup</li>
+</ul>
+<h2 id="bli-en-del-av-fellesskapet-valgfritt">Bli en del av fellesskapet
+(valgfritt)</h2>
+<p>Mange synes det er motiverende å hjelpe andre nybegynnere når de selv
+har lært noe.</p>
+<h2 id="husk-dette">Husk dette</h2>
+<p>Linux er ikke noe du “blir ferdig med”. Det er et verktøy du gradvis
+blir bedre til å bruke.</p>
+<p>De fleste som har brukt Linux i mange år sier det samme:</p>
+<blockquote>
+<p>“Jeg angrer ikke et sekund på at jeg byttet.”</p>
+</blockquote>
+<h2 id="det-viktigste-fra-dette-kapittelet">Det viktigste fra dette
+kapittelet</h2>
+<ul>
+<li>Ta det med ro – bruk systemet, løs problemer når de dukker opp, og
+lær én ting av gangen</li>
+<li>Står du fast, er r/linux4noobs, Linux Journey og Arch Wiki gull
+verdt</li>
+<li>Vent med å fjerne Windows til du har klart deg uten i noen måneder –
+og ta snapshot og backup først</li>
+<li>Den dagen du vil videre, står <em>Linux for Viderekommende</em> klar
+og fortsetter der denne boken slipper</li>
+</ul>
+<hr />
+<p><strong>Takk for at du leste denne boken!</strong></p>
+</section>
+<section id="kap12" class="chapter">
+<h1 id="bonus-ofte-stilte-spørsmål-og-myter-om-linux">Bonus: Ofte stilte
+spørsmål og myter om Linux</h1>
+<p>Dette kapittelet samler de spørsmålene og mytene som dukker opp
+oftest.</p>
+<h2 id="myter-om-linux">Myter om Linux</h2>
+<h3 id="myte-1-linux-er-bare-for-nerder-og-programmerere">Myte 1: “Linux
+er bare for nerder og programmerere”</h3>
+<p><strong>Fakta:</strong> For 15 år siden var det delvis sant. I 2026
+er det ikke det. Det finnes distribusjoner som er laget spesifikt for
+vanlige mennesker som kommer fra Windows. Du kan bruke Linux i årevis
+uten å åpne terminalen en eneste gang.</p>
+<h3 id="myte-2-du-kan-ikke-spille-spill-på-linux">Myte 2: “Du kan ikke
+spille spill på Linux”</h3>
+<p><strong>Fakta:</strong> De fleste spill på Steam fungerer nå via
+Proton. Mange spill kjører like godt eller bedre på Linux enn på
+Windows. Det finnes fortsatt noen unntak (spesielt spill med aggressive
+anti-cheat-systemer), men det blir færre hele tiden.</p>
+<h3 id="myte-3-det-finnes-ingen-programmer-til-linux">Myte 3: “Det
+finnes ingen programmer til Linux”</h3>
+<p><strong>Fakta:</strong> Nesten alle populære programmer har enten en
+Linux-versjon, en Flatpak-versjon, eller et godt alternativ. I tillegg
+kan du kjøre mange Windows-programmer via Wine/Bottles.</p>
+<h3 id="myte-4-linux-er-ustabilt-og-kræsjer-hele-tiden">Myte 4: “Linux
+er ustabilt og kræsjer hele tiden”</h3>
+<p><strong>Fakta:</strong> Mange opplever at Linux er mer stabilt enn
+Windows. Systemet kræsjer sjelden. Når det er problemer, er det nesten
+alltid maskinvare-drivere eller brukerfeil.</p>
+<h3 id="myte-5-linux-er-gratis-derfor-må-det-være-dårlig">Myte 5: “Linux
+er gratis, derfor må det være dårlig”</h3>
+<p><strong>Fakta:</strong> Linux brukes på de fleste superdatamaskiner i
+verden, på Android-telefoner, på servere over hele verden, og i stadig
+flere bærbare og stasjonære PC-er.</p>
+<h3 id="myte-6-du-må-bruke-terminalen-til-alt">Myte 6: “Du må bruke
+terminalen til alt”</h3>
+<p><strong>Fakta:</strong> Du kan, men du må ikke. De fleste ting kan
+gjøres med mus og grafiske programmer.</p>
+<h3 id="myte-7-alle-linux-distribusjoner-er-like">Myte 7: “Alle
+Linux-distribusjoner er like”</h3>
+<p><strong>Fakta:</strong> Det er enorme forskjeller. Linux Mint og Arch
+Linux har omtrent like mye til felles som Windows 11 og en Raspberry
+Pi.</p>
+<h2 id="ofte-stilte-spørsmål">Ofte stilte spørsmål</h2>
+<h3 id="kan-jeg-gå-tilbake-til-windows-hvis-jeg-ikke-liker-det">Kan jeg
+gå tilbake til Windows hvis jeg ikke liker det?</h3>
+<p>Ja. Hvis du installerte med dual boot, kan du bare velge Windows i
+GRUB-menyen. Hvis du slettet Windows, kan du reinstallere det fra en
+Windows-USB. Lag alltid backup først.</p>
+<h3 id="vil-linux-fungere-på-maskinen-min">Vil Linux fungere på maskinen
+min?</h3>
+<p>Sannsynligvis ja. De fleste maskiner fra de siste 5–7 årene fungerer
+utmerket. Eldre maskiner fungerer ofte bedre på Linux enn på nyere
+Windows. Det eneste som kan være problematisk er helt splitter nye
+maskinvarekomponenter.</p>
+<h3 id="må-jeg-installere-drivere-selv">Må jeg installere drivere
+selv?</h3>
+<p>Ofte ikke. De fleste drivere er innebygd. For NVIDIA og noen
+WiFi-kort må du noen ganger installere ekstra drivere etter
+installasjonen.</p>
+<h3 id="er-det-trygt-å-ha-dual-boot">Er det trygt å ha dual boot?</h3>
+<p>Ja, for de fleste. Risikoen er lav hvis du følger veiledningene. Det
+verste som vanligvis skjer er at Windows-oppdateringer overskriver
+bootloaderen, men det er lett å fikse.</p>
+<h3 id="hvorfor-finnes-det-så-mange-forskjellige-distribusjoner">Hvorfor
+finnes det så mange forskjellige distribusjoner?</h3>
+<p>Fordi folk har forskjellige behov. Noen vil ha det enkleste mulige.
+Andre vil ha maksimal kontroll. Det er en styrke.</p>
+<h3 id="hva-er-forskjellen-på-ubuntu-mint-pop_os-osv.">Hva er
+forskjellen på Ubuntu, Mint, Pop!_OS osv.?</h3>
+<p>De er alle bygget på samme grunnlag, men har forskjellige
+standardprogrammer, utseende og filosofi. Mint og Zorin er mer
+“Windows-lignende”. Pop!_OS og Ubuntu er mer moderne.</p>
+<h3 id="kommer-oppdateringer-til-å-ødelegge-systemet-mitt">Kommer
+oppdateringer til å ødelegge systemet mitt?</h3>
+<p>Svært sjelden på LTS-versjoner. Installer gjerne Timeshift før store
+oppdateringer hvis du er engstelig.</p>
+<h3 id="er-linux-virkelig-bedre-for-personvern">Er Linux virkelig bedre
+for personvern?</h3>
+<p>Ja, som standard. Du blir ikke sporet av operativsystemet selv på
+samme måte som i Windows. Men hvis du installerer alle de samme
+tjenestene og logger inn overalt, blir personvernet tilsvarende.</p>
+<h3 id="kan-jeg-bruke-microsoft-office">Kan jeg bruke Microsoft
+Office?</h3>
+<p>Du kan bruke Microsoft 365 i nettleseren. For lokal bruk er
+LibreOffice det beste alternativet for de fleste.</p>
+<h3 id="hva-med-photoshop-premiere-og-lignende">Hva med Photoshop,
+Premiere og lignende?</h3>
+<ul>
+<li>Photoshop → GIMP + Photopea (nett)</li>
+<li>Premiere → DaVinci Resolve (har offisiell Linux-versjon og er
+utmerket), Kdenlive eller Shotcut</li>
+</ul>
+<h3 id="må-jeg-lære-å-programmere">Må jeg lære å programmere?</h3>
+<p>Nei. Absolutt ikke.</p>
+<h3 id="hva-koster-det">Hva koster det?</h3>
+<p>Ingenting for selve systemet. De fleste programmene er også
+gratis.</p>
+<h3 id="hvor-lang-tid-tar-det-å-venne-seg-til-det">Hvor lang tid tar det
+å venne seg til det?</h3>
+<p>De fleste klarer de grunnleggende tingene etter 1–3 dager. Etter 2–4
+uker føles det normalt.</p>
+<h3 id="kan-jeg-få-hjelp-hvis-jeg-står-fast">Kan jeg få hjelp hvis jeg
+står fast?</h3>
+<p>Ja. Fellesskapet er generelt veldig hjelpsomt. Skriv detaljert hva du
+prøver å gjøre og hva som skjer.</p>
+<h3 id="er-det-verdt-det">Er det verdt det?</h3>
+<p>De fleste som har byttet svarer “ja” etter noen uker. Du får mer
+kontroll, bedre personvern, ofte raskere system, ingen reklame, og en
+følelse av å faktisk eie maskinen din.</p>
+<h3 id="fungerer-norsk-tastatur-og-æøå">Fungerer norsk tastatur og
+æøå?</h3>
+<p>Ja. Velg norsk tastaturoppsett under installasjonen. Alt
+fungerer.</p>
+<h3 id="kan-jeg-bruke-bankid-og-vipps">Kan jeg bruke BankID og
+Vipps?</h3>
+<p>BankID: ja, fungerer utmerket i nettleseren hos de fleste banker.
+Vipps: web-versjonen lar deg logge inn og se historikk, men selve
+betalingene skjer fortsatt på mobilen – akkurat som på en Windows-PC. Se
+kapittel 6 for detaljer.</p>
+<h3 id="hva-hvis-jeg-har-en-helt-ny-laptop-med-spesiell-maskinvare">Hva
+hvis jeg har en helt ny laptop med spesiell maskinvare?</h3>
+<p>Noen helt nye maskiner kan ha utfordringer (spesielt WiFi og GPU).
+Pop!_OS og Ubuntu har ofte best støtte for ny maskinvare. Sjekk forumene
+før du kjøper hvis du er usikker.</p>
+<h3 id="kan-jeg-kjøre-android-apper-på-linux">Kan jeg kjøre
+Android-apper på Linux?</h3>
+<p>Ja, med verktøy som Waydroid. Det er ikke like sømløst som på
+Windows, men det fungerer for mange apper.</p>
+<h3 id="hva-er-det-beste-med-linux-ifølge-de-som-har-byttet">Hva er det
+beste med Linux ifølge de som har byttet?</h3>
+<p>Vanlige svar: - Følelsen av kontroll - At maskinen føles raskere og
+renere - At det er gratis og forblir gratis - At det er færre
+“irriterende” ting</p>
+<h3 id="kan-jeg-installere-linux-på-en-mac">Kan jeg installere Linux på
+en Mac?</h3>
+<p>Ja, men det kan være mer komplisert på nyere Apple-maskiner med
+ARM-prosessor (M1/M2/M3). På eldre Intel-baserte Mac-er fungerer det
+ofte bra.</p>
+<h3 id="hva-med-personlige-filer-fra-windows">Hva med personlige filer
+fra Windows?</h3>
+<p>De fleste filer (bilder, dokumenter, musikk, videoer) fungerer uten
+problemer. Noen gamle .exe-filer kan ikke kjøres direkte.</p>
+<h3 id="hvor-ofte-bør-jeg-oppdatere">Hvor ofte bør jeg oppdatere?</h3>
+<p>De fleste anbefaler å oppdatere en gang i uken eller hver gang det
+dukker opp en påminnelse. Unngå å hoppe over oppdateringer over lang
+tid.</p>
+<h3 id="kan-jeg-ha-flere-distribusjoner-på-samme-maskin">Kan jeg ha
+flere distribusjoner på samme maskin?</h3>
+<p>Ja. Du kan ha både Linux Mint og Ubuntu installert samtidig hvis du
+vil teste.</p>
+<h3 id="hva-er-root">Hva er “root”?</h3>
+<p>Root er superbrukeren (administrator) på Linux. Du bruker vanligvis
+ikke root direkte, men <code>sudo</code> når du trenger ekstra
+rettigheter.</p>
+<h3
+id="hvorfor-heter-det-linux-når-det-er-så-mange-forskjellige-ting">Hvorfor
+heter det “Linux” når det er så mange forskjellige ting?</h3>
+<p>“Linux” refererer egentlig bare til kjernen. Når folk snakker om
+“Linux” i daglig tale, mener de nesten alltid en hel distribusjon.</p>
+<h3 id="kan-barn-bruke-linux">Kan barn bruke Linux?</h3>
+<p>Ja. Mange distribusjoner er like enkle som Windows for barn. Noen
+foreldre foretrekker Linux fordi det er færre distraksjoner og bedre
+personvern.</p>
+<h3 id="hva-hvis-jeg-er-helt-ny-på-datamaskiner">Hva hvis jeg er helt ny
+på datamaskiner?</h3>
+<p>Da kan Linux faktisk være enklere enn Windows på noen områder, fordi
+det er færre unødvendige valg og reklame.</p>
+<hr />
+<p><strong>Takk for at du leste!</strong></p>
+<p>Du har nå et godt grunnlag. Bruk boken som oppslagsverk når du
+trenger den.</p>
+</section>
+<section id="kap13" class="chapter">
+<h1 id="hurtigreferanse">Hurtigreferanse</h1>
+<p>Dette er en rask oppslagsdel du kan bla til når du trenger det.</p>
+<h2 id="de-viktigste-terminal-kommandoene">De viktigste
+terminal-kommandoene</h2>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kommando</th>
+<th>Hva den gjør</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Hvor er jeg?</td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>List filer</td>
+</tr>
+<tr class="odd">
+<td><code>ls -la</code></td>
+<td>List alt (inkl. skjulte)</td>
+</tr>
+<tr class="even">
+<td><code>cd mappe</code></td>
+<td>Gå til mappe</td>
+</tr>
+<tr class="odd">
+<td><code>cd ..</code></td>
+<td>Gå ett nivå opp</td>
+</tr>
+<tr class="even">
+<td><code>mkdir navn</code></td>
+<td>Lag mappe</td>
+</tr>
+<tr class="odd">
+<td><code>cp fil mappe</code></td>
+<td>Kopier fil</td>
+</tr>
+<tr class="even">
+<td><code>mv fil mappe</code></td>
+<td>Flytt eller gi nytt navn</td>
+</tr>
+<tr class="odd">
+<td><code>rm fil</code></td>
+<td>Slett fil (forsiktig!)</td>
+</tr>
+<tr class="even">
+<td><code>sudo apt update &amp;&amp; sudo apt upgrade</code></td>
+<td>Oppdater system (Debian-baserte)</td>
+</tr>
+<tr class="odd">
+<td><code>flatpak update</code></td>
+<td>Oppdater Flatpak-apper</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nyttige-snarveier-de-fleste-distribusjoner">Nyttige snarveier
+(de fleste distribusjoner)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Snarvei</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Super (Windows-tast)</td>
+<td>Åpne oversikt / startmeny</td>
+</tr>
+<tr class="even">
+<td>Super + tall</td>
+<td>Bytt til program i oppgavelinjen</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + T</td>
+<td>Åpne terminal</td>
+</tr>
+<tr class="even">
+<td>Alt + Tab</td>
+<td>Bytt mellom vinduer</td>
+</tr>
+<tr class="odd">
+<td>Super + D</td>
+<td>Vis skrivebordet</td>
+</tr>
+<tr class="even">
+<td>Super + L</td>
+<td>Lås skjermen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="viktige-programmer-å-installere-tidlig-med-kommandoer">Viktige
+programmer å installere tidlig (med kommandoer)</h2>
+<h3 id="via-apt-debian-baserte">Via apt (Debian-baserte)</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install vlc</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gimp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install thunderbird</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install keepassxc</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flameshot</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw</span></code></pre></div>
+<h3 id="via-flatpak-anbefalt-for-mange-apper">Via Flatpak (anbefalt for
+mange apper)</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.spotify.Client</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.discordapp.Discord</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.valvesoftware.Steam</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.gimp.GIMP</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.keepassxc.KeePassXC</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span></code></pre></div>
+<p><strong>LibreOffice</strong> er vanligvis allerede installert,
+eller:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install libreoffice</span></code></pre></div>
+<h3 id="hvordan-finne-riktig-flatpak-id">Hvordan finne riktig
+Flatpak-ID?</h3>
+<ol type="1">
+<li>Gå til <a href="https://flathub.org">https://flathub.org</a></li>
+<li>Søk etter programmet</li>
+<li>Kopier “Install” kommandoen som vises (f.eks.
+<code>flatpak install flathub com.example.App</code>)</li>
+</ol>
+<h2 id="vanlige-apper-med-kommando-hurtigtabell">Vanlige apper med
+kommando (hurtigtabell)</h2>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 34%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>App</th>
+<th>apt-kommando</th>
+<th>Flatpak-kommando</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VLC</td>
+<td><code>sudo apt install vlc</code></td>
+<td><code>flatpak install flathub org.videolan.VLC</code></td>
+</tr>
+<tr class="even">
+<td>GIMP</td>
+<td><code>sudo apt install gimp</code></td>
+<td><code>flatpak install flathub org.gimp.GIMP</code></td>
+</tr>
+<tr class="odd">
+<td>Discord</td>
+<td>(ikke anbefalt)</td>
+<td><code>flatpak install flathub com.discordapp.Discord</code></td>
+</tr>
+<tr class="even">
+<td>Spotify</td>
+<td>-</td>
+<td><code>flatpak install flathub com.spotify.Client</code></td>
+</tr>
+<tr class="odd">
+<td>Steam</td>
+<td><code>sudo apt install steam</code></td>
+<td><code>flatpak install flathub com.valvesoftware.Steam</code></td>
+</tr>
+<tr class="even">
+<td>KeePassXC</td>
+<td><code>sudo apt install keepassxc</code></td>
+<td><code>flatpak install flathub org.keepassxc.KeePassXC</code></td>
+</tr>
+<tr class="odd">
+<td>Timeshift</td>
+<td><code>sudo apt install timeshift</code></td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Flameshot</td>
+<td><code>sudo apt install flameshot</code></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hvor-finner-jeg-hjelp">Hvor finner jeg hjelp?</h2>
+<ul>
+<li><strong>Norsk:</strong> <a
+href="https://www.diskusjon.no">diskusjon.no</a> (Linux-forum)</li>
+<li><strong>Engelsk (nybegynnere):</strong> <a
+href="https://www.reddit.com/r/linux4noobs">reddit.com/r/linux4noobs</a></li>
+<li><strong>Distrospecifikt:</strong> Søk etter ditt distro + “forum”
+(f.eks. forums.linuxmint.com)</li>
+</ul>
+<p><strong>Flathub (apper):</strong> <a
+href="https://flathub.org">https://flathub.org</a> <strong>ProtonDB
+(spill):</strong> <a
+href="https://www.protondb.com">https://www.protondb.com</a></p>
+<h2 id="sjekkliste-etter-installasjon">Sjekkliste etter
+installasjon</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Ta backup av viktige
+filer</label></li>
+<li><label><input type="checkbox" />Installer oppdateringer</label></li>
+<li><label><input type="checkbox" />Huket av for multimedia-kodeker
+under installasjonen? (ellers: Programvarebehandling →
+mint-meta-codecs)</label></li>
+<li><label><input type="checkbox" />Installer Timeshift og ta første
+snapshot</label></li>
+<li><label><input type="checkbox" />Installer de programmene du bruker
+mest</label></li>
+<li><label><input type="checkbox" />Test at WiFi, lyd, skriver
+fungerer</label></li>
+<li><label><input type="checkbox" />Tilpass utseende litt (tema /
+bakgrunn)</label></li>
+<li><label><input type="checkbox" />Lær deg 3–4
+terminal-kommandoer</label></li>
+</ul>
+<hr />
+<p>Dette er slutten på hovedinnholdet. Bruk resten av boken som
+oppslagsverk!</p>
+</section>
+<section id="kap14" class="chapter">
+<h1 id="ordliste-glossary">Ordliste (Glossary)</h1>
+<p><strong>Bootbar USB</strong><br />
+En USB-pinne som kan brukes til å starte opp en datamaskin og installere
+eller prøve et operativsystem.</p>
+<p><strong>Distribusjon (Distro)</strong><br />
+En komplett pakke av Linux som inkluderer kjerne, skrivebordsmiljø,
+programmer og verktøy. Eksempler: Linux Mint, Ubuntu, Pop!_OS.</p>
+<p><strong>Dual boot</strong><br />
+Når to operativsystemer (f.eks. Windows og Linux) er installert på samme
+maskin, og du kan velge hvilket du vil starte.</p>
+<p><strong>Flatpak</strong><br />
+Et moderne system for å distribuere apper på Linux. Apper er isolerte og
+fungerer på tvers av distribusjoner.</p>
+<p><strong>GRUB</strong><br />
+Bootloaderen som lar deg velge hvilket operativsystem du vil starte når
+maskinen skrur på.</p>
+<p><strong>ISO-fil</strong><br />
+En bildefil som inneholder hele operativsystemet. Den brukes til å lage
+en bootbar USB.</p>
+<p><strong>Kernel (Kjerne)</strong><br />
+Kjernen i operativsystemet. I Linux er dette “Linux-kjernen”.</p>
+<p><strong>LTS (Long Term Support)</strong><br />
+En versjon som får oppdateringer over lang tid (vanligvis 5 år).
+Anbefalt for nybegynnere.</p>
+<p><strong>Programvaresenter</strong><br />
+Det grafiske programmet der du søker etter og installerer apper
+(Software Center).</p>
+<p><strong>Repository</strong><br />
+Et offisielt lager av programmer som distribusjonen din henter apper og
+oppdateringer fra.</p>
+<p><strong>Secure Boot</strong><br />
+En sikkerhetsfunksjon i BIOS/UEFI som kan hindre at ikke-godkjente
+operativsystemer starter. Må noen ganger slås av midlertidig under
+installasjon.</p>
+<p><strong>Snapshot</strong><br />
+Et øyeblikksbilde av systemet ditt. Brukes i Timeshift for å kunne gå
+tilbake til en tidligere tilstand.</p>
+<p><strong>Sudo</strong><br />
+Kommando som lar deg kjøre programmer med administrator-rettigheter.</p>
+<p><strong>Terminal</strong><br />
+Tekstbasert grensesnitt der du skriver kommandoer.</p>
+<p><strong>Timeshift</strong><br />
+Program som lager system-snapshots, lignende System Restore i
+Windows.</p>
+<p><strong>Wine</strong><br />
+Et lag som lar deg kjøre mange Windows-programmer på Linux.</p>
+<p><strong>BIOS / UEFI</strong><br />
+Programvaren som starter datamaskinen før operativsystemet. UEFI er den
+moderne versjonen.</p>
+<p><strong>Partisjon</strong><br />
+En inndeling av harddisken. Du kan ha flere partisjoner for f.eks.
+Windows og Linux side om side.</p>
+<p><strong>Live-modus</strong><br />
+Å kjøre Linux direkte fra USB uten å installere det. Perfekt for
+testing.</p>
+<p><strong>Bootloader</strong><br />
+Programmet som velger hvilket operativsystem som skal starte (f.eks.
+GRUB).</p>
+<p><strong>apt</strong><br />
+Pakkebehandleren som brukes i Ubuntu-baserte distribusjoner for å
+installere og oppdatere programmer.</p>
+<p><strong>Pakke</strong><br />
+Et ferdig program eller verktøy som kan installeres via apt eller
+Flatpak.</p>
+<p><strong>Driver</strong><br />
+Programvare som får maskinvare (WiFi, grafikk, skriver) til å
+fungere.</p>
+<p><strong>Åpen kildekode (Open Source)</strong><br />
+Programvare der kildekoden er offentlig, slik at alle kan se, endre og
+dele den.</p>
+<p><strong>GNOME / Cinnamon / KDE / COSMIC</strong><br />
+Populære skrivebordsmiljøer (det visuelle laget du klikker på). Cinnamon
+er mest Windows-lignende. COSMIC er Pop!_OS sitt eget skrivebord.</p>
+<p><strong>Proton</strong><br />
+Verktøy fra Valve som lar de fleste Windows-spill kjøre på Linux via
+Steam.</p>
+<p><strong>Root</strong><br />
+Administrator-brukeren på Linux, med full tilgang til hele systemet.</p>
+<p><strong>Hjemmemappe</strong><br />
+Mappen der dine personlige filer ligger (<code>/home/brukernavn</code>,
+forkortet <code>~</code>).</p>
+<p><strong>Wayland / X11</strong><br />
+To forskjellige måter Linux viser grafikk på skjermen. Ubuntu/GNOME, KDE
+og COSMIC bruker Wayland som standard; Linux Mint Cinnamon bruker
+fortsatt X11.</p>
+<p><strong>Snap</strong><br />
+Canonical (Ubuntu) sitt pakkeformat – et alternativ til Flatpak. Brukes
+mest i Ubuntu.</p>
+<p><strong>AppImage</strong><br />
+Et program pakket som én enkelt fil: last ned, gjør den kjørbar, og
+kjør. Ingen installasjon, men heller ingen automatiske
+oppdateringer.</p>
+<p><strong>PipeWire</strong><br />
+Lydserveren de fleste moderne distribusjoner bruker. Håndterer lyd og
+video i bakgrunnen.</p>
+<hr />
+<h2 id="norskengelsk-ordliste">Norsk–engelsk ordliste</h2>
+<p>Nyttig når du søker etter hjelp på engelsk:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Norsk</th>
+<th>Engelsk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kjerne</td>
+<td>Kernel</td>
+</tr>
+<tr class="even">
+<td>Distribusjon</td>
+<td>Distribution (distro)</td>
+</tr>
+<tr class="odd">
+<td>Skrivebordsmiljø</td>
+<td>Desktop environment</td>
+</tr>
+<tr class="even">
+<td>Programvaresenter</td>
+<td>Software center</td>
+</tr>
+<tr class="odd">
+<td>Filbehandler</td>
+<td>File manager</td>
+</tr>
+<tr class="even">
+<td>Oppgavelinje</td>
+<td>Taskbar / panel</td>
+</tr>
+<tr class="odd">
+<td>Snarvei</td>
+<td>Shortcut</td>
+</tr>
+<tr class="even">
+<td>Sikkerhetskopi</td>
+<td>Backup</td>
+</tr>
+<tr class="odd">
+<td>Innstillinger</td>
+<td>Settings</td>
+</tr>
+<tr class="even">
+<td>Brannmur</td>
+<td>Firewall</td>
+</tr>
+<tr class="odd">
+<td>Skjermkort / grafikkort</td>
+<td>GPU / graphics card</td>
+</tr>
+<tr class="even">
+<td>Oppdateringsfrekvens</td>
+<td>Refresh rate</td>
+</tr>
+</tbody>
+</table>
+</section>
+      <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.9rem; color: #666;">
+        <p>Denne boken er ment som en praktisk guide. Lykke til med Linux!</p>
+        <p><small>Generert automatisk med <code>bygg.py</code> – rediger kapitlene, ikke denne filen.</small></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
