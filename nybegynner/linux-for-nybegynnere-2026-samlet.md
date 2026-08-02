@@ -2,7 +2,7 @@
 
 **En praktisk og vennlig guide for deg som vil bytte fra Windows til Linux.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-03.*
 
 ## Innhold
 
@@ -85,7 +85,24 @@ Takk for at du har valgt å gi Linux en sjanse. Jeg håper denne boken gjør ove
 
 Lykke til!
 
-— Forfatteren
+---
+
+## Et par ord fra forfatteren
+
+Jeg er ikke systemadministrator av yrke. Til daglig er jeg prosjektleder i byggebransjen, hos en av de større aktørene i Norge – fremdrift, kontrakter og tall som skal stemme.
+
+Men interessen for data har vært der siden jeg var ung, og for litt over et år siden bestemte jeg meg for å gi Linux en ordentlig sjanse. Jeg har ikke sett meg tilbake siden.
+
+Det er derfor denne boken finnes. Jeg skrev den jeg selv skulle ønske jeg hadde det første året: ikke en oppslagsbok som forutsetter at du kan halvparten fra før, men en rolig gjennomgang skrevet av en som fortsatt husker godt hvordan det er å ikke vite.
+
+Og en ting jeg synes du skal vite: denne boken er skrevet med god hjelp fra kunstig intelligens – Claude Fable har vært min viktigste sparringpartner, sammen med noen andre språkmodeller. Det er faktisk en del av historien om hvorfor Linux ble overkommelig for meg i utgangspunktet: å ha noen å spørre klokken elleve på kvelden, som aldri blir lei av det ellevte oppfølgingsspørsmålet, forandrer hvor bratt en læringskurve føles. Innholdet er mitt, og kommandoene er testet på ekte maskiner før de fikk stå – men jeg har hatt selskap underveis, og det unner jeg deg også.
+
+Hvis du sitter og lurer på om du kan nok til å begynne: det kunne ikke jeg heller. Det går fint likevel.
+
+Lykke til.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 

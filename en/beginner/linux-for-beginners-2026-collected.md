@@ -2,7 +2,7 @@
 
 **A practical, friendly guide for anyone switching from Windows to Linux.**
 
-*Collected edition – all chapters in one file. Generated 2026-08-02.*
+*Collected edition – all chapters in one file. Generated 2026-08-03.*
 
 ## Contents
 
@@ -85,7 +85,26 @@ Thank you for choosing to give Linux a chance. I hope this book makes the transi
 
 Good luck!
 
-— The Author
+---
+
+## A few words from the author
+
+I'm not a systems administrator by trade. My day job is project management in construction, at one of Norway's larger contractors – schedules, contracts, and numbers that have to add up.
+
+But computers have been my passion since I was young, and a little over a year ago I decided to give Linux a real chance. I haven't looked back since.
+
+That's why this book exists. I wrote the book I wish I'd had during my first year: not a reference work that assumes you already know half of it, but a calm walkthrough written by someone who still remembers exactly what it's like not to know.
+
+One more thing I think you should know: this book was written with a great deal of help from artificial intelligence – Claude Fable has been my main sparring partner, along with a few other language models. That's actually part of the story of why Linux became manageable for me in the first place. Having someone to ask at eleven at night, who never tires of the eleventh follow-up question, changes how steep a learning curve feels. The content is mine, and every command was tested on real machines before it earned its place – but I had company along the way, and I'd wish the same for you.
+
+A note on language: these books were originally written in Norwegian and adapted for a US audience. If a turn of phrase now and then sounds like it came from somewhere colder – it did.
+
+If you're sitting there wondering whether you know enough to start: I didn't either. It works out anyway.
+
+Good luck.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 

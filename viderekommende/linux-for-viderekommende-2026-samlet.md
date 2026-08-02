@@ -2,7 +2,7 @@
 
 **Oppfølgeren – for deg som har brukt Linux en stund og vil forstå og mestre systemet ditt.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-03.*
 
 ## Innhold
 
@@ -90,7 +90,24 @@ Jeg lover deg én ting: **Du trenger ikke å kunne alt på en gang.** Lær én t
 
 Lykke til – og nyt reisen!
 
-— Forfatteren
+---
+
+## Et par ord fra forfatteren
+
+Jeg er ikke systemadministrator av yrke. Til daglig er jeg prosjektleder i byggebransjen, hos en av de større aktørene i Norge – fremdrift, kontrakter og tall som skal stemme.
+
+Men interessen for data har vært der siden jeg var ung, og for litt over et år siden bestemte jeg meg for å gi Linux en ordentlig sjanse. Jeg har ikke sett meg tilbake siden.
+
+Denne boken er det andre året mitt, destillert. Alt jeg måtte google to ganger fordi svaret første gang ikke ga mening, alt jeg ødela og måtte fikse, alle øyeblikkene der en brikke plutselig falt på plass – samlet i den rekkefølgen jeg skulle ønske noen hadde presentert det for meg.
+
+Og en ting jeg synes du skal vite: denne boken er skrevet med god hjelp fra kunstig intelligens – Claude Fable har vært min viktigste sparringpartner, sammen med noen andre språkmodeller. Det er faktisk en del av historien om hvorfor Linux ble overkommelig for meg i utgangspunktet: å ha noen å spørre klokken elleve på kvelden, som aldri blir lei av det ellevte oppfølgingsspørsmålet, forandrer hvor bratt en læringskurve føles. Innholdet er mitt, og kommandoene er testet på ekte maskiner før de fikk stå – men jeg har hatt selskap underveis, og det unner jeg deg også.
+
+Lær én ting, prøv den, ødelegg noe, fiks det. Det er hele metoden.
+
+Lykke til.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 

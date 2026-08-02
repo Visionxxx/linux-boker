@@ -2,7 +2,7 @@
 
 **Third book in the series – master your system at the source level and run your own infrastructure like a pro.**
 
-*Collected edition – all chapters in one file. Generated 2026-08-02.*
+*Collected edition – all chapters in one file. Generated 2026-08-03.*
 
 ## Contents
 
@@ -76,6 +76,27 @@ In other words, the machine you already have will do. Time-wise: Parts 1 and 2 a
 **Tested on:** Commands and package names in this book are verified against Debian 13 and Ubuntu 24.04-based systems (including Linux Mint 22). Where the distros diverge, the text says so. (Example output – kernel versions, package versions, and the like – varies with distro and time, so don't worry if your numbers differ from the book's.) If you're running something else, the differences are small – and now you have the tools to find them. We write `apt` throughout; on Fedora it's `dnf`, on Arch `pacman` – at your level that translation is trivial (the distro safari in Book 2 gave you the map).
 
 Now it's time to see what's really going on under the hood.
+
+---
+
+## A few words from the author
+
+I'm not a systems administrator by trade. My day job is project management in construction, at one of Norway's larger contractors – schedules, contracts, and numbers that have to add up.
+
+But computers have been my passion since I was young, and a little over a year ago I decided to give Linux a real chance. I haven't looked back since.
+
+This book wasn't written by a veteran with twenty years in production operations. It was written by an enthusiast who has burned himself on enough home lab to know where it hurts – and who left the scar in the text every time, so you don't have to earn your own.
+
+One more thing I think you should know: this book was written with a great deal of help from artificial intelligence – Claude Fable has been my main sparring partner, along with a few other language models. That's actually part of the story of why Linux became manageable for me in the first place. Having someone to ask at eleven at night, who never tires of the eleventh follow-up question, changes how steep a learning curve feels. The content is mine, and every command was tested on real machines before it earned its place – but I had company along the way, and I'd wish the same for you.
+
+A note on language: these books were originally written in Norwegian and adapted for a US audience. If a turn of phrase now and then sounds like it came from somewhere colder – it did.
+
+Use this book as a toolbox, not as an exam. The best chapters are the ones you come back to at three in the morning.
+
+Good luck.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 

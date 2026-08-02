@@ -2,7 +2,7 @@
 
 **Tredje bok i serien – for deg som vil mestre systemet på kildenivå og drifte egen infrastruktur som en proff.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-03.*
 
 ## Innhold
 
@@ -76,6 +76,25 @@ Du klarer deg altså med maskinen du har. Tidsmessig: Del 1 og 2 er kveldsstoff 
 **Testet på:** Kommandoer og pakkenavn i boken er verifisert mot Debian 13 og Ubuntu 24.04-baserte systemer (inkludert Linux Mint 22). Der distroene skiller lag, sier teksten fra. (Eksempelutskrifter – kjerneversjoner, pakkeversjoner og lignende – varierer med distro og tidspunkt, så ikke bli urolig om dine tall avviker fra bokens.) Bruker du noe annet, er avvikene små – og nå har du verktøyene til å finne dem. Vi skriver `apt` hele veien; på Fedora heter det `dnf`, på Arch `pacman` – på ditt nivå er den oversettelsen triviell (distro-safarien i bok 2 ga deg kartet).
 
 Nå er det på tide å se hva som virkelig foregår under panseret.
+
+---
+
+## Et par ord fra forfatteren
+
+Jeg er ikke systemadministrator av yrke. Til daglig er jeg prosjektleder i byggebransjen, hos en av de større aktørene i Norge – fremdrift, kontrakter og tall som skal stemme.
+
+Men interessen for data har vært der siden jeg var ung, og for litt over et år siden bestemte jeg meg for å gi Linux en ordentlig sjanse. Jeg har ikke sett meg tilbake siden.
+
+Denne boken er ikke skrevet av en veteran med tjue år i produksjonsdrift. Den er skrevet av en entusiast som har brent seg på nok hjemmelab til å vite hvor det gjør vondt – og som har lagt igjen arret i teksten hver gang, slik at du slipper å skaffe deg det selv.
+
+Og en ting jeg synes du skal vite: denne boken er skrevet med god hjelp fra kunstig intelligens – Claude Fable har vært min viktigste sparringpartner, sammen med noen andre språkmodeller. Det er faktisk en del av historien om hvorfor Linux ble overkommelig for meg i utgangspunktet: å ha noen å spørre klokken elleve på kvelden, som aldri blir lei av det ellevte oppfølgingsspørsmålet, forandrer hvor bratt en læringskurve føles. Innholdet er mitt, og kommandoene er testet på ekte maskiner før de fikk stå – men jeg har hatt selskap underveis, og det unner jeg deg også.
+
+Bruk boken som en verktøykasse, ikke som en eksamen. De beste kapitlene er de du kommer tilbake til klokken tre om natten.
+
+Lykke til.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 

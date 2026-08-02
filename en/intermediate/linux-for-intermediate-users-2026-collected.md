@@ -2,7 +2,7 @@
 
 **The sequel – for you who have used Linux for a while and want to understand and master your system.**
 
-*Collected edition – all chapters in one file. Generated 2026-08-02.*
+*Collected edition – all chapters in one file. Generated 2026-08-03.*
 
 ## Contents
 
@@ -90,7 +90,26 @@ I promise you one thing: **You don't need to know everything at once.** Learn on
 
 Good luck – and enjoy the journey!
 
-— The Author
+---
+
+## A few words from the author
+
+I'm not a systems administrator by trade. My day job is project management in construction, at one of Norway's larger contractors – schedules, contracts, and numbers that have to add up.
+
+But computers have been my passion since I was young, and a little over a year ago I decided to give Linux a real chance. I haven't looked back since.
+
+This book is my second year, distilled. Everything I had to look up twice because the first answer didn't make sense, everything I broke and had to fix, every moment where a piece suddenly clicked into place – gathered in the order I wish someone had handed it to me.
+
+One more thing I think you should know: this book was written with a great deal of help from artificial intelligence – Claude Fable has been my main sparring partner, along with a few other language models. That's actually part of the story of why Linux became manageable for me in the first place. Having someone to ask at eleven at night, who never tires of the eleventh follow-up question, changes how steep a learning curve feels. The content is mine, and every command was tested on real machines before it earned its place – but I had company along the way, and I'd wish the same for you.
+
+A note on language: these books were originally written in Norwegian and adapted for a US audience. If a turn of phrase now and then sounds like it came from somewhere colder – it did.
+
+Learn one thing, try it, break something, fix it. That's the whole method.
+
+Good luck.
+
+**Glenn Roar Høye**
+*August 2026*
 
 ---
 
