@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="620" viewBox="0 0 1180 620" font-family="DejaVu Sans Mono, monospace">
+<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a97ad"/></marker></defs>
+<rect width="1180" height="620" rx="14" fill="#0e1526" stroke="#2b3a55" stroke-width="2"/>
+<text x="590.0" y="42" fill="#4ec9b0" font-size="22" font-weight="bold" text-anchor="middle">cgroup-hierarkiet: grenser arves nedover</text>
+<rect x="470" y="80" width="240" height="54" rx="8" fill="#243a24" stroke="#4e7a3a" stroke-width="1.6"/>
+<text x="590.0" y="112.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">-.slice  (hele maskinen)</text>
+<rect x="230" y="200" width="240" height="54" rx="8" fill="#1e3550" stroke="#4a90d9" stroke-width="1.6"/>
+<text x="350.0" y="222.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">system.slice</text>
+<text x="350.0" y="242.3" fill="#8a97ad" font-size="13" text-anchor="middle">tjenestene</text>
+<rect x="710" y="200" width="240" height="54" rx="8" fill="#1e3550" stroke="#4a90d9" stroke-width="1.6"/>
+<text x="830.0" y="222.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">user.slice</text>
+<text x="830.0" y="242.3" fill="#8a97ad" font-size="13" text-anchor="middle">innloggede brukere</text>
+<line x1="590" y1="134" x2="350" y2="200" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="590" y1="134" x2="830" y2="200" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="70" y="330" width="250" height="66" rx="8" fill="#243f22" stroke="#4ec9b0" stroke-width="1.6"/>
+<text x="195.0" y="358.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">nginx.service</text>
+<text x="195.0" y="377.5" fill="#e6e6e6" font-size="15" font-weight="bold" text-anchor="middle">MemoryMax=500M · CPUQuota=50%</text>
+<rect x="360" y="330" width="190" height="54" rx="8" fill="#243f22" stroke="#4ec9b0" stroke-width="1.6"/>
+<text x="455.0" y="362.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">ssh.service</text>
+<rect x="700" y="330" width="260" height="60" rx="8" fill="#1e3550" stroke="#4a90d9" stroke-width="1.6"/>
+<text x="830.0" y="365.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">user-1000.slice</text>
+<line x1="350" y1="254" x2="195" y2="330" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="350" y1="254" x2="455" y2="330" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="830" y1="254" x2="830" y2="330" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<rect x="60" y="470" width="130" height="50" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="125.0" y="499.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">master</text>
+<rect x="210" y="470" width="150" height="50" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="285.0" y="499.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">worker ×4</text>
+<rect x="700" y="470" width="260" height="54" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="830.0" y="492.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">session-3.scope</text>
+<text x="830.0" y="510.7" fill="#8a97ad" font-size="11" text-anchor="middle">terminalen din</text>
+<line x1="195" y1="396" x2="125" y2="470" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="195" y1="396" x2="285" y2="470" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="830" y1="390" x2="830" y2="470" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="590.0" y="596" fill="#dcdcaa" font-size="15" text-anchor="middle">Grensen på nginx.service gjelder ALT under den – workers kan ikke rømme kvoten.</text>
+</svg>

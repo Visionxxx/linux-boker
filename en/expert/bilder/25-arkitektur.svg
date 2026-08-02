@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="660" viewBox="0 0 1180 660" font-family="DejaVu Sans Mono, monospace">
+<defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8a97ad"/></marker></defs>
+<rect width="1180" height="660" rx="14" fill="#0e1526" stroke="#2b3a55" stroke-width="2"/>
+<text x="590.0" y="42" fill="#4ec9b0" font-size="22" font-weight="bold" text-anchor="middle">Referansearkitektur: hjemmelabben</text>
+<rect x="470" y="78" width="240" height="52" rx="8" fill="#1a2336" stroke="#455574" stroke-width="1.6"/>
+<text x="590.0" y="109.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">Internett</text>
+<rect x="360" y="190" width="460" height="84" rx="8" fill="#3a2436" stroke="#c586c0" stroke-width="1.6"/>
+<text x="590.0" y="227.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">gateway</text>
+<text x="590.0" y="247.3" fill="#e6e6e6" font-size="16" font-weight="bold" text-anchor="middle">Caddy · Unbound · nftables · VLAN-ruting</text>
+<line x1="590" y1="130" x2="590" y2="188" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="760" y="168" fill="#4ec9b0" font-size="14" text-anchor="start" font-style="italic">kun VPN inn (WireGuard)</text>
+<line x1="120" y1="320" x2="1060" y2="320" stroke="#569cd6" stroke-width="2.4"/>
+<line x1="590" y1="274" x2="590" y2="320" stroke="#569cd6" stroke-width="1.8"/>
+<text x="140" y="308" fill="#569cd6" font-size="14" text-anchor="start" font-style="italic">VLAN 10 adm · VLAN 20 tjenester · VLAN 30 IoT (isolert)</text>
+<rect x="120" y="400" width="250" height="96" rx="8" fill="#243f22" stroke="#4ec9b0" stroke-width="1.6"/>
+<text x="245.0" y="434.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">compute1 / 2</text>
+<text x="245.0" y="452.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">Jellyfin · Home Assistant</text>
+<text x="245.0" y="470.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">Forgejo (containere)</text>
+<rect x="465" y="400" width="250" height="96" rx="8" fill="#2a3b57" stroke="#7fb3d5" stroke-width="1.6"/>
+<text x="590.0" y="434.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">monitor</text>
+<text x="590.0" y="452.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">Prometheus · Grafana</text>
+<text x="590.0" y="470.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">Loki</text>
+<rect x="810" y="400" width="250" height="96" rx="8" fill="#3a2f1c" stroke="#dcdcaa" stroke-width="1.6"/>
+<text x="935.0" y="434.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">nas</text>
+<text x="935.0" y="452.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">btrfs / ZFS · NFS</text>
+<text x="935.0" y="470.7" fill="#e6e6e6" font-size="14" font-weight="bold" text-anchor="middle">backup (restic)</text>
+<line x1="245" y1="320" x2="245" y2="400" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="590" y1="320" x2="590" y2="400" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="935" y1="320" x2="935" y2="400" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="590.0" y="560" fill="#8a97ad" font-size="14" text-anchor="middle">node_exporter på alle noder  ──►  monitor  (metrikker inn)</text>
+<line x1="245" y1="496" x2="560" y2="546" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="935" y1="496" x2="620" y2="546" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<line x1="590" y1="496" x2="590" y2="530" stroke="#8a97ad" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="590.0" y="638" fill="#dcdcaa" font-size="15" text-anchor="middle">Gateway = eneste vei inn. Ett ansvar per vert – noder kan dø uten å ta med DNS eller overvåking.</text>
+</svg>

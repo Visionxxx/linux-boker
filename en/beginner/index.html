@@ -1,0 +1,3869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux for Beginners 2026</title>
+  <style>
+    :root {
+      --bg: #f8f5f0;
+      --text: #222;
+      --accent: #2c5f2d;
+      --sidebar: #f0e9df;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.7;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .container {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      padding: 20px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      border-right: 1px solid #d4c9b8;
+      font-size: 0.95rem;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin: 6px 0;
+    }
+    .sidebar a {
+      color: #333;
+      text-decoration: none;
+      display: block;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .sidebar a:hover {
+      background: #e6dccd;
+    }
+    .main {
+      flex: 1;
+      max-width: 780px;
+      padding: 40px 50px;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      min-height: 100vh;
+    }
+    h1, h2, h3 {
+      color: var(--accent);
+      line-height: 1.3;
+    }
+    h1 {
+      font-size: 2.1rem;
+      border-bottom: 3px solid #d4c9b8;
+      padding-bottom: 10px;
+      margin-top: 1.5em;
+    }
+    h2 { font-size: 1.5rem; margin-top: 1.8em; }
+    h3 { font-size: 1.2rem; }
+    p, li {
+      max-width: 70ch;
+    }
+    pre, code {
+      background: #f4f1e9;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: ui-monospace, monospace;
+    }
+    pre {
+      padding: 14px;
+      overflow-x: auto;
+    }
+    pre code {
+      /* code-paddingen over gjelder inline-kode; inni en blokk gir den
+         første linje et falskt innrykk – nullstill den der */
+      padding: 0;
+      background: none;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background: #f4f1e9;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 1em 0;
+    }
+    .chapter {
+      margin-bottom: 3rem;
+    }
+    .toc-header {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    .book-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .book-subtitle {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; position: static; }
+      .main { padding: 20px; }
+    }
+    .nav-top {
+      background: #2c5f2d;
+      color: white;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-top a {
+      color: white;
+      text-decoration: none;
+    }
+    .info-box {
+      background: #eef4ea;
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin: 1.2em 0;
+    }
+    .info-box p { margin: 0 0 6px 0; }
+    .info-box ul, .info-box ol { margin: 0; padding-left: 1.2em; }
+    .warn-box {
+      background: #fdeeee;
+      border-left: 4px solid #b3382c;
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin: 1.2em 0;
+    }
+    .warn-box p { margin: 0 0 6px 0; }
+    .warn-box p strong { color: #b3382c; }
+    .warn-box ul, .warn-box ol { margin: 0; padding-left: 1.2em; }
+    .kryss-lenke {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    .kryss-lenke a { color: var(--accent); font-weight: 600; }
+    .epub-btn {
+      display: inline-block;
+      background: white;
+      color: var(--accent) !important;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .epub-btn:hover { background: #e6dccd; }
+    .sidebar .epub-btn {
+      background: var(--accent);
+      color: white !important;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .sidebar .epub-btn:hover { background: #234b24; }
+    .hjem-lenke {
+      display: block;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      color: var(--accent) !important;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-top">
+    <div>
+      <strong>Linux for Beginners 2026</strong>
+    </div>
+    <div>
+      <a href="linux-for-beginners-2026.epub" download class="epub-btn">&#128214; Download EPUB</a>
+      &nbsp;&nbsp;
+      <a href="linux-for-beginners-2026.pdf" download class="epub-btn">&#128196; Download PDF</a>
+      &nbsp;&nbsp;
+      <a href="../../index.html">&#128218; All books</a>
+      &nbsp;&nbsp;
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav class="sidebar">
+      <div class="book-title">Linux for Beginners</div>
+      <div class="book-subtitle">2026</div>
+      <a href="linux-for-beginners-2026.epub" download class="epub-btn">&#128214; Download EPUB</a>
+      <a href="linux-for-beginners-2026.pdf" download class="epub-btn">&#128196; Download PDF</a>
+      <a href="../../index.html" class="hjem-lenke">&#128218; All books in the series</a>
+
+      <h2 class="toc-header">Contents</h2>
+      <ul>
+        <li><a href="#forord">Preface</a></li>
+        <li><a href="#kap01">1. Introduction</a></li>
+        <li><a href="#kap02">2. What is Linux, really?</a></li>
+        <li><a href="#kap03">3. Which Linux should I choose?</a></li>
+        <li><a href="#kap04">4. Preparation and Installation</a></li>
+        <li><a href="#kap05">5. The First Time You Start Linux</a></li>
+        <li><a href="#kap06">6. Daily Use</a></li>
+        <li><a href="#kap07">7. The Terminal</a></li>
+        <li><a href="#kap08">8. Common Problems in the First Weeks</a></li>
+        <li><a href="#kap09">9. Customization and Polish</a></li>
+        <li><a href="#kap10">10. Security, backups, and good habits</a></li>
+        <li><a href="#kap11">11. What now? Next steps and resources</a></li>
+        <li><a href="#kap12">Bonus: Frequently asked questions and myths about Linux</a></li>
+        <li><a href="#kap13">Quick reference</a></li>
+        <li><a href="#kap14">Glossary</a></li>
+      </ul>
+      <p class="kryss-lenke">
+        Finished the book?<br>
+        <a href="../intermediate/index.html">Linux for Intermediate Users &rarr;</a>
+      </p>
+      <p class="kryss-lenke">
+        Foretrekker du norsk?<br>
+        <a href="../../nybegynner/index.html">Norsk utgave &rarr;</a>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+        All chapters on a single page.
+      </p>
+    </nav>
+
+    <main class="main" id="top">
+      <h1 style="text-align:center; margin-bottom: 0.3em;">Linux for Beginners 2026</h1>
+      <p style="text-align:center; font-size:1.1rem; color:#444; margin-top:0;">
+        A practical, friendly guide for anyone switching from Windows to Linux.
+      </p>
+<section id="forord" class="chapter">
+<h1 id="preface">Preface</h1>
+<p>Welcome to <em>Linux for Beginners 2026</em>.</p>
+<p>This book is written for you — someone who has considered switching
+from Windows to Linux, but has been a little unsure. Maybe you’ve heard
+that Linux is “difficult”, “only for programmers”, or that “nothing
+works”. Maybe you’ve watched a friend use it and wondered whether it
+might suit you too.</p>
+<p>I wrote this book because I believe 2026 is one of the best times
+ever to switch to Linux. Hardware support is better than it has ever
+been, games run surprisingly well, and the most beginner-friendly
+distributions have never been more polished.</p>
+<h2 id="who-is-this-book-for">Who is this book for?</h2>
+<p>This book is for:</p>
+<ul>
+<li>You, if you’re tired of ads, tracking, and unnecessary “features” in
+Windows</li>
+<li>You, if you want a faster and more stable system on an older
+machine</li>
+<li>You, if you’re curious and like to understand the things you
+use</li>
+<li>You, if you want an operating system that respects you as a
+user</li>
+</ul>
+<p>It is <strong>not</strong> written for people who are already
+experienced Linux users, or for those who want the most technical and
+advanced guide out there. There are plenty of other books and resources
+for them.</p>
+<h2 id="how-to-use-this-book">How to use this book</h2>
+<p>You can read it cover to cover, but you don’t have to. Most chapters
+can be read independently once you’ve installed the system.</p>
+<p>I do recommend reading the first four chapters in order:</p>
+<ol type="1">
+<li>Introduction (why you might want to switch)</li>
+<li>What Linux actually is</li>
+<li>Which distribution you should choose</li>
+<li>Installation</li>
+</ol>
+<p>After that, you can jump to whichever chapters are most relevant to
+you right now.</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>You’ll learn enough to:</p>
+<ul>
+<li>Install Linux safely (either as a dual boot or on its own)</li>
+<li>Use your computer for everyday things</li>
+<li>Install and use the programs you need</li>
+<li>Solve most common problems yourself</li>
+<li>Customize the system until it feels like your own</li>
+</ul>
+<p>You will <em>not</em> learn everything. That’s not the goal, either.
+Linux is big, and it’s perfectly fine to learn things as you need
+them.</p>
+<h2 id="a-small-piece-of-encouragement">A small piece of
+encouragement</h2>
+<p>The best advice I can give you is this:</p>
+<p><strong>Be patient with yourself for the first few
+weeks.</strong></p>
+<p>Everything will feel a little different. Some things will be better.
+Some things will be worse. That’s completely normal. Most people who
+have switched to Linux say it took between two and four weeks before it
+felt entirely natural.</p>
+<p>If something doesn’t work, take a deep breath. Almost every problem
+has a solution, and there’s a very helpful community out there.</p>
+<h2 id="thank-you">Thank you</h2>
+<p>Thank you for choosing to give Linux a chance. I hope this book makes
+the transition a little easier and a lot more pleasant.</p>
+<p>Good luck!</p>
+<p>— The Author</p>
+<hr />
+<p><strong>Next:</strong> <a href="01-innledning.md">Introduction – Why
+switch to Linux at all?</a></p>
+</section>
+<section id="kap01" class="chapter">
+<h1 id="introduction-why-switch-to-linux-at-all">1. Introduction – Why
+switch to Linux at all?</h1>
+<p><em>Last updated: 2026-07-11</em></p>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>The most common reasons to switch to Linux in 2026</li>
+<li>Why this book is written for completely ordinary people</li>
+<li>How the book is structured and how to get the most out of it</li>
+</ul>
+<hr />
+<h3 id="introduction">Introduction</h3>
+<p>Welcome! You’ve probably heard of Linux before. Maybe a friend
+mentioned it, or you saw it come up in a YouTube video. Maybe you’re
+tired of Windows feeling slow, or of getting more and more ads inside
+your operating system. Whatever brought you here — you’re in the right
+place.</p>
+<p>This book is written for you as a beginner. You don’t need to be
+technical. You don’t need to know how to code. All you need is curiosity
+and a little patience.</p>
+<h2 id="why-switch-at-all">Why switch at all?</h2>
+<p>Most people who switch to Linux don’t do it because they “have to”.
+They do it because they discover there’s a better alternative for
+them.</p>
+<p>Here are some of the most common reasons in 2026:</p>
+<h3 id="privacy-you-own-your-machine">1. Privacy – you own your
+machine</h3>
+<p>Windows collects a lot of data about you. Microsoft knows what you
+search for, which apps you use, how long you use them, and much more.
+Recent versions of Windows have added an increasing number of features
+like “Recall” (which takes screenshots of everything you do) and Copilot
+integration that analyzes your activity.</p>
+<p>Linux, on the other hand, is built on a completely different
+philosophy: <strong>You own your machine</strong>. No big corporation
+tracks you by default. No hidden telemetry services phoning home to a
+company without your knowledge.</p>
+<h3 id="no-ads-in-the-operating-system">2. No ads in the operating
+system</h3>
+<p>Have you noticed that Windows 11 keeps adding more suggestions,
+widgets, “recommended” apps, and ads in the Start menu? Many users feel
+their operating system has started to resemble an advertising
+platform.</p>
+<p>Linux doesn’t have that. Your desktop is yours. Period. No “Get
+Microsoft 365” popping up every time you open a document. No “Try Edge”
+messages.</p>
+<h3 id="its-free-and-always-will-be">3. It’s free – and always will
+be</h3>
+<p>You pay nothing for Linux. Not for the system itself, not for
+updates, and not for most of the programs you’ll need. There’s no “Pro”
+version that suddenly appears after a few months, and no subscription to
+renew.</p>
+<p>The same goes for most of the software: LibreOffice, VLC, GIMP,
+Firefox — all free, with no limitations.</p>
+<h3 id="you-learn-how-your-computer-actually-works">4. You learn how
+your computer actually works</h3>
+<p>With Windows, you’re often treated as a passive user. You’re supposed
+to just click on things and hope they work. With Linux, you’re invited
+behind the scenes. You learn how things fit together. It feels both
+liberating and useful — especially when something goes wrong and you
+actually understand why.</p>
+<p>Many people who have used Linux for a while say they feel more “in
+control” of their machine.</p>
+<h3 id="pushing-back-against-big-tech">5. Pushing back against Big
+Tech</h3>
+<p>Many people are tired of being locked into ecosystems. You shouldn’t
+need a Microsoft account to use your own PC. You shouldn’t be pushed
+into using OneDrive or Edge. Linux gives you back control.</p>
+<p>You decide which services you want to use — and which ones you
+don’t.</p>
+<h3 id="its-surprisingly-stable-and-lightweight">6. It’s surprisingly
+stable and lightweight</h3>
+<p>Many first-time Linux users are surprised by how fast and stable it
+feels — even on older machines.</p>
+<p>No forced restarts in the middle of your work. No “Update in
+progress, please don’t turn off your computer” when you’re up against a
+deadline. Many people find that older laptops that had grown sluggish on
+Windows suddenly feel fast again.</p>
+<h3 id="everyday-services-work-just-fine">7. Everyday services work just
+fine</h3>
+<p>In 2026, the services most Americans rely on every day work great on
+Linux:</p>
+<ul>
+<li>Online banking in the browser (Chase, Bank of America, Wells Fargo,
+your local credit union)</li>
+<li>Government websites (IRS, Social Security, your state’s DMV)</li>
+<li>Streaming: Netflix, YouTube, Hulu, Disney+, Spotify</li>
+<li>Shopping and shipping: Amazon, USPS and UPS tracking, and the
+rest</li>
+<li>Email, calendars, video calls (Gmail, Outlook.com, Zoom, Google
+Meet)</li>
+</ul>
+<p>Phone-only payment apps like Venmo, Zelle, and Cash App live on your
+phone anyway — exactly as they would if you were using a Windows PC.</p>
+<p>Most of the things that matter in day-to-day life work without a
+hitch.</p>
+<h2 id="but-isnt-linux-just-for-nerds">“But isn’t Linux just for
+nerds?”</h2>
+<p>This is the biggest myth of all. Fifteen or twenty years ago it may
+have been partly true. In 2026, it isn’t.</p>
+<p>Today there are Linux distributions made specifically for people
+coming from Windows. They look and feel almost identical to what you’re
+used to. You can use your mouse exactly like before. You can have
+multiple windows open. You can install apps with a few clicks.</p>
+<p>You don’t need to use the terminal if you don’t want to (although
+it’s fun to pick up a little of it over time).</p>
+<h2 id="is-linux-right-for-you-an-honest-checklist">Is Linux right for
+you? (an honest checklist)</h2>
+<p>Before you dive in, be honest with yourself:</p>
+<p><strong>Linux is an especially good fit if you:</strong></p>
+<ul>
+<li>Have an older PC that’s no longer supported by Windows 11 (Windows
+10 lost support in 2025)</li>
+<li>Are tired of ads and tracking in your operating system</li>
+<li>Want a stable, fast system with no forced updates in the middle of
+your work</li>
+<li>Mostly use a browser, office apps, music/video, and everyday
+services like online banking and streaming</li>
+</ul>
+<p><strong>Consider waiting if you:</strong></p>
+<ul>
+<li>Depend entirely on the Adobe suite (Photoshop, Premiere) for
+work</li>
+<li>Only play recent multiplayer games with strict anti-cheat</li>
+<li>Have a brand-new ARM laptop (e.g., the latest Snapdragon or Apple
+Silicon) and don’t want to risk any problems</li>
+</ul>
+<p>If you’re in doubt: start by trying Linux from a USB stick without
+installing anything. That way you lose nothing.</p>
+<h2 id="personal-reasons-what-are-yours">Personal reasons – what are
+yours?</h2>
+<p>Before you continue, take a moment and think:</p>
+<ul>
+<li>What annoys you most about Windows right now?</li>
+<li>What are you hoping to get out of trying Linux?</li>
+<li>Is it privacy? Speed? Cost? Curiosity? Fewer ads?</li>
+</ul>
+<p>Consider writing it down. It will help you stay motivated when things
+feel a little unfamiliar during the first few days.</p>
+<p>Here are some examples of what others have said:</p>
+<blockquote>
+<p>“I was tired of Windows 11 feeling like an advertising platform.” “My
+machine from 2018 got so slow I almost bought a new one. After Linux
+Mint, it feels fast again.” “I don’t want Microsoft to know everything I
+do on my computer.”</p>
+</blockquote>
+<p><strong>A real-world example:</strong> Karen (62) had an 8-year-old
+laptop that had grown sluggish on Windows 10. She installed Linux Mint
+with a little help from her grandson. Now she uses it for email, the
+news, online banking, and Netflix. “It feels new again, and I’m free of
+all those annoying pop-ups,” she says.</p>
+<h2 id="what-to-expect-from-this-book">What to expect from this
+book</h2>
+<p>This book is not a thick textbook full of commands. It’s a practical
+companion that walks you through the whole journey — from choosing a
+distribution to daily use — just as the preface describes. And most
+importantly: you’ll learn that it’s completely fine not to know
+everything right away.</p>
+<h2 id="why-so-many-people-wish-theyd-switched-sooner">Why so many
+people wish they’d switched sooner</h2>
+<p>After a few weeks or months on Linux, you often hear things like:</p>
+<ul>
+<li>“Why did this feel so scary before?”</li>
+<li>“My machine has never been this fast”</li>
+<li>“I barely notice I’m using a different operating system
+anymore”</li>
+<li>“I don’t miss anything from Windows except a couple of programs I’ve
+replaced”</li>
+</ul>
+<p>The transition is usually far less dramatic than people fear.</p>
+<h2 id="a-small-warning">A small warning</h2>
+<p>There will be days when things don’t work as expected. That’s part of
+the process. The difference from Windows is that once you’ve learned how
+to fix things, you feel far more capable of handling future problems
+yourself.</p>
+<h2 id="ready-to-start">Ready to start?</h2>
+<p>Then let’s get going.</p>
+<p>The next chapter covers the most fundamental question of all:
+<strong>What is Linux, really?</strong> — explained in a way anyone can
+understand.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Linux gives you more control, better privacy, and fewer ads than
+Windows.</li>
+<li>You can’t make a wrong choice — every recommended distribution is
+good for beginners.</li>
+<li>This book is designed to be reassuring and practical — go at your
+own pace.</li>
+</ul></div>
+<hr />
+<p><strong>Next chapter:</strong> <a href="02-hva-er-linux.md">02 – What
+is Linux, really?</a></p>
+</section>
+<section id="kap02" class="chapter">
+<h1
+id="what-is-linux-really-explained-simply-no-technical-mumbo-jumbo">2.
+What is Linux, really? (explained simply, no technical mumbo jumbo)</h1>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>The difference between the Linux kernel, distributions, and desktop
+environments</li>
+<li>Why there are so many different Linux variants</li>
+<li>A simple metaphor for understanding how Linux fits together</li>
+</ul>
+<hr />
+<h3 id="introduction">Introduction</h3>
+<p>Let’s start with the most important point: Linux is not a single
+program. It’s not “an alternative to Windows” in the way one app is an
+alternative to another app.</p>
+<p>Linux is a whole family of operating systems.</p>
+<h2 id="the-simplest-explanation">The simplest explanation</h2>
+<p>Think of it this way:</p>
+<ul>
+<li><strong>Windows</strong> is a finished product made by Microsoft.
+You buy (or receive) the whole package.</li>
+<li><strong>Linux</strong> is like an engine that many different
+manufacturers use to build their own cars.</li>
+</ul>
+<p>The engine (the kernel) is called the <strong>Linux kernel</strong>.
+But what you actually use — what you see on the screen — is built by
+many different people and organizations around the world.</p>
+<p>When people say “I use Linux”, they almost always mean a complete
+package called a <strong>distribution</strong> (or “distro” for
+short).</p>
+<h2 id="what-is-a-distribution">What is a distribution?</h2>
+<p>A distribution is a complete package that includes:</p>
+<ul>
+<li>The Linux kernel (the engine)</li>
+<li>A desktop environment (what you see and click on)</li>
+<li>Programs and tools</li>
+<li>An installer</li>
+<li>An update system</li>
+<li>Look-and-feel and default settings</li>
+</ul>
+<p>Examples of popular distributions in 2026:</p>
+<ul>
+<li>Linux Mint</li>
+<li>Ubuntu</li>
+<li>Pop!_OS</li>
+<li>Zorin OS</li>
+<li>Fedora</li>
+<li>Debian</li>
+</ul>
+<p>They all use the same Linux kernel, but they’re assembled in
+different ways — just like different car brands can use the same engine
+but have different bodywork, interiors, and driving feel.</p>
+<h2 id="why-are-there-so-many">Why are there so many?</h2>
+<p>Because people have different needs and preferences:</p>
+<ul>
+<li>Some want something that looks as much like Windows as possible</li>
+<li>Some want something very modern and minimalist</li>
+<li>Some want maximum stability</li>
+<li>Some want the newest of the new</li>
+</ul>
+<p>The nice part is that you can try several without breaking anything.
+Most distributions can run directly from a USB stick before you install
+them.</p>
+<h2 id="open-source-what-does-it-actually-mean">Open source – what does
+it actually mean?</h2>
+<p>Linux is <strong>open source</strong>. That means anyone can see how
+it’s made, change it, and share their changes.</p>
+<p>Why does this matter to you as a beginner?</p>
+<ul>
+<li>Thousands of people work on improving it all the time</li>
+<li>There’s no hidden agenda and no advertising</li>
+<li>If something is wrong, anyone can fix it (and many do)</li>
+<li>It’s extremely hard to sneak malicious software into the system
+without someone noticing</li>
+</ul>
+<p>Open source does not mean unstable or “amateurish”. Quite the
+opposite: much of the internet, supercomputers, phones (Android), and
+even many cars run on Linux.</p>
+<h2 id="desktop-environments-what-you-see-and-click-on">Desktop
+environments – what you see and click on</h2>
+<p>When you install Linux, you often also choose a <strong>desktop
+environment</strong>. This is the visual layer — how windows look, how
+the taskbar works, how you switch between apps.</p>
+<p>Some popular ones:</p>
+<ul>
+<li><strong>Cinnamon</strong> – Classic and Windows-like (used in Linux
+Mint)</li>
+<li><strong>GNOME</strong> – Modern and tidy (used in Ubuntu)</li>
+<li><strong>COSMIC</strong> – New and fast, made by System76 (used in
+Pop!_OS)</li>
+<li><strong>KDE Plasma</strong> – Extremely customizable, can look like
+almost anything</li>
+<li><strong>XFCE</strong> – Light and fast, great on older machines</li>
+</ul>
+<p>Here’s how two of them can look — same Linux, completely different
+interior:</p>
+<figure>
+<img src="bilder/GNOME_Shell.png"
+alt="The GNOME desktop (Ubuntu): the overview with a search bar at the top, open windows in the middle, and an app bar at the bottom – modern and tidy" />
+<figcaption aria-hidden="true">The GNOME desktop (Ubuntu): the overview
+with a search bar at the top, open windows in the middle, and an app bar
+at the bottom – modern and tidy</figcaption>
+</figure>
+<figure>
+<img
+src="bilder/Pop!_OS_24.04_LTS_COSMIC_Files_0.1.0_about_-_English.png"
+alt="The COSMIC desktop (Pop!_OS): the file manager in a dark theme with a panel at the top and a dock at the bottom – new, fast, and built from scratch" />
+<figcaption aria-hidden="true">The COSMIC desktop (Pop!_OS): the file
+manager in a dark theme with a panel at the top and a dock at the bottom
+– new, fast, and built from scratch</figcaption>
+</figure>
+<p>You can switch desktop environments later if you want — it’s one of
+the coolest things about Linux.</p>
+<h2 id="in-short">In short</h2>
+<ul>
+<li>Linux = the kernel (the engine)</li>
+<li>Distribution = the whole car (what you install and use)</li>
+<li>Desktop environment = the interior and the dashboard</li>
+</ul>
+<p>You don’t need to memorize all of this right now. The most important
+thing to take away is:</p>
+<p><strong>Linux is not one thing. It’s many different ways to run your
+computer — and you can choose the one that suits you best.</strong></p>
+<h2 id="try-it-yourself">Try it yourself</h2>
+<p>Next time you see Linux mentioned online or on YouTube, try to figure
+out which distribution and which desktop environment it’s about. You can
+now tell the engine (the kernel), the car (the distribution), and the
+interior (the desktop environment) apart — and that’s more than most
+people can do.</p>
+<h2 id="whats-next">What’s next?</h2>
+<p>In the next chapter, we’ll look at the best distributions for
+beginners in 2026 and help you choose the right one.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Linux is not a single program, but a whole family of operating
+systems (distributions).</li>
+<li>You choose a distribution and a desktop environment — just like
+choosing a car brand and an interior.</li>
+<li>You don’t need to remember all the technical details — what matters
+is picking something that feels familiar.</li>
+</ul></div>
+<hr />
+<p><strong>Next chapter:</strong> <a href="03-hvilken-linux.md">03 –
+Which Linux should I choose?</a></p>
+</section>
+<section id="kap03" class="chapter">
+<h1 id="which-linux-should-i-choose">3. Which Linux should I
+choose?</h1>
+<p><em>Last updated: 2026-07-11</em></p>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>The four best distributions for beginners in 2026</li>
+<li>The pros and cons of each of them</li>
+<li>A clear recommendation based on your situation</li>
+</ul>
+<hr />
+<p>This is one of the most common questions — and understandably so.
+There are hundreds of distributions, and it can feel overwhelming.</p>
+<p>The good news: for most beginners in 2026, there are really only a
+handful of good options worth considering.</p>
+<p>Here are my clear recommendations, ranked by who they suit best.</p>
+<h2 id="linux-mint-the-safest-choice-for-most-people">1. Linux Mint –
+The safest choice for most people</h2>
+<p><strong>Best for:</strong> Most people coming straight from Windows
+who want as little of a shock as possible.</p>
+<p>Linux Mint is known for being the most “Windows-like” option. It uses
+the Cinnamon desktop, which has a classic taskbar at the bottom, a Start
+menu, and support for folders on the desktop.</p>
+<figure>
+<img src="bilder/Linux_Mint_22.2_Cinnamon_eng.webp.png"
+alt="Linux Mint 22 with the Cinnamon desktop: a taskbar at the bottom and an open menu in the lower left – familiar surroundings for anyone coming from Windows" />
+<figcaption aria-hidden="true">Linux Mint 22 with the Cinnamon desktop:
+a taskbar at the bottom and an open menu in the lower left – familiar
+surroundings for anyone coming from Windows</figcaption>
+</figure>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Looks and feels familiar</li>
+<li>Very stable</li>
+<li>Includes most of what you need out of the box</li>
+<li>Excellent documentation and community</li>
+<li>Easy to install drivers and multimedia codecs</li>
+<li>Updates are conservative and safe</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Looks a bit “traditional” (some find it boring)</li>
+<li>Not always the very latest software</li>
+</ul>
+<p><strong>Recommended if:</strong> You want something that “just works”
+and reminds you as much as possible of Windows 10/11.</p>
+<p>Most first-time switchers start with Linux Mint Cinnamon.</p>
+<h2
+id="zorin-os-when-you-want-the-most-windows-like-experience-of-all">2.
+Zorin OS – When you want the most Windows-like experience of all</h2>
+<p><strong>Best for:</strong> Those who are wary of change and want
+something that resembles Windows 11 as closely as possible.</p>
+<p>Zorin OS is built on Ubuntu but is designed to feel familiar to
+Windows users. It has several different “looks” you can switch between —
+including one that closely resembles Windows 11.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Can look like Windows 11, Windows 10, or macOS</li>
+<li>Very beginner-friendly</li>
+<li>Good support for Windows programs via Wine/Bottles</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>A bit more “pre-packaged” than the others</li>
+<li>The community is smaller than Mint’s and Ubuntu’s</li>
+</ul>
+<p><strong>Recommended if:</strong> You want as little visual “newness”
+to deal with as possible.</p>
+<h2 id="pop_os-excellent-for-newer-machines-and-gaming">3. Pop!_OS –
+Excellent for newer machines and gaming</h2>
+<p><strong>Best for:</strong> You, if you have a relatively new PC,
+perhaps with an NVIDIA graphics card, or you’re interested in
+gaming.</p>
+<p>Pop!_OS is made by System76 (a company that sells Linux PCs). It’s
+based on Ubuntu but adds many improvements — especially around graphics,
+drivers, and productivity.</p>
+<p>Since version 24.04, Pop!_OS has its own desktop environment,
+<strong>COSMIC</strong>, which System76 built entirely from scratch in
+the Rust programming language — making it fast and modern. COSMIC
+shipped as stable in late 2025 and is safe for daily use, but it’s still
+a young project under active development. What sets it apart from GNOME
+and Cinnamon is built-in <strong>window tiling</strong> (automatic
+window organization) and a flexible panel system — one of the reasons
+many people pick Pop in the first place.</p>
+<figure>
+<img src="bilder/Pop!_OS_24.04_LTS_Installation_1_-_English.png"
+alt="The Pop!_OS installer: language selection in a clean, dark interface – installation is just as easy as Mint’s, only with a different look" />
+<figcaption aria-hidden="true">The Pop!_OS installer: language selection
+in a clean, dark interface – installation is just as easy as Mint’s,
+only with a different look</figcaption>
+</figure>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Outstanding support for NVIDIA and new hardware</li>
+<li>Fantastic guides and videos</li>
+<li>Built-in Flatpak support</li>
+<li>Very good for gaming (Steam + Proton)</li>
+<li>Clean, modern look</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>The COSMIC desktop is new and can feel a bit different from
+Windows</li>
+<li>A bit more “modern” than Mint</li>
+</ul>
+<p><strong>Recommended if:</strong> You have a new machine, you game, or
+you like a clean and modern look.</p>
+<h2 id="ubuntu-the-most-widely-used-option">4. Ubuntu – The most widely
+used option</h2>
+<p><strong>Best for:</strong> You, if you want the biggest community and
+the most documentation.</p>
+<p>Ubuntu is the best-known and most widely used Linux distribution in
+the world. Almost every guide you find on the internet works on
+Ubuntu.</p>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Biggest community</li>
+<li>Most support from software developers</li>
+<li>Huge number of guides and videos</li>
+<li>Long-term support (LTS releases)</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Has become a bit more “modern” in recent years</li>
+<li>Some feel Canonical adds too many “things of its own”</li>
+</ul>
+<p><strong>Recommended if:</strong> You want the “safest” choice in the
+sense of “everyone else uses this too”.</p>
+<h2 id="quick-comparison-2026">Quick comparison (2026)</h2>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Windows-like</th>
+<th>New machine/gaming</th>
+<th>Biggest community</th>
+<th>Easy to get started</th>
+<th>Recommended for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linux Mint</td>
+<td>★★★★★</td>
+<td>★★★</td>
+<td>★★★★</td>
+<td>★★★★★</td>
+<td>Most people</td>
+</tr>
+<tr class="even">
+<td>Zorin OS</td>
+<td>★★★★★</td>
+<td>★★★</td>
+<td>★★★</td>
+<td>★★★★★</td>
+<td>Those wary of change</td>
+</tr>
+<tr class="odd">
+<td>Pop!_OS</td>
+<td>★★★</td>
+<td>★★★★★</td>
+<td>★★★★</td>
+<td>★★★★</td>
+<td>New machine + gaming</td>
+</tr>
+<tr class="even">
+<td>Ubuntu</td>
+<td>★★★</td>
+<td>★★★★</td>
+<td>★★★★★</td>
+<td>★★★★</td>
+<td>Those who want the most support</td>
+</tr>
+</tbody>
+</table>
+<h2 id="my-advice-to-you">My advice to you</h2>
+<ul>
+<li><strong>Never used Linux before?</strong> → Start with <strong>Linux
+Mint</strong> or <strong>Zorin OS</strong>.</li>
+<li><strong>Have a newer PC, or you game?</strong> → Go for
+**Pop!_OS**.</li>
+<li><strong>Want the most popular option?</strong> → Choose
+<strong>Ubuntu</strong>.</li>
+</ul>
+<p>You can’t make a wrong choice here. All four of these are excellent
+for beginners.</p>
+<h2 id="how-to-test-before-you-decide">How to test before you
+decide</h2>
+<p>Most distributions have a “Try” or “Live” mode:</p>
+<ol type="1">
+<li>Download the .iso file from the official website (and if you pick
+Pop!_OS, don’t go looking for an LTS button — Pop!_OS only has one
+current release, take that one)</li>
+<li>Create a bootable USB (we’ll walk through this in the next
+chapter)</li>
+<li>Boot your PC from the USB</li>
+<li>Try the system without installing it</li>
+</ol>
+<p>You can browse the web, open files, test software — all without
+changing anything on your hard drive.</p>
+<p>This is the best way to find out whether a distribution feels right
+for you.</p>
+<h2 id="other-distributions-only-if-you-get-curious-later">Other
+distributions (only if you get curious later)</h2>
+<ul>
+<li><strong>Fedora</strong> – Modern and “clean”, good for
+developers</li>
+<li><strong>Debian</strong> – Extremely stable, but a bit more
+conservative</li>
+<li><strong>Manjaro</strong> or <strong>EndeavourOS</strong> – Based on
+Arch (more advanced)</li>
+<li><strong>Bazzite</strong> or <strong>Nobara</strong> – Built
+specifically for gaming; worth a look if gaming is your top
+priority</li>
+</ul>
+<p>For beginners, I recommend sticking to the four I listed at the
+top.</p>
+<h2 id="next-step">Next step</h2>
+<p>Now that you have an idea of which distribution you want to try,
+we’ll go through how to prepare for installation safely.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Most people should start with Linux Mint or Zorin OS.</li>
+<li>Have a new machine, or do you game? Choose Pop!_OS.</li>
+<li>You can’t make a wrong choice — all the recommended options are
+safe.</li>
+</ul></div>
+<hr />
+<p><strong>Next chapter:</strong> <a
+href="04-forberedelse-og-installasjon.md">04 – Preparation and
+installation</a></p>
+</section>
+<section id="kap04" class="chapter">
+<h1 id="preparation-and-installation">4. Preparation and
+Installation</h1>
+<p><em>Last updated: 2026-07-11</em></p>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>How to make a safe backup before installing</li>
+<li>How to create a bootable USB with Rufus</li>
+<li>The difference between dual boot and a full replacement</li>
+<li>Step-by-step installation with the common pitfalls</li>
+</ul>
+<hr />
+<p>This is the chapter most people are a little nervous about. That’s
+completely normal.</p>
+<p>The good news is that installing Linux today is much easier than most
+people think — especially if you follow the steps carefully. We’ll take
+it slow and safe.</p>
+<h2 id="what-you-should-have-ready-before-you-begin">What you should
+have ready before you begin</h2>
+<ul>
+<li>An external hard drive or a large USB stick for backup</li>
+<li>A note listing the programs you use most today</li>
+<li>Your passwords (or an exported password manager vault)</li>
+<li>Some time (set aside 1–2 hours the first time)</li>
+<li>A cup of coffee or tea</li>
+</ul>
+<h2 id="first-make-a-backup-most-important-of-all">First: Make a backup!
+(Most important of all)</h2>
+<p>This cannot be said often enough:</p>
+<p><strong>Back up your important files before you begin.</strong></p>
+<p>Even if you’re only going to try Linux from a USB stick at first,
+it’s smart to have a copy of:</p>
+<ul>
+<li>Documents and projects</li>
+<li>Photos and videos</li>
+<li>Passwords (use a password manager like Bitwarden or KeePassXC!)</li>
+<li>Email settings and important emails</li>
+<li>Downloads you want to keep</li>
+<li>Any important programs you’ve paid for (license keys)</li>
+</ul>
+<p>The easiest way is to copy everything important to an external hard
+drive or a large USB stick. You can also use OneDrive, Google Drive,
+Proton Drive, or iCloud as temporary backup.</p>
+<p><strong>Pro tips:</strong></p>
+<ul>
+<li>Back up folders like “Documents”, “Pictures”, “Downloads”, and
+“Desktop”.</li>
+<li>Export your passwords from the browser to a file (you can import
+them again later).</li>
+<li>Write down which programs you use most, so you know what to install
+on Linux.</li>
+</ul>
+<h3 id="how-to-move-your-files-from-windows-step-by-step">How to move
+your files from Windows (step by step)</h3>
+<p>Once Linux is installed:</p>
+<ol type="1">
+<li>Connect the external hard drive or USB stick you used for
+backup.</li>
+<li>Open the file manager (Nemo in Mint).</li>
+<li>Find the external drive in the left sidebar (often under “Other
+Locations”).</li>
+<li>Copy your folders into “Documents”, “Pictures”, and so on in
+Linux.</li>
+<li>Open Firefox → Settings → Privacy &amp; Security → Bookmarks →
+Import bookmarks and passwords.</li>
+</ol>
+<p>This is often the first task people do after installation. Take your
+time here.</p>
+<h2 id="choose-a-distribution-and-download-it">Choose a distribution and
+download it</h2>
+<p>Go to the official website of the distribution you’ve chosen:</p>
+<ul>
+<li><strong>Linux Mint</strong>: <a
+href="https://linuxmint.com">https://linuxmint.com</a> (direct download:
+<a
+href="https://linuxmint.com/download.php">https://linuxmint.com/download.php</a>)</li>
+<li><strong>Zorin OS</strong>: <a
+href="https://zorin.com/os">https://zorin.com/os</a> (download: <a
+href="https://zorin.com/os/download/">https://zorin.com/os/download/</a>)</li>
+<li>**Pop!_OS**: <a
+href="https://system76.com/pop">https://system76.com/pop</a></li>
+<li><strong>Ubuntu</strong>: <a
+href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a></li>
+</ul>
+<p>Download the latest <strong>LTS</strong> version (Long Term Support).
+That’s the most stable release, and it gets updates for many years
+(usually 5).</p>
+<p>The file you download is usually named something like
+<code>linuxmint-22-cinnamon-64bit.iso</code> or similar. This is called
+an <strong>ISO file</strong>.</p>
+<p><strong>Important:</strong> Always download from the official
+website. Avoid random download sites.</p>
+<p>🟡 Optional: Verify the download with a checksum (recommended if
+you’re extra careful). On the Linux Mint site you’ll find the SHA256
+value. After downloading:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sha256sum</span> linuxmint-<span class="pp">*</span>.iso</span></code></pre></div>
+<p>Compare the number with the one on the website. If it matches, the
+file is genuine and unmodified.</p>
+<h2 id="create-a-bootable-usb-stick">Create a bootable USB stick</h2>
+<p>This is the most important step for installing Linux.</p>
+<p>You need:</p>
+<ul>
+<li>A USB stick of at least 8 GB (preferably 16 GB or more). Everything
+on it will be erased.</li>
+<li>A program that can create a “bootable” USB.</li>
+</ul>
+<h3 id="recommended-programs-2026">Recommended programs (2026)</h3>
+<p><strong>If you’re still on Windows:</strong></p>
+<ul>
+<li><strong>Rufus</strong> (free, popular, and simple) – <a
+href="https://rufus.ie">https://rufus.ie</a></li>
+<li><strong>balenaEtcher</strong> – <a
+href="https://www.balena.io/etcher">https://www.balena.io/etcher</a>
+(very user-friendly)</li>
+<li><strong>Ventoy</strong> (advanced, but very practical – can hold
+several ISO files on the same stick)</li>
+</ul>
+<p><strong>If you’re already on Linux:</strong></p>
+<ul>
+<li>Use the <code>dd</code> command or tools like
+<code>gnome-disks</code> / balenaEtcher.</li>
+</ul>
+<h3
+id="how-to-create-a-bootable-usb-with-rufus-easiest-for-most-people">How
+to create a bootable USB with Rufus (easiest for most people):</h3>
+<ol type="1">
+<li>Download and open Rufus (no installation needed).</li>
+<li>Insert the USB stick.</li>
+<li>In Rufus:
+<ul>
+<li>Select the USB stick under “Device”</li>
+<li>Click the arrow next to “Boot selection” and choose the ISO file you
+downloaded</li>
+<li>Leave the rest at the default settings. Rufus usually suggests the
+right options for your machine (GPT + UEFI on modern PCs).</li>
+</ul></li>
+<li>Click <strong>Start</strong>.</li>
+</ol>
+<figure>
+<img src="bilder/04-rufus.png"
+alt="Screenshot of Rufus with a USB stick and ISO file selected" />
+<figcaption aria-hidden="true">Screenshot of Rufus with a USB stick and
+ISO file selected</figcaption>
+</figure>
+<p>Wait for the process to finish. It can take 5–15 minutes depending on
+your USB stick.</p>
+<blockquote>
+<p><strong>Important:</strong> Everything on the USB stick will be
+erased. Back it up if there’s anything on it already.</p>
+</blockquote>
+<p>Once the USB is done, you can leave it in the machine.</p>
+<h2 id="extra-tips-for-a-successful-installation">Extra tips for a
+successful installation</h2>
+<h3 id="choose-the-right-usb-stick">Choose the right USB stick</h3>
+<p>Use USB 3.0 or newer if possible. Older USB 2.0 sticks are slower,
+but they still work.</p>
+<h3 id="save-the-download-link">Save the download link</h3>
+<p>It’s smart to note down where you downloaded the ISO file from, so
+you can grab a fresh copy later if you need one.</p>
+<h3 id="make-more-than-one-usb-stick">Make more than one USB stick</h3>
+<p>Many people make an extra “rescue USB” with the same distribution.
+That way you always have a way to start the machine if something goes
+wrong.</p>
+<h3 id="give-try-before-install-a-proper-test">Give “Try before install”
+a proper test</h3>
+<p>Spend at least 15–30 minutes in Live mode before installing. Test: -
+WiFi - Sound (play a YouTube video) - Screen resolution - Touchscreen if
+you have one - An external monitor if you use one</p>
+<h3
+id="partitioning-for-advanced-users-optional-advanced-feel-free-to-skip">Partitioning
+for advanced users (optional) 🔴 Advanced – feel free to skip</h3>
+<p>If you choose “Something else” during installation, you can create
+partitions manually. A common setup is: - <code>/</code> (root) – 30–50
+GB - <code>/home</code> – the rest of the space (your personal files) -
+swap – 4–8 GB (depending on how much RAM you have)</p>
+<figure>
+<img src="bilder/installer-partitions.webp"
+alt="Manual partitioning – this is what the “Something else” view looks like in the installer" />
+<figcaption aria-hidden="true">Manual partitioning – this is what the
+“Something else” view looks like in the installer</figcaption>
+</figure>
+<p>For beginners, letting the installer handle partitioning is
+recommended.</p>
+<h2 id="dual-boot-or-replace-windows-entirely">Dual boot or replace
+Windows entirely?</h2>
+<p>Now comes an important choice.</p>
+<h3 id="dual-boot-recommended-for-most-beginners">Dual boot (recommended
+for most beginners)</h3>
+<p>You keep Windows, and you can choose which operating system to start
+when you turn on the PC.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>You can go back to Windows at any time</li>
+<li>Safe to experiment</li>
+<li>Perfect if you’re unsure or need Windows for something specific
+(certain programs or games, for example)</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Takes up space on the hard drive (you have to split the disk)</li>
+<li>Slightly more complicated to set up</li>
+<li>Occasionally, Windows updates can mess up the bootloader (but this
+is rare in 2026)</li>
+</ul>
+<h3 id="replace-windows-entirely">Replace Windows entirely</h3>
+<p>You erase Windows and have only Linux.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Clean and tidy installation</li>
+<li>The whole disk is available to Linux</li>
+<li>No conflicts with Windows</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>You lose Windows (you’d have to reinstall it later if you change
+your mind)</li>
+<li>Riskier if you’re not sure</li>
+</ul>
+<p><strong>My advice:</strong> Start with <strong>dual boot</strong>.
+You can always delete Windows later, once you’re comfortable with
+Linux.</p>
+<h2
+id="step-by-step-installation-linux-mint-as-the-example">Step-by-step
+installation (Linux Mint as the example)</h2>
+<p>Every distribution has a slightly different installer, but the
+principle is the same. Here we use Linux Mint as the example — the
+process is very similar in Zorin OS, Pop!_OS, and Ubuntu.</p>
+<h3 id="boot-from-the-usb">1. Boot from the USB</h3>
+<ul>
+<li>Insert the USB stick</li>
+<li>Restart the PC</li>
+<li>Repeatedly press a key to reach the boot menu. Common keys:
+<ul>
+<li><strong>F12</strong> (Dell, many others)</li>
+<li><strong>F10</strong> or <strong>Esc</strong> (HP)</li>
+<li><strong>F2</strong> or <strong>Del</strong> (some other brands)</li>
+<li>Try <strong>Esc</strong> first – many machines show a menu
+there</li>
+</ul></li>
+<li>Select the USB stick from the list (it often says “UEFI: USB” or
+just the name of the USB stick)</li>
+</ul>
+<figure>
+<img src="bilder/04-boot-menu.png"
+alt="BIOS/UEFI boot menu with the USB stick selected" />
+<figcaption aria-hidden="true">BIOS/UEFI boot menu with the USB stick
+selected</figcaption>
+</figure>
+<p><strong>Tips if it doesn’t work:</strong></p>
+<ul>
+<li>Enter the BIOS/UEFI (usually Del, F2, or F10 while the machine is
+starting)</li>
+<li>Enable “Boot from USB” if it’s off</li>
+<li>Try temporarily disabling “Secure Boot” (see the separate
+explanation below)</li>
+<li>Try a different USB port (preferably a USB 2.0 port if you have
+one)</li>
+</ul>
+<h3 id="secure-boot-what-is-it-and-how-do-you-handle-it">Secure Boot –
+what is it, and how do you handle it?</h3>
+<p><strong>What is Secure Boot?</strong> Secure Boot is a security
+feature in most PCs from 2012 onward. It checks that the operating
+system being started is “signed” with an approved key. This prevents
+malware from starting before the operating system does.</p>
+<p><strong>Why might I need to turn it off to install Linux?</strong>
+Some Linux distributions don’t have signed drivers for all hardware
+(especially NVIDIA graphics and certain WiFi cards). The PC may
+therefore refuse to boot from the USB stick unless Secure Boot is
+off.</p>
+<p><strong>How to turn Secure Boot off (and back on):</strong></p>
+<ol type="1">
+<li>Start the PC and press <strong>F2</strong>, <strong>Del</strong>,
+<strong>F10</strong>, or <strong>Esc</strong> (depending on the brand)
+to enter the BIOS/UEFI.</li>
+<li>Find the <strong>Security</strong> or <strong>Boot</strong>
+tab.</li>
+<li>Find <strong>Secure Boot</strong> and set it to
+<strong>Disabled</strong>.</li>
+<li>Save and exit (usually <strong>F10</strong>).</li>
+</ol>
+<p><strong>After installation:</strong> Most modern distributions
+(Ubuntu, Linux Mint, Pop!_OS, and recent versions of Zorin OS)
+<strong>support Secure Boot</strong> with signed kernels. So you can
+turn Secure Boot back on after installation: go back into the BIOS/UEFI
+and set Secure Boot to <strong>Enabled</strong>. If the machine won’t
+start then, just turn it off again — nothing gets broken.</p>
+<blockquote>
+<p><strong>Note:</strong> If you use NVIDIA’s proprietary drivers,
+Secure Boot can cause trouble. In that case you either keep Secure Boot
+off, or sign the drivers yourself (🔴 advanced – not recommended for
+beginners).</p>
+</blockquote>
+<h3 id="choose-start-linux-mint-live-mode">2. Choose “Start Linux Mint”
+(Live mode)</h3>
+<p>You’ll enter a live system. Nothing is installed yet. You can test
+everything.</p>
+<figure>
+<img src="bilder/cinnamon.webp"
+alt="Linux Mint in live mode – note the “Install Linux Mint” icon in the top left" />
+<figcaption aria-hidden="true">Linux Mint in live mode – note the
+“Install Linux Mint” icon in the top left</figcaption>
+</figure>
+<p>Use this opportunity to: - Check that WiFi works - Test the sound -
+See how the mouse and keyboard behave - Open the browser and surf a
+bit</p>
+<p>If everything feels fine, double-click “Install Linux Mint” on the
+desktop.</p>
+<h3 id="follow-the-installation-wizard">3. Follow the installation
+wizard</h3>
+<ol type="1">
+<li><p><strong>Language</strong> — Choose <strong>English</strong> (or
+whichever language you prefer).</p></li>
+<li><p><strong>Keyboard</strong> — Choose the US keyboard layout (or
+whatever matches your physical keyboard).</p></li>
+<li><p><strong>Connection</strong> — Connect to WiFi. This matters for
+downloading updates during the installation.</p></li>
+<li><p><strong>Multimedia codecs</strong> — Check “Install multimedia
+codecs” when the installer asks. Then video and music play right out of
+the box.</p></li>
+<li><p><strong>Installation type</strong> (the most important
+step!):</p>
+<p>Choose carefully here:</p>
+<ul>
+<li><strong>“Install Linux Mint alongside Windows”</strong> or similar →
+Dual boot (recommended)</li>
+<li><strong>“Erase disk and install Linux Mint”</strong> → Replace
+everything</li>
+</ul>
+<p>Look closely at the overview. It shows your hard drives. Make sure
+you don’t pick the wrong disk if you have several.</p>
+<figure>
+<img src="bilder/04-partisjon.png"
+alt="Installer window showing the partition choices and the dual boot option (screenshot shows a Norwegian locale — yours will be in English)" />
+<figcaption aria-hidden="true">Installer window showing the partition
+choices and the dual boot option (screenshot shows a Norwegian locale —
+yours will be in English)</figcaption>
+</figure></li>
+<li><p><strong>Time zone</strong> — Choose your city (New York, Chicago,
+Denver, Los Angeles, or whichever is closest).</p></li>
+<li><p><strong>User account</strong></p>
+<ul>
+<li>Enter your full name</li>
+<li>Choose a username (usually lowercase letters, no spaces)</li>
+<li>Create a strong password</li>
+<li>Choose whether to log in automatically or require a password (I
+recommend a password)</li>
+</ul></li>
+<li><p><strong>Start the installation</strong></p>
+<ul>
+<li>Click “Install”. This can take 10–40 minutes depending on the
+machine.</li>
+</ul></li>
+</ol>
+<figure>
+<img src="bilder/installer-slideshow.webp"
+alt="The installation copies files – you can lean back" />
+<figcaption aria-hidden="true">The installation copies files – you can
+lean back</figcaption>
+</figure>
+<ol start="9" type="1">
+<li><strong>Done</strong>
+<ul>
+<li>When the installation is finished, you’ll be asked to restart.</li>
+<li><strong>Remove the USB stick</strong> before restarting.</li>
+</ul></li>
+</ol>
+<h2 id="frequently-asked-questions-during-installation">Frequently asked
+questions during installation</h2>
+<p><strong>“What does ‘Erase disk and install’ mean?”</strong> It means
+the entire hard drive is erased and only Linux is installed.</p>
+<p><strong>“Can I install onto an external hard drive?”</strong> Yes,
+but it’s not recommended for daily use. It will be slower.</p>
+<p><strong>“What if I have several hard drives?”</strong> Be extremely
+careful. Choose the right disk in the installer. Look at the size and
+the name.</p>
+<p><strong>“Do I have to turn Secure Boot off permanently?”</strong>
+Often not. Try turning it back on after installation. Most modern
+distributions support Secure Boot.</p>
+<h2 id="common-mistakes-to-avoid-during-installation">Common mistakes to
+avoid during installation</h2>
+<ol type="1">
+<li><strong>Don’t continue if you’re unsure which disk is being
+used.</strong> Go back and double-check.</li>
+<li><strong>Don’t remove the USB stick too early.</strong> Wait until
+the installer says it’s safe.</li>
+<li><strong>Don’t skip the updates after installation.</strong> The
+first updates are often important.</li>
+<li><strong>Don’t install too many things in the first few
+days.</strong> Let the system settle first.</li>
+</ol>
+<h2 id="the-first-restart-the-grub-menu">The first restart – the GRUB
+menu</h2>
+<p>When the PC restarts, you’ll see a menu called <strong>GRUB</strong>.
+Here you can choose:</p>
+<ul>
+<li>Linux (usually at the top, or “Linux Mint”)</li>
+<li>Windows Boot Manager</li>
+</ul>
+<p>Use the arrow keys and Enter to choose.</p>
+<p>Linux sits at the top and starts automatically after a few seconds if
+you don’t choose anything. The default can be changed later in the
+settings.</p>
+<h2 id="common-problems-during-installation">Common problems during
+installation</h2>
+<ul>
+<li><strong>Can’t boot from USB</strong>: See the tips above about
+BIOS/UEFI and Secure Boot.</li>
+<li><strong>Black screen after selecting the USB</strong>: Try a
+different USB port, or add <code>nomodeset</code> to the boot parameters
+(advanced).</li>
+<li><strong>No WiFi in live mode</strong>: Sometimes you need to install
+drivers after installation (see chapter 8).</li>
+<li><strong>Error message about partitioning</strong>: Don’t panic. You
+can go back and choose again. Never continue if you’re unsure which disk
+is being erased.</li>
+</ul>
+<h2 id="after-the-installation-first-things-to-do">After the
+installation – first things to do</h2>
+<ol type="1">
+<li>Let the system download all updates.</li>
+<li>Restart.</li>
+<li>Set up Flatpak (if it isn’t already in place):</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flatpak</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> remote-add <span class="at">--if-not-exists</span> flathub https://flathub.org/repo/flathub.flatpakrepo</span></code></pre></div>
+<p>(On Ubuntu, Flatpak apps don’t show up in the software center without
+the package <code>gnome-software-plugin-flatpak</code> – install it with
+<code>sudo apt install gnome-software-plugin-flatpak</code>.)</p>
+<ol start="4" type="1">
+<li>Install <strong>Timeshift</strong> (system snapshots):</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span></code></pre></div>
+<ol start="5" type="1">
+<li>Take your first system snapshot (strongly recommended!).</li>
+</ol>
+<h2 id="after-the-installation-the-first-48-hours">After the
+installation – the first 48 hours</h2>
+<ol type="1">
+<li>Install all updates and restart</li>
+<li>Install Timeshift and take your first snapshot</li>
+<li>Install the 5–6 programs you use most</li>
+<li>Test that everything you need day to day works (especially the
+everyday services you rely on — banking, streaming, and so on)</li>
+<li>Take a fresh backup of important files to an external drive</li>
+</ol>
+<p>If all of this works, you’re off to a great start.</p>
+<h2 id="congratulations">Congratulations!</h2>
+<p>You have now installed Linux. The next chapter is about what you see
+when you log in for the first time.</p>
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Always back up before you begin.</li>
+<li>Try Linux from USB first (Live mode) – it’s safe.</li>
+<li>Choose dual boot if you’re unsure.</li>
+<li>Install Timeshift and take your first snapshot immediately after
+installation.</li>
+<li>Keep your phone handy as backup support during the
+installation.</li>
+</ul></div>
+<hr />
+<p><strong>Next chapter:</strong> <a
+href="05-forste-gang-du-starter-linux.md">05 – The First Time You Start
+Linux</a></p>
+</section>
+<section id="kap05" class="chapter">
+<h1 id="the-first-time-you-start-linux">5. The First Time You Start
+Linux</h1>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>What the desktop looks like and how it works</li>
+<li>How to find and install programs</li>
+<li>Basic navigation and updates</li>
+</ul>
+<hr />
+<p>Congratulations! You have now started Linux for the first time. Let’s
+look at how things work.</p>
+<h2 id="the-desktop-first-impressions">The desktop – first
+impressions</h2>
+<p>When you log in, you’ll see something that looks like a normal
+desktop, with a few differences depending on which distribution you
+chose.</p>
+<h3 id="typical-elements">Typical elements:</h3>
+<p><strong>Taskbar / Panel</strong></p>
+<ul>
+<li>Usually at the bottom (Linux Mint Cinnamon) or at the top (Ubuntu
+GNOME, Pop!_OS)</li>
+<li>Shows open windows</li>
+<li>Has a “Start menu” or “Activities” / “Overview”</li>
+</ul>
+<p><strong>The desktop</strong></p>
+<ul>
+<li>May have icons (depending on the distribution)</li>
+<li>Right-click for options (wallpaper, settings, etc.)</li>
+</ul>
+<p><strong>System status</strong></p>
+<ul>
+<li>Clock</li>
+<li>WiFi, sound, battery, updates</li>
+<li>User menu (log out, shut down, settings)</li>
+</ul>
+<figure>
+<img src="bilder/05-skrivebord.png"
+alt="Example of a Linux Mint Cinnamon desktop (screenshot shows a Norwegian locale — yours will be in English)" />
+<figcaption aria-hidden="true">Example of a Linux Mint Cinnamon desktop
+(screenshot shows a Norwegian locale — yours will be in
+English)</figcaption>
+</figure>
+<h2 id="important-differences-from-windows">Important differences from
+Windows</h2>
+<ul>
+<li>The <strong>Super key</strong> (the Windows key) often opens the
+overview or the start menu.</li>
+<li>Right-clicking is still your best friend.</li>
+<li>There’s no “Control Panel” by that name – everything lives in
+<strong>Settings</strong>.</li>
+<li>The close, minimize, and maximize buttons are usually in the top
+right (some distributions put them on the left).</li>
+<li>You can have multiple workspaces (virtual desktops) – very
+useful!</li>
+</ul>
+<h3 id="windows-linux-what-are-things-called">Windows → Linux: what are
+things called?</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Windows</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Programs and Features</td>
+<td>Software Manager / Software Center</td>
+</tr>
+<tr class="even">
+<td>Control Panel</td>
+<td>Settings</td>
+</tr>
+<tr class="odd">
+<td>Task Manager</td>
+<td>System Monitor (or <code>htop</code> in the terminal)</td>
+</tr>
+<tr class="even">
+<td>File Explorer</td>
+<td>File manager (Nemo, Nautilus, Dolphin)</td>
+</tr>
+<tr class="odd">
+<td>C:\</td>
+<td><code>/</code> (the root of the file system)</td>
+</tr>
+<tr class="even">
+<td>C:</td>
+<td><code>/home/username</code></td>
+</tr>
+<tr class="odd">
+<td>.exe files</td>
+<td>.deb, Flatpak, or AppImage</td>
+</tr>
+<tr class="even">
+<td>MS Office</td>
+<td>LibreOffice</td>
+</tr>
+<tr class="odd">
+<td>Paint</td>
+<td>Pinta</td>
+</tr>
+<tr class="even">
+<td>Notepad</td>
+<td>Text editor (Gedit, Kate, Xed)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-find-and-install-programs">How to find and install
+programs</h2>
+<p>This is one of the biggest differences from Windows – and one of the
+best.</p>
+<p>Instead of going to websites and downloading .exe files, Linux has a
+built-in <strong>package repository</strong>.</p>
+<h3 id="two-main-ways-to-install-programs">Two main ways to install
+programs:</h3>
+<ol type="1">
+<li><strong>Software Manager / Software Center / Discover</strong></li>
+<li><strong>Flatpak</strong> (the modern and recommended method in
+2026)</li>
+</ol>
+<h3 id="the-software-center">The software center</h3>
+<p>It has different names depending on the distribution:</p>
+<ul>
+<li><strong>Linux Mint</strong>: “Software Manager”</li>
+<li>**Pop!_OS / Ubuntu**: “Ubuntu Software” or “App Center”</li>
+<li><strong>Zorin OS</strong>: “Software”</li>
+</ul>
+<p>Here’s how it usually works:</p>
+<ol type="1">
+<li>Open the software center from the start menu or the taskbar.</li>
+<li>Search for the program you want (e.g. “VLC”, “GIMP”,
+“Firefox”).</li>
+<li>Click <strong>Install</strong>.</li>
+</ol>
+<p>The program is installed automatically, including all
+dependencies.</p>
+<figure>
+<img src="bilder/05-programvaresenter.png"
+alt="The Software Manager / Software Center (screenshot shows a Norwegian locale — yours will be in English)" />
+<figcaption aria-hidden="true">The Software Manager / Software Center
+(screenshot shows a Norwegian locale — yours will be in
+English)</figcaption>
+</figure>
+<h3 id="flatpak-the-modern-way">Flatpak – the modern way</h3>
+<p>Flatpak is a newer technology that lets programs run the same way on
+every Linux distribution. The advantages:</p>
+<ul>
+<li>Always the latest version</li>
+<li>Better security (programs are sandboxed)</li>
+<li>Works across distributions</li>
+</ul>
+<p>Many distributions come with Flatpak support built in.</p>
+<h3 id="all-the-methods-in-one-overview-optional">All the methods in one
+overview 🟡 Optional</h3>
+<p>You’re going to run into several terms for installing programs.
+Here’s the full picture, so you’ll recognize the names:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 32%" />
+<col style="width: 25%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>What it is</th>
+<th>Advantages</th>
+<th>Disadvantages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Software center</strong></td>
+<td>Graphical “app store”</td>
+<td>Simple, safe, requires no knowledge</td>
+<td>May have older versions</td>
+</tr>
+<tr class="even">
+<td><strong>apt</strong></td>
+<td>Command-line tool (the Debian/Ubuntu family)</td>
+<td>Fast, official packages</td>
+<td>Requires the terminal</td>
+</tr>
+<tr class="odd">
+<td><strong>Flatpak</strong></td>
+<td>Modern, sandboxed apps from Flathub</td>
+<td>Always the latest version, safe, works on all distros</td>
+<td>Uses more disk space</td>
+</tr>
+<tr class="even">
+<td><strong>Snap</strong></td>
+<td>Canonical’s (Ubuntu’s) alternative to Flatpak</td>
+<td>Simple, well integrated in Ubuntu</td>
+<td>Controversial – closed backend, slower startup</td>
+</tr>
+<tr class="odd">
+<td><strong>AppImage</strong></td>
+<td>A single file – download and run</td>
+<td>No installation, portable</td>
+<td>No automatic updates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation for beginners:</strong></p>
+<ul>
+<li>Use the <strong>software center</strong> for most apps.</li>
+<li>Choose the <strong>Flatpak</strong> version when possible (often
+labeled “Flathub” in the software center).</li>
+<li>You’ll mostly encounter <strong>Snap</strong> on Ubuntu – it’s the
+default there, and the software center will often give you the Snap
+version anyway. It works perfectly fine, and you can happily use Flatpak
+alongside it. Outside Ubuntu, Flatpak is the usual choice.</li>
+<li><strong>AppImage</strong> is fine for individual programs you just
+want to try out.</li>
+</ul>
+<h2 id="important-programs-you-should-install-right-away">Important
+programs you should install right away</h2>
+<p>Here are some recommendations for beginners:</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 35%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Recommended program</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Browser</td>
+<td>Firefox or Chromium</td>
+<td>Often preinstalled</td>
+</tr>
+<tr class="even">
+<td>Office</td>
+<td>LibreOffice</td>
+<td>Free and very good</td>
+</tr>
+<tr class="odd">
+<td>Photos</td>
+<td>GIMP or Shotwell</td>
+<td>GIMP for advanced work</td>
+</tr>
+<tr class="even">
+<td>Video</td>
+<td>VLC</td>
+<td>Plays almost everything</td>
+</tr>
+<tr class="odd">
+<td>Music</td>
+<td>Spotify or Lollypop</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Email</td>
+<td>Thunderbird</td>
+<td>Excellent</td>
+</tr>
+<tr class="odd">
+<td>Passwords</td>
+<td>KeePassXC or Bitwarden</td>
+<td>Strongly recommended</td>
+</tr>
+<tr class="even">
+<td>Screenshots</td>
+<td>Flameshot</td>
+<td>Much better than the default</td>
+</tr>
+<tr class="odd">
+<td>System backup</td>
+<td>Timeshift</td>
+<td>Important! Install early</td>
+</tr>
+</tbody>
+</table>
+<h2 id="updates">Updates</h2>
+<p>Linux updates itself much more smoothly than Windows.</p>
+<p>You’ll see an update icon in the taskbar. Click it and install
+updates regularly.</p>
+<p>In the beginning there may be a lot of updates – that’s completely
+normal.</p>
+<p><strong>Recommended routine:</strong></p>
+<ol type="1">
+<li>Open the software center or use the terminal</li>
+<li>Install all updates</li>
+<li>Restart if asked to</li>
+</ol>
+<p>Chapter 10 collects the entire recommended maintenance routine
+(updates, Timeshift, and backup) in one place.</p>
+<h2 id="workspaces-virtual-desktops">Workspaces (virtual desktops)</h2>
+<p>One of the coolest features in Linux:</p>
+<ul>
+<li>You can have several “desktops” at the same time</li>
+<li>Switch with Super + Page Up/Down or Super + a number</li>
+<li>Move windows between workspaces</li>
+<li>Perfect for separating work and personal life, or different
+projects</li>
+</ul>
+<h2 id="shutting-down-and-restarting">Shutting down and restarting</h2>
+<ul>
+<li>Click the power icon or the user menu</li>
+<li>Choose “Shut Down”, “Restart”, or “Log Out”</li>
+</ul>
+<p>Most distributions don’t ask “Why are you shutting down?” the way
+Windows does.</p>
+<h2 id="tips-for-the-first-hours">Tips for the first hours</h2>
+<ul>
+<li>Click around. It’s hard to break anything just by clicking.</li>
+<li>Right-click everywhere – you’ll be surprised how many options pop
+up.</li>
+<li>Don’t be afraid to close windows or move things around.</li>
+<li>Anything you install can be uninstalled just as easily.</li>
+<li>Try creating a new workspace and moving a few windows there.</li>
+</ul>
+<h2 id="next-steps">Next steps</h2>
+<p>Now that you’re in and have found your bearings, we’ll go through
+what you actually use day to day: browsing, office work, photos, music,
+and file management.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Right-clicking is your best friend.</li>
+<li>Use the software center for most apps, and Flatpak for newer
+versions.</li>
+<li>Install Timeshift early.</li>
+<li>Try multiple workspaces (virtual desktops) – it saves a lot of
+clutter.</li>
+</ul></div>
+<p><strong>Try it yourself:</strong> Open the terminal with Ctrl+Alt+T,
+type <code>ls</code>, press Enter, and close the window. That’s it.</p>
+<hr />
+<p><strong>Next chapter:</strong> <a href="06-daglig-bruk.md">06 – Daily
+Use</a></p>
+</section>
+<section id="kap06" class="chapter">
+<h1 id="daily-use-what-you-actually-need">6. Daily Use – What You
+Actually Need</h1>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>How to use a browser, email, and streaming</li>
+<li>LibreOffice and other everyday programs</li>
+<li>File management and everyday services (banking, government, payment
+apps)</li>
+</ul>
+<hr />
+<p>Now comes the most important chapter for most people: How do you use
+Linux for the things you do every day?</p>
+<p>The short version: You can do almost everything the same way as on
+Windows – just in slightly different ways. And in 2026, nearly all the
+everyday services you rely on work great.</p>
+<h2 id="browsing-the-web">Browsing the web</h2>
+<h3 id="browsers">Browsers</h3>
+<p>Most distributions come with <strong>Firefox</strong> or
+<strong>Chromium</strong> preinstalled. Both work excellently.</p>
+<ul>
+<li>YouTube works perfectly</li>
+<li>Netflix, Hulu, Max, Disney+, and Prime Video work well in both
+Firefox and Chrome (Widevine DRM support is built in)</li>
+<li>Live TV and network sites (PBS, ESPN, YouTube TV) work great
+too</li>
+</ul>
+<p>If you miss Chrome: You can install Google Chrome or Microsoft Edge
+from their official websites, or use Chromium (the open-source
+version).</p>
+<p><strong>Tip:</strong> Use Firefox if you care about privacy. It’s the
+default in most distributions and works very well.</p>
+<p>If you want to install Firefox via Flatpak (often a newer
+version):</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span></code></pre></div>
+<p><strong>Sites that work well:</strong></p>
+<ul>
+<li>npr.org, nytimes.com, wikipedia.org</li>
+<li>eBay and Craigslist</li>
+<li>Amazon, Etsy, and other shopping sites</li>
+<li>all the major banks</li>
+</ul>
+<h2 id="email">Email</h2>
+<p>You have several good options:</p>
+<ol type="1">
+<li><strong>Use the browser</strong> (Gmail, Outlook, Proton Mail,
+etc.)</li>
+<li><strong>Thunderbird</strong> – An excellent, free, open-source email
+program that comes preinstalled in many distributions. Supports IMAP,
+calendar, and contacts.</li>
+<li><strong>Evolution</strong> – An alternative that resembles Outlook a
+bit.</li>
+</ol>
+<p>Most people recommend starting with Thunderbird.</p>
+<h2 id="everyday-services">Everyday services</h2>
+<p>This matters to a lot of people who are considering Linux.</p>
+<p>Most of the things that matter in everyday life work without any
+problems. Here’s an honest overview in three categories:</p>
+<h3 id="works-great-in-the-browser">Works great in the browser</h3>
+<table>
+<colgroup>
+<col style="width: 79%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Service</th>
+<th>Tips</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Online banking</td>
+<td>Chase, Bank of America, Wells Fargo, and virtually every credit
+union work fully in the browser.</td>
+</tr>
+<tr class="even">
+<td>IRS (irs.gov)</td>
+<td>Filing, payments, and transcripts – full support in modern
+browsers.</td>
+</tr>
+<tr class="odd">
+<td>Social Security (ssa.gov)</td>
+<td>Excellent experience.</td>
+</tr>
+<tr class="even">
+<td>DMV websites</td>
+<td>Registration renewals, appointments, and license services work
+fine.</td>
+</tr>
+<tr class="odd">
+<td>Health portals (MyChart etc.)</td>
+<td>Appointments, test results, and messages without problems.</td>
+</tr>
+<tr class="even">
+<td>USPS / UPS / FedEx</td>
+<td>Tracking and shipping without problems.</td>
+</tr>
+<tr class="odd">
+<td>Utilities and insurance</td>
+<td>Paying bills and managing accounts generally works great.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="works-but-with-limitations">Works, but with limitations</h3>
+<p><strong>Venmo</strong> – Venmo’s website (<a
+href="https://venmo.com">venmo.com</a>) works in Firefox and Chrome, but
+is <strong>limited to certain features</strong>: logging in, viewing
+your transaction history, and managing your account. To <strong>send
+money, pay in a store, or use Venmo as a payment method online</strong>
+you still need the phone app. This is not a Linux limitation – Venmo’s
+web version is deliberately limited by Venmo itself, and it’s exactly
+the same on a Windows PC.</p>
+<h3 id="requires-the-phone-app">Requires the phone app</h3>
+<p>Services like Zelle (which lives inside your bank’s mobile app), Cash
+App payments in stores, and tap-to-pay wallets (Apple Pay, Google
+Wallet) live on your phone regardless of which operating system your PC
+runs. Your phone and your Linux PC work fine together – see the section
+on KDE Connect further down.</p>
+<p>If something doesn’t work perfectly, it’s almost always solvable with
+a different browser or a small settings change.</p>
+<h2 id="youtube-netflix-and-streaming">YouTube, Netflix, and
+streaming</h2>
+<p>All of this works directly in the browser.</p>
+<p>If you want an even better experience:</p>
+<ul>
+<li><strong>FreeTube</strong> (YouTube without ads and tracking)</li>
+<li><strong>Jellyfin</strong> or <strong>Plex</strong> clients if you
+have your own media server</li>
+</ul>
+<h2 id="office-work-libreoffice">Office work – LibreOffice</h2>
+<p><strong>LibreOffice</strong> is the program you’ll use for documents,
+spreadsheets, and presentations.</p>
+<p>It’s free, open source, and very powerful.</p>
+<figure>
+<img src="bilder/06-libreoffice.png"
+alt="LibreOffice Writer in use (screenshot shows a Norwegian locale — yours will be in English)" />
+<figcaption aria-hidden="true">LibreOffice Writer in use (screenshot
+shows a Norwegian locale — yours will be in English)</figcaption>
+</figure>
+<h3 id="what-corresponds-to-what">What corresponds to what?</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Windows program</th>
+<th>Linux alternative</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Microsoft Word</td>
+<td>LibreOffice Writer</td>
+<td>Very similar, supports .docx</td>
+</tr>
+<tr class="even">
+<td>Microsoft Excel</td>
+<td>LibreOffice Calc</td>
+<td>Good support for most spreadsheets</td>
+</tr>
+<tr class="odd">
+<td>Microsoft PowerPoint</td>
+<td>LibreOffice Impress</td>
+<td>Works well for most presentations</td>
+</tr>
+<tr class="even">
+<td>OneNote</td>
+<td>Joplin, Logseq, or Notes</td>
+<td>Joplin is excellent for notes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important:</strong> LibreOffice can open and save files in
+Microsoft Office formats (.docx, .xlsx, .pptx). Sometimes the formatting
+can look a little different, but this has gotten much better in recent
+years.</p>
+<p><strong>Tip:</strong> If you collaborate a lot with people who use
+Microsoft 365, you can still use the web apps in the browser (Word
+Online, Excel Online) in parallel.</p>
+<h2 id="photos">Photos</h2>
+<ul>
+<li><strong>Simple viewing and organizing:</strong> Shotwell (often
+preinstalled) or GNOME Photos</li>
+<li><strong>Editing:</strong> <strong>GIMP</strong> (free and very
+powerful)</li>
+<li><strong>Simpler editing:</strong> Pinta or Krita</li>
+</ul>
+<p>Most people who just want to crop photos, adjust lighting, and add
+text will do fine with GIMP or web apps like Photopea (in the
+browser).</p>
+<h2 id="music-and-video">Music and video</h2>
+<h3 id="music">Music</h3>
+<ul>
+<li><strong>Local music:</strong> Lollypop, Rhythmbox, or
+Strawberry</li>
+<li><strong>Streaming:</strong> Spotify (official client via Flatpak:
+<code>flatpak install flathub com.spotify.Client</code>), Tidal, or
+Deezer via the browser</li>
+</ul>
+<h3 id="video">Video</h3>
+<ul>
+<li><strong>VLC Media Player</strong> – still the king. Plays almost
+anything you throw at it.</li>
+<li><strong>MPV</strong> – a light and modern alternative</li>
+</ul>
+<p><strong>Video editing:</strong> <strong>Kdenlive</strong> (free,
+available in the software center) handles everyday editing like vacation
+videos and small projects just fine. For the ambitious, there’s also
+<strong>DaVinci Resolve</strong> for Linux – the FAQ has more to say
+about it.</p>
+<h2 id="file-management-and-organization">File management and
+organization</h2>
+<p>This is one of the areas where Linux often feels better than
+Windows.</p>
+<h3 id="file-managers-depending-on-the-distribution">File managers
+(depending on the distribution)</h3>
+<ul>
+<li><strong>Linux Mint (Cinnamon):</strong> Nemo – very similar to
+Windows File Explorer</li>
+<li>**Ubuntu / Pop!_OS:** Nautilus (Files)</li>
+<li><strong>KDE:</strong> Dolphin – extremely powerful</li>
+</ul>
+<figure>
+<img src="bilder/nautilus-list.png"
+alt="The Files file manager (Nautilus) in list view: the home folder with Documents, Pictures, and the other standard folders in the sidebar – Nemo in Linux Mint looks similar" />
+<figcaption aria-hidden="true">The Files file manager (Nautilus) in list
+view: the home folder with Documents, Pictures, and the other standard
+folders in the sidebar – Nemo in Linux Mint looks similar</figcaption>
+</figure>
+<h3 id="useful-things-you-can-do">Useful things you can do:</h3>
+<ul>
+<li><strong>Tabs</strong> in the file manager (open several folders in
+the same window)</li>
+<li><strong>Search</strong> directly in the folder (often just start
+typing)</li>
+<li><strong>Right-click → Properties</strong> for detailed info</li>
+<li><strong>Copy path</strong> (very useful)</li>
+<li><strong>Multiple views:</strong> Icons, list, details</li>
+</ul>
+<h3 id="recommended-folder-structure">Recommended folder structure</h3>
+<p>Most distributions come with these standard folders:</p>
+<ul>
+<li>Documents</li>
+<li>Downloads</li>
+<li>Pictures</li>
+<li>Music</li>
+<li>Videos</li>
+<li>Desktop</li>
+</ul>
+<p>You can create your own folders under “Home” (your personal
+area).</p>
+<p><strong>Tip:</strong> Avoid saving things directly on the desktop if
+you want to keep it tidy. Use folders instead.</p>
+<h2 id="printing-and-scanning">Printing and scanning</h2>
+<p>Most printers work with no extra effort in 2026.</p>
+<ul>
+<li>Go to <strong>Settings → Printers</strong></li>
+<li>Printers are often recognized automatically</li>
+<li>For older printers, you may need to install drivers via the software
+center (search for the brand + model)</li>
+</ul>
+<p>Can’t get the printer working? Chapter 8 has a thorough step-by-step
+guide for printers.</p>
+<h2 id="your-phone-and-your-files">Your phone and your files</h2>
+<ul>
+<li>Connect your phone with USB – it usually shows up as an external
+device</li>
+<li>For Android: Many people use <strong>KDE Connect</strong> or
+<strong>GSConnect</strong> to send files, see notifications, and control
+music wirelessly. It’s one of the most popular tools among Linux
+users.</li>
+</ul>
+<h2 id="common-daily-shortcuts">Common daily shortcuts</h2>
+<ul>
+<li><strong>Super (Windows key) + a number</strong> – switch to program
+no. X in the taskbar</li>
+<li><strong>Super + D</strong> – show the desktop</li>
+<li><strong>Alt + Tab</strong> – switch between windows</li>
+<li><strong>Super + Tab</strong> or <strong>Super + `</strong> – switch
+between windows of the same program</li>
+</ul>
+<h2 id="youre-already-up-and-running">You’re already up and running</h2>
+<p>If you can do all of this, you’re already using Linux for most of
+what you need in everyday life – including nearly all your everyday
+services.</p>
+<h2 id="extra-tips-for-daily-use">Extra tips for daily use</h2>
+<h3 id="organizing-files">Organizing files</h3>
+<p>Create folders like “Archive”, “Active projects”, and “Done” under
+Documents. Use dates in filenames when it’s useful
+(e.g. <code>2026-07-11-meeting-notes.txt</code>).</p>
+<h3 id="multiple-monitors">Multiple monitors</h3>
+<p>Most distributions handle multiple monitors very well. Go to Settings
+→ Display to arrange them.</p>
+<h3 id="night-mode-dark-mode">Night mode / dark mode</h3>
+<p>Most desktop environments have dark mode built in. It’s gentle on the
+eyes in the evening.</p>
+<h3 id="automatic-app-updates">Automatic app updates</h3>
+<p>Many Flatpak apps update themselves. You can also set up automatic
+system updates if you want.</p>
+<h3 id="syncing-between-devices">Syncing between devices</h3>
+<p>Tools like Syncthing let you sync files between Linux, Windows, Mac,
+and your phone without using cloud services.</p>
+<h2 id="common-everyday-tasks-that-work-well">Common everyday tasks that
+work well</h2>
+<ul>
+<li>Writing your résumé and cover letters in LibreOffice</li>
+<li>Editing photos for social media in GIMP or Pinta</li>
+<li>Watching Netflix, Hulu, Max, and YouTube</li>
+<li>Checking your Venmo history in the browser (the payments themselves
+happen on your phone)</li>
+<li>Keeping a household budget in LibreOffice Calc</li>
+<li>Joining video meetings via Zoom, Teams (web), or Jitsi</li>
+<li>Making presentations</li>
+</ul>
+<h2 id="how-to-handle-files-from-windows">How to handle files from
+Windows</h2>
+<p>Most file types work without any problems: - Images (jpg, png, etc.)
+- Documents (docx, pdf, odt) - Music and video (mp3, mp4, etc.) - Excel
+files (xlsx)</p>
+<p>Sometimes formatting in Office files can look a little different.
+Save as .odt if you want the best compatibility between LibreOffice
+users.</p>
+<h2 id="tips-for-feeling-at-home-faster">Tips for feeling at home
+faster</h2>
+<ul>
+<li>Change the wallpaper to something you like on day one</li>
+<li>Install the 3 programs you use most right away</li>
+<li>Learn 2–3 shortcuts you’ll use daily</li>
+<li>Try not to compare with Windows too much during the first weeks</li>
+</ul>
+<p>In the next chapter we’ll look at the terminal – not because you have
+to, but because it’s surprisingly useful once you learn the most
+important commands.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Most everyday services – banking, government, streaming – work great
+in the browser.</li>
+<li>LibreOffice is a solid, free alternative to Microsoft Office.</li>
+<li>Use tabs in the file manager – it’s much better than in Windows File
+Explorer.</li>
+</ul></div>
+<p><strong>Try it yourself:</strong> Connect an external USB stick or
+hard drive and copy a folder over to “Documents”. Open it in the file
+manager.</p>
+<hr />
+<p><strong>Next chapter:</strong> <a href="07-terminalen.md">07 – The
+Terminal</a></p>
+</section>
+<section id="kap07" class="chapter">
+<h1 id="the-terminal-dont-be-afraid-of-it">7. The Terminal – Don’t Be
+Afraid of It</h1>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>Why the terminal is useful (even though you don’t have to use
+it)</li>
+<li>The 10–15 most important commands</li>
+<li>How to install apps from the terminal safely</li>
+</ul>
+<hr />
+<p>Many people coming from Windows get chills when they hear the words
+“terminal” or “command line”. That’s completely understandable.</p>
+<p>The good news: You don’t need the terminal to use Linux. Many people
+use Linux for years without opening it a single time.</p>
+<p>But… once you learn the most important commands, the terminal becomes
+one of the most useful tools you have.</p>
+<h2 id="why-is-the-terminal-useful">Why is the terminal useful?</h2>
+<ul>
+<li>It’s faster than clicking through menus for many things</li>
+<li>It works the same on almost all Linux systems (and Mac)</li>
+<li>It can do things that are nearly impossible with mouse and keyboard
+alone</li>
+<li>It helps you understand what’s really going on</li>
+<li>It’s worth its weight in gold when something goes wrong and you find
+a solution on the internet</li>
+</ul>
+<p>Think of it as a remote control for your computer. You can do a lot
+without it, but sometimes it’s simply the easiest way.</p>
+<h2 id="the-most-important-commands-most-beginners-need">The most
+important commands most beginners need</h2>
+<p>Here are the essentials. You don’t need to learn them all at
+once.</p>
+<h3 id="navigation">Navigation</h3>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 51%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Shows where you are right now</td>
+<td><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>Lists files and folders</td>
+<td><code>ls</code></td>
+</tr>
+<tr class="odd">
+<td><code>ls -la</code></td>
+<td>Lists everything, including hidden files</td>
+<td><code>ls -la</code></td>
+</tr>
+<tr class="even">
+<td><code>cd</code></td>
+<td>Change folder</td>
+<td><code>cd Documents</code></td>
+</tr>
+<tr class="odd">
+<td><code>cd ..</code></td>
+<td>Go up one level</td>
+<td><code>cd ..</code></td>
+</tr>
+<tr class="even">
+<td><code>cd ~</code></td>
+<td>Go to your home folder</td>
+<td><code>cd ~</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="files-and-folders">Files and folders</h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 50%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mkdir</code></td>
+<td>Create a new folder</td>
+<td><code>mkdir pictures/vacation</code></td>
+</tr>
+<tr class="even">
+<td><code>cp</code></td>
+<td>Copy a file or folder</td>
+<td><code>cp photo.jpg pictures/</code></td>
+</tr>
+<tr class="odd">
+<td><code>mv</code></td>
+<td>Move or rename</td>
+<td><code>mv old.txt new.txt</code></td>
+</tr>
+<tr class="even">
+<td><code>rm</code></td>
+<td>Delete a file (careful!)</td>
+<td><code>rm file.txt</code></td>
+</tr>
+<tr class="odd">
+<td><code>rm -r</code></td>
+<td>Delete a folder and everything inside (very careful!)</td>
+<td><code>rm -r old-folder</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important warning about <code>rm</code>:</strong> 🟡 Optional
+to learn early, but important. There is no “Trash” in the terminal. Once
+something is deleted, it’s gone forever. Use with care.</p>
+<h3 id="viewing-file-contents">Viewing file contents</h3>
+<ul>
+<li><code>cat filename</code> — Shows the entire contents of a file</li>
+<li><code>less filename</code> — Shows the contents page by page (press
+Q to quit)</li>
+</ul>
+<h3 id="updates-very-useful">Updates (very useful)</h3>
+<p>**Debian-based systems (Linux Mint, Ubuntu, Pop!_OS, Zorin OS):**</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span></code></pre></div>
+<p><strong>Flatpak updates (recommended to run regularly):</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update</span></code></pre></div>
+<p><code>sudo</code> means “run this as administrator”. You’ll be asked
+for your password. You won’t see asterisks as you type – that’s
+completely normal.</p>
+<h3 id="other-useful-commands">Other useful commands</h3>
+<ul>
+<li><code>clear</code> — clears the terminal window</li>
+<li><code>history</code> — shows commands you’ve used before</li>
+<li><code>exit</code> or <code>Ctrl + D</code> — closes the
+terminal</li>
+</ul>
+<h2 id="practical-examples">Practical examples</h2>
+<h3 id="update-the-whole-system-quickly">Update the whole system
+quickly</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span> <span class="kw">&amp;&amp;</span> <span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<h3 id="create-a-folder-and-move-a-file-into-it">Create a folder and
+move a file into it</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> Projects</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> important-document.pdf Projects/</span></code></pre></div>
+<h3 id="find-out-where-you-are-and-whats-there">Find out where you are
+and what’s there</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div>
+<h2 id="how-to-open-the-terminal">How to open the terminal</h2>
+<ul>
+<li><strong>Linux Mint / Cinnamon:</strong> Right-click on the desktop →
+“Open in Terminal”, or search for “Terminal”</li>
+<li><strong>Most others:</strong> Press <code>Ctrl + Alt + T</code> or
+search for “Terminal” / “Konsole”</li>
+</ul>
+<h2 id="a-practical-example-installing-something-via-the-terminal">A
+practical example: Installing something via the terminal</h2>
+<p>Let’s say you want to install VLC via Flatpak:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span></code></pre></div>
+<p>Or update everything at once:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<p>You can copy and paste commands from guides on the internet – that’s
+completely normal and safe as long as you trust the source. (More on
+that in The Terminal Rule toward the end of the chapter.)</p>
+<h2 id="common-installation-commands-debian-based-distros">Common
+installation commands (Debian-based distros)</h2>
+<p>Here are the most useful commands you’ll use in the beginning:</p>
+<h3 id="first-make-sure-flatpak-is-set-up-important">First: Make sure
+Flatpak is set up (important!)</h3>
+<p>Many distributions have it already, but to be sure:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flatpak</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> remote-add <span class="at">--if-not-exists</span> flathub https://flathub.org/repo/flathub.flatpakrepo</span></code></pre></div>
+<h3 id="install-programs-via-apt-fast-and-official">Install programs via
+apt (fast and official)</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># System tools</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift          <span class="co"># System backup (highly recommended)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw        <span class="co"># Better battery life on laptops</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ufw                <span class="co"># Firewall (optional)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Common programs</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install vlc                <span class="co"># Best video player</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gimp               <span class="co"># Image editing</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install thunderbird        <span class="co"># Email</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install keepassxc          <span class="co"># Password manager</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flameshot          <span class="co"># Better screenshots</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install neofetch           <span class="co"># Show system info (cool)</span></span></code></pre></div>
+<p>(In newer distro versions the successor is called
+<code>fastfetch</code> – feel free to try
+<code>sudo apt install fastfetch</code> first if you’re on something
+newer than Mint 22 / Ubuntu 24.04.)</p>
+<h3 id="install-via-flatpak-recommended-for-many-modern-apps">Install
+via Flatpak (recommended for many modern apps)</h3>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Popular apps</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.spotify.Client</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.discordapp.Discord</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.valvesoftware.Steam</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.gimp.GIMP</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.keepassxc.KeePassXC</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.github.tchx84.Flatseal   <span class="co"># Control Flatpak permissions</span></span></code></pre></div>
+<p><strong>Tip:</strong> You can install several at once:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC com.spotify.Client</span></code></pre></div>
+<p><strong>How do you find the right Flatpak ID?</strong><br />
+Go to <a href="https://flathub.org">https://flathub.org</a>, search for
+the app, and copy the installation command shown there. That’s the most
+reliable way.</p>
+<h2 id="how-to-uninstall-things">How to uninstall things</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Via apt</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove vlc</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Via Flatpak</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> uninstall org.videolan.VLC</span></code></pre></div>
+<h2 id="how-to-search-for-a-program">How to search for a program</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Via apt</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> search gimp</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Via Flatpak</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> search discord</span></code></pre></div>
+<h2 id="you-set-the-pace">You set the pace</h2>
+<p>Some people learn these commands in the first few weeks. Others wait
+for months. Both are perfectly fine.</p>
+<p>My advice:</p>
+<ol type="1">
+<li>Open the terminal once in a while</li>
+<li>Try <code>ls</code> and <code>cd</code> just to see how it
+feels</li>
+<li>When you find a guide that says “run this command”, copy it in and
+see what happens</li>
+</ol>
+<h2 id="one-last-important-thing">One last important thing</h2>
+<p>The terminal is powerful. That also means you can make mistakes that
+have consequences.</p>
+<p>But: Most mistakes are easy to fix. And you quickly learn what not to
+do.</p>
+<p>The worst mistake most beginners make is copying a command from the
+internet without understanding what it does. So here’s one rule to take
+with you – it’s so important that it deserves its own name:</p>
+<blockquote>
+<p><strong>The Terminal Rule:</strong> read the command before you press
+Enter – and only run what you get from sources you trust.</p>
+</blockquote>
+<p>Remember it by name. It comes up again later, and it’s all you need
+to use the terminal safely.</p>
+<p>If you’re unsure, ask on Reddit (r/linux4noobs) or your
+distribution’s forum.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>You don’t need the terminal for daily use, but it makes many things
+faster.</li>
+<li>Remember The Terminal Rule: read the command before you press Enter
+– and only run what you trust.</li>
+<li>Run <code>sudo apt update &amp;&amp; sudo apt upgrade</code> and
+<code>flatpak update</code> regularly.</li>
+</ul></div>
+<p><strong>Try it yourself:</strong></p>
+<ol type="1">
+<li>Open a terminal.</li>
+<li>Type <code>pwd</code> and press Enter.</li>
+<li>Type <code>ls</code> and press Enter.</li>
+<li>Type <code>cd Documents</code> and press Enter.</li>
+<li>Type <code>ls</code> again.</li>
+<li>Type <code>cd ~</code> to go back.</li>
+</ol>
+<p><strong>Using a non-US keyboard layout?</strong> Some symbols the
+terminal uses a lot – like <code>~ | \</code> – may hide behind the
+AltGr key (the right Alt) on your layout. On a US layout they’re
+directly on the keyboard. Check your layout in Settings → Keyboard if a
+symbol doesn’t behave as expected.</p>
+<hr />
+<p><strong>Next chapter:</strong> <a href="08-vanlige-problemer.md">08 –
+Common Problems in the First Weeks</a></p>
+</section>
+<section id="kap08" class="chapter">
+<h1
+id="common-problems-in-the-first-weeks-this-chapter-will-be-worth-its-weight-in-gold">8.
+Common Problems in the First Weeks (this chapter will be worth its
+weight in gold)</h1>
+<p><em>Last updated: 2026-07-11</em></p>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>The most common hardware problems and how to fix them</li>
+<li>What to do about Windows programs and games</li>
+<li>A “first aid” page for when something goes wrong</li>
+</ul>
+<hr />
+<p><strong>Something went wrong – start here (panic page)</strong></p>
+<ol type="1">
+<li>Breathe. Most problems are easy to fix.</li>
+<li>Restart the PC.</li>
+<li>Plug in power and internet.</li>
+<li>Check whether Timeshift has a snapshot you can roll back to.</li>
+<li>Phrase the question well when asking for help: “I’m on Linux Mint
+22, I tried to [do this], and got this error message: [paste].”</li>
+</ol>
+<p>This chapter may be the most important one in the book.</p>
+<p>In your first 1–3 weeks with Linux, you’ll probably run into a few
+things that don’t work quite as expected. That’s completely normal.</p>
+<p>The nice part is that almost all of these problems have simple
+solutions – and most people have run into the same thing before you.</p>
+<h2 id="hardware-problems">Hardware problems</h2>
+<h3 id="wifi-doesnt-work">WiFi doesn’t work</h3>
+<p>This is the most common problem after installation.</p>
+<p><strong>What to try first:</strong></p>
+<ol type="1">
+<li>Restart (sometimes it just fixes itself)</li>
+<li>Check that airplane mode isn’t on</li>
+<li>Go to Settings → WiFi and see if the adapter is detected</li>
+</ol>
+<p><strong>If it still doesn’t work:</strong></p>
+<p>Most WiFi problems are solved by installing extra drivers.</p>
+<p>For Ubuntu-based systems:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install linux-firmware</span></code></pre></div>
+<p>You’ll often find more driver info on your distribution’s forum or by
+searching for your exact WiFi model.</p>
+<p>Restart afterwards.</p>
+<p>If you have a newer machine with Intel AX, MediaTek, or Broadcom
+WiFi, search for “your distro + WiFi model + driver”.</p>
+<h3 id="no-wifi-and-no-drivers-the-chicken-and-egg-problem">No WiFi and
+no drivers – the “chicken and egg” problem</h3>
+<p>How do you download WiFi drivers when you have no internet? Here’s
+the rescue plan:</p>
+<ol type="1">
+<li><strong>Connect with a network cable</strong> (Ethernet) if the
+machine has a port – the simplest solution.</li>
+<li><strong>USB tethering from your phone:</strong>
+<ul>
+<li>Connect the phone to the PC with a USB cable.</li>
+<li><strong>Android:</strong> Settings → Network → Hotspot &amp;
+tethering → USB tethering.</li>
+<li><strong>iPhone:</strong> Settings → Personal Hotspot (turn it on,
+and accept on the PC).</li>
+<li>The PC then gets internet through the phone – no setup needed on the
+Linux side.</li>
+</ul></li>
+<li><strong>Install the drivers</strong> while you’re online:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install linux-firmware</span></code></pre></div>
+<ol start="4" type="1">
+<li><strong>Restart</strong> – WiFi should now work.</li>
+</ol>
+<h3 id="sound-doesnt-work-or-is-quiet">Sound doesn’t work or is
+quiet</h3>
+<p>For most people, sound works right away in 2026. If not, take it step
+by step:</p>
+<p><strong>What is PipeWire?</strong> PipeWire is the sound server most
+modern distributions use (it replaced PulseAudio). It handles audio and
+video in the background – you normally never need to think about it.</p>
+<ol type="1">
+<li><strong>Check that the right device is selected</strong> in Settings
+→ Sound (speakers vs. headphones vs. HDMI).</li>
+<li><strong>Check that the sound isn’t muted</strong> – click the
+speaker icon in the taskbar.</li>
+<li><strong>Restart the sound system:</strong></li>
+</ol>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> <span class="at">--user</span> restart pipewire pipewire-pulse</span></code></pre></div>
+<ol start="4" type="1">
+<li><strong>Install <code>pavucontrol</code></strong> for more detailed
+control (also works with PipeWire):</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install pavucontrol</span></code></pre></div>
+<p>Open pavucontrol and check that the right device is selected and that
+the levels aren’t at 0.</p>
+<ol start="5" type="1">
+<li><strong>Check that the sound card is detected:</strong></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lspci</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> audio</span></code></pre></div>
+<ol start="6" type="1">
+<li><strong>If all else fails:</strong> Restart the machine – it solves
+a surprising amount.</li>
+</ol>
+<h3 id="screen-resolution-and-external-monitors">Screen resolution and
+external monitors</h3>
+<ul>
+<li>Go to <strong>Settings → Display</strong></li>
+<li>Most modern monitors and graphics cards work without issues</li>
+</ul>
+<p><strong>If the external monitor doesn’t show up or has the wrong
+resolution:</strong></p>
+<ol type="1">
+<li>Go to <strong>Settings → Display</strong> and check that the monitor
+is enabled (not turned off).</li>
+<li>Try a different cable or port – HDMI cables are a classic
+culprit.</li>
+<li>Check what the system sees (🔴 advanced, applies to X11 – on Wayland
+just use Settings → Display):</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xrandr</span></span></code></pre></div>
+<p>This lists all connected monitors. If it doesn’t appear here, the
+problem is the cable or the driver.</p>
+<ol start="4" type="1">
+<li>Force resolution and refresh rate manually (🔴 advanced, X11):</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xrandr</span> <span class="at">--output</span> HDMI-1 <span class="at">--mode</span> 1920x1080 <span class="at">--rate</span> 144</span></code></pre></div>
+<ol start="5" type="1">
+<li>If you experience “tearing” (the image rips) with monitors running
+at different speeds (60 Hz + 144 Hz), the solution depends on which
+desktop environment you’re using:
+<ul>
+<li>**Ubuntu/GNOME, KDE Plasma, and Pop!_OS/COSMIC** run Wayland by
+default – tearing is rarely a problem there to begin with.</li>
+<li><strong>Linux Mint Cinnamon</strong> still uses X11 by default
+(Cinnamon’s Wayland session is experimental for now). Don’t go looking
+for a Wayland switch – instead, set all monitors to the same refresh
+rate in Settings → Display, and enable VSYNC in the Cinnamon settings if
+needed. That solves the vast majority of cases.</li>
+</ul></li>
+</ol>
+<h3 id="nvidia-drivers-how-to-install-them">NVIDIA drivers – how to
+install them</h3>
+<p>If you have an NVIDIA graphics card and choppy graphics or the wrong
+resolution, it’s almost always the driver:</p>
+<p><strong>Linux Mint:</strong></p>
+<ol type="1">
+<li>Open <strong>Driver Manager</strong> (search in the start menu)</li>
+<li>Select the recommended NVIDIA driver</li>
+<li>Restart</li>
+</ol>
+<p><strong>Ubuntu:</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ubuntu-drivers autoinstall</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<p>**Pop!_OS:** Choose the NVIDIA edition of the ISO when you download,
+and the drivers are in place from the start.</p>
+<p><strong>Other Debian-based distros:</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ubuntu-drivers</span> list                  <span class="co"># find the latest recommended version</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install nvidia-driver-550   <span class="co"># or the latest available version</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div>
+<h3
+id="hybrid-graphics-switching-between-gpus-on-a-laptop-optional">Hybrid
+graphics – switching between GPUs on a laptop 🟡 Optional</h3>
+<p>Many laptops have both Intel graphics (power-efficient) and NVIDIA
+(powerful). Here’s how to switch:</p>
+<p><strong>Ubuntu / Linux Mint:</strong></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select on-demand   <span class="co"># Default and best compromise: NVIDIA is used only when an app asks for it</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select nvidia      <span class="co"># Use NVIDIA all the time (performance)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> prime-select intel       <span class="co"># Use Intel all the time (battery life)</span></span></code></pre></div>
+<p><code>on-demand</code> is the default and the best compromise for
+most people – you get battery life in daily use and performance when you
+need it. Restart after switching.</p>
+<p>**Pop!_OS:** Has built-in switching – click the battery/power menu in
+the top right and choose a graphics mode.</p>
+<p><strong>Check which GPU is in use:</strong></p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">glxinfo</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;OpenGL renderer&quot;</span></span></code></pre></div>
+<h3 id="battery-life-on-laptops">Battery life on laptops</h3>
+<p>Linux has traditionally had worse battery life on some machines, but
+it has gotten much better.</p>
+<p><strong>Tips for better battery life:</strong></p>
+<ul>
+<li>Install <code>tlp</code>:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable tlp</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start tlp</span></code></pre></div>
+<p>You can check the status with <code>tlp-stat</code>.</p>
+<ul>
+<li>Use “Power saving” or “Balanced” mode in the power settings</li>
+<li>Lower the screen brightness</li>
+<li>Close the lid when you’re not using the machine</li>
+</ul>
+<h3 id="printers-step-by-step">Printers – step by step</h3>
+<p>Most modern printers work plug-and-play, but here’s the full ladder
+if yours doesn’t:</p>
+<p><strong>Step 1: Automatic discovery</strong> Most modern printers
+(especially network printers) are detected automatically. Go to
+<strong>Settings → Printers</strong>, click “Add” and see if the printer
+shows up.</p>
+<p><strong>Step 2: Manual installation</strong> If the printer isn’t
+detected:</p>
+<ul>
+<li>Search for the printer brand in the Software Center (e.g., “Brother”
+or “Epson”)</li>
+<li>Many manufacturers offer Linux drivers on their websites</li>
+</ul>
+<p><strong>Step 3: HP printers</strong> For HP printers (including older
+ones), <strong>HPLIP</strong> almost always works:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install hplip</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">hp-setup</span></span></code></pre></div>
+<p><strong>Step 4: Other older printers</strong> Many older printers are
+supported by the <strong>Gutenprint</strong> drivers:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install printer-driver-gutenprint</span></code></pre></div>
+<blockquote>
+<p><strong>Tip:</strong> If you have a printer that’s more than 10 years
+old, search for “model name + linux” – there’s almost always a solution.
+And if you’re buying new: Brother and HP have the best Linux
+reputation.</p>
+</blockquote>
+<h2 id="where-are-my-programs-from-windows">“Where are my programs from
+Windows?”</h2>
+<p>This is one of the biggest questions.</p>
+<h3 id="find-a-linux-alternative-recommended">1. Find a Linux
+alternative (recommended)</h3>
+<p>Most common programs have good alternatives:</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 52%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Windows program</th>
+<th>Linux alternative</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Photoshop</td>
+<td>GIMP, Photopea (web)</td>
+<td>GIMP is powerful</td>
+</tr>
+<tr class="even">
+<td>Office</td>
+<td>LibreOffice</td>
+<td>Very good</td>
+</tr>
+<tr class="odd">
+<td>OneNote</td>
+<td>Joplin, Logseq</td>
+<td>Joplin is popular</td>
+</tr>
+<tr class="even">
+<td>Spotify</td>
+<td>Spotify (Flatpak)</td>
+<td>Official client</td>
+</tr>
+<tr class="odd">
+<td>Zoom</td>
+<td>Zoom (official)</td>
+<td>Works well</td>
+</tr>
+<tr class="even">
+<td>Notepad++</td>
+<td>Kate, VS Code, Gedit</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="run-the-windows-program-directly">2. Run the Windows program
+directly</h3>
+<ul>
+<li><strong>Bottles</strong> or <strong>Wine</strong> – lets you run
+many Windows programs</li>
+<li><strong>CrossOver</strong> (paid, but good support)</li>
+</ul>
+<h3 id="use-the-web-app">3. Use the web app</h3>
+<p>Many programs are now available as web apps.</p>
+<h3 id="run-windows-in-a-virtual-machine">4. Run Windows in a virtual
+machine</h3>
+<ul>
+<li><strong>GNOME Boxes</strong></li>
+<li><strong>VirtualBox</strong></li>
+<li><strong>VMware</strong></li>
+</ul>
+<p>This lets you run all of Windows inside Linux. Perfect for programs
+you absolutely must have.</p>
+<h2 id="gaming-on-linux-in-2026">Gaming on Linux in 2026</h2>
+<p>This has gotten surprisingly good.</p>
+<h3 id="steam-proton">Steam + Proton</h3>
+<p>If you install <strong>Steam</strong>:</p>
+<ul>
+<li>Most games on Steam now work via <strong>Proton</strong></li>
+<li>Check the rating at <a
+href="https://www.protondb.com">https://www.protondb.com</a> before you
+buy</li>
+</ul>
+<p><strong>Before buying a game on Steam – make this a
+habit:</strong></p>
+<ol type="1">
+<li>Go to <a href="https://www.protondb.com">protondb.com</a></li>
+<li>Search for the game</li>
+<li>Check the rating:
+<ul>
+<li><strong>Platinum</strong> – Works perfectly</li>
+<li><strong>Gold</strong> – Works well with minor tweaks</li>
+<li><strong>Silver</strong> – Works, but with some issues</li>
+<li><strong>Bronze</strong> – Works poorly</li>
+<li><strong>Borked</strong> – Doesn’t work</li>
+</ul></li>
+</ol>
+<p>This takes 30 seconds and saves you a lot of frustration.</p>
+<figure>
+<img src="bilder/08-steam-proton.png" alt="Steam with Proton support" />
+<figcaption aria-hidden="true">Steam with Proton support</figcaption>
+</figure>
+<p>Here’s how to set it up:</p>
+<ol type="1">
+<li>Install Steam</li>
+<li>Go to Steam → Settings → Steam Play</li>
+<li>Check “Enable Steam Play for all other titles”</li>
+<li>Select Proton Experimental</li>
+</ol>
+<h3 id="other-gaming-platforms">Other gaming platforms</h3>
+<ul>
+<li><strong>Heroic Games Launcher</strong> – Epic Games Store and
+GOG</li>
+<li><strong>Lutris</strong> – almost everything else</li>
+<li><strong>Bottles</strong> – standalone Windows games</li>
+</ul>
+<h3 id="what-doesnt-work">What doesn’t work?</h3>
+<p>Some games with strict anti-cheat systems (especially certain online
+multiplayer games). Always check ProtonDB.</p>
+<h2 id="other-common-things">Other common things</h2>
+<h3 id="everything-looks-too-big-too-small">“Everything looks too big /
+too small”</h3>
+<ul>
+<li>Settings → Display → Scaling (try 125% or 150%)</li>
+</ul>
+<h3 id="updates-that-break-things">Updates that break things</h3>
+<p>It rarely happens, but it can.</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li>Always have backups</li>
+<li>Install <strong>Timeshift</strong> and take snapshots before big
+changes</li>
+</ul>
+<h3 id="i-miss-the-windows-keyboard-shortcuts">“I miss the Windows
+keyboard shortcuts”</h3>
+<p>Most shortcuts are the same. Some useful ones:</p>
+<ul>
+<li><code>Ctrl + Alt + T</code> → Terminal</li>
+<li><code>Super + L</code> → Lock the screen</li>
+</ul>
+<p>You can change all shortcuts in Settings.</p>
+<h2 id="when-you-cant-find-the-solution-yourself">When you can’t find
+the solution yourself</h2>
+<ol type="1">
+<li>Write down exactly what happens (error messages help a lot)</li>
+<li>Search on Google:
+<code>your problem + your distro + 2026</code></li>
+<li>Good places:
+<ul>
+<li>Reddit: r/linux4noobs, r/linuxquestions, r/linuxmint, r/pop_os</li>
+<li>Your distro’s official forum</li>
+<li>AskUbuntu</li>
+</ul></li>
+</ol>
+<p>Most problems have already been solved by someone else.</p>
+<h2 id="specific-common-problems-and-solutions">Specific common problems
+and solutions</h2>
+<h3 id="the-touchpad-doesnt-work-well">“The touchpad doesn’t work
+well”</h3>
+<ul>
+<li>Search for “libinput” or “synaptics” drivers</li>
+<li>Many people solve it with the settings under “Mouse and
+Touchpad”</li>
+</ul>
+<h3 id="the-screen-flickers-or-tears">“The screen flickers” or
+“tears”</h3>
+<ul>
+<li>Try changing the refresh rate in Settings → Display</li>
+<li>Install proprietary drivers if you have NVIDIA. If you have AMD,
+support is built into the system (Mesa) – there is no proprietary
+desktop driver to install. Just make sure the system is up to date.</li>
+</ul>
+<h3 id="the-program-i-want-isnt-in-the-software-center">“The program I
+want isn’t in the Software Center”</h3>
+<ul>
+<li>Check whether it exists as a Flatpak</li>
+<li>Search the web for “program name flatpak” or “program name
+linux”</li>
+<li>Many programs have official installation instructions on their
+websites</li>
+</ul>
+<h3 id="i-cant-log-in-after-an-update">“I can’t log in after an
+update”</h3>
+<ul>
+<li>Restart the machine and choose an older kernel from the GRUB menu
+(advanced). If the menu doesn’t appear: hold Shift, or press Esc, during
+boot – then choose Advanced options.</li>
+<li>Restore from Timeshift</li>
+</ul>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Most problems are solved with a restart + update or Timeshift.</li>
+<li>Search for “your problem + your distro”.</li>
+<li>Reddit’s r/linux4noobs is gold for beginners.</li>
+</ul></div>
+<hr />
+<p><strong>Next chapter:</strong> <a
+href="09-tilpasning-og-finpuss.md">09 – Customization and Polish</a></p>
+</section>
+<section id="kap09" class="chapter">
+<h1 id="customization-and-polish">9. Customization and Polish</h1>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>How to change the look and themes</li>
+<li>Which apps you might want to add</li>
+<li>A “golden path” for customizing without overdoing it</li>
+</ul>
+<hr />
+<p>One of the greatest joys of Linux is how easy it is to make it
+<strong>your</strong> system.</p>
+<p>You can change almost everything: colors, icons, fonts, how windows
+look, where the taskbar sits, and much more.</p>
+<h2 id="changing-the-look">Changing the look</h2>
+<h3 id="linux-mint-cinnamon">Linux Mint (Cinnamon)</h3>
+<p>Cinnamon is very easy to customize:</p>
+<ol type="1">
+<li>Right-click on the desktop → <strong>Settings</strong></li>
+<li>Go to <strong>Themes</strong></li>
+<li>Choose:
+<ul>
+<li><strong>Desktop</strong> (appearance)</li>
+<li><strong>Icons</strong></li>
+<li><strong>Controls</strong> (buttons and windows)</li>
+<li><strong>Mouse pointer</strong></li>
+</ul></li>
+</ol>
+<p>You can download more themes from the web and install them by
+extracting them into <code>~/.themes</code> and
+<code>~/.icons</code>.</p>
+<h3 id="gnome-ubuntu-and-many-others">GNOME (Ubuntu and many
+others)</h3>
+<p>GNOME is more minimalist, but can be customized with
+<strong>extensions</strong>.</p>
+<ul>
+<li>Install the <strong>Extensions</strong> app or “GNOME Tweaks”</li>
+<li>Go to <a
+href="https://extensions.gnome.org">https://extensions.gnome.org</a> in
+Firefox</li>
+<li>Enable extensions like “Dash to Dock”, “User Themes”, “Blur my
+Shell”, etc.</li>
+</ul>
+<p><strong>Warning for beginners:</strong> Don’t install too many
+extensions at once. They can cause instability.</p>
+<h3 id="cosmic-pop_os">COSMIC (Pop!_OS)</h3>
+<p>Pop!_OS uses its own desktop environment, <strong>COSMIC</strong> –
+not GNOME. That means GNOME Tweaks and GNOME extensions don’t apply
+here. Instead:</p>
+<ul>
+<li>Open <strong>Settings → Desktop</strong> for themes, colors, panels,
+and the dock</li>
+<li>Window tiling (automatic window arrangement) is toggled with the
+button in the top right of the panel</li>
+<li>Most customization is built in – you don’t need any extra tools</li>
+</ul>
+<h3 id="kde-plasma">KDE Plasma</h3>
+<p>KDE is the most customizable of them all. You can change almost
+everything via <strong>System Settings → Appearance</strong>.</p>
+<h2 id="icons-and-themes">Icons and themes</h2>
+<p>Popular places to find themes and icons:</p>
+<ul>
+<li><a href="https://www.pling.com">https://www.pling.com</a></li>
+<li><a
+href="https://www.gnome-look.org">https://www.gnome-look.org</a></li>
+</ul>
+<p><strong>How to install a theme (general):</strong></p>
+<ol type="1">
+<li>Download a <code>.tar.xz</code> or <code>.zip</code> file</li>
+<li>Extract it</li>
+<li>Move the folder to the right place:
+<ul>
+<li>Themes: <code>~/.themes</code> or
+<code>~/.local/share/themes</code></li>
+<li>Icons: <code>~/.icons</code> or
+<code>~/.local/share/icons</code></li>
+</ul></li>
+<li>Select the theme in Settings</li>
+</ol>
+<h2 id="wallpapers-and-the-lock-screen">Wallpapers and the lock
+screen</h2>
+<ul>
+<li>Right-click on the desktop → Change wallpaper</li>
+<li>You can use your own pictures</li>
+<li>Some distributions let you change the lock screen separately</li>
+</ul>
+<h2 id="adding-apps-youre-missing">Adding apps you’re missing</h2>
+<p>Here are some popular apps many people want:</p>
+<h3 id="communication">Communication</h3>
+<ul>
+<li><strong>Discord</strong> –
+<code>flatpak install flathub com.discordapp.Discord</code></li>
+<li><strong>Telegram</strong> –
+<code>flatpak install flathub org.telegram.desktop</code></li>
+<li><strong>Signal</strong> –
+<code>flatpak install flathub org.signal.Signal</code></li>
+<li><strong>Element</strong> (Matrix) –
+<code>flatpak install flathub im.riot.Riot</code></li>
+</ul>
+<h3 id="development-text">Development / text</h3>
+<ul>
+<li><strong>Visual Studio Code</strong> – Very popular. Install via
+Flatpak or the official source</li>
+<li><strong>VSCodium</strong> – Same as VS Code, but without Microsoft
+telemetry</li>
+</ul>
+<h3 id="other-useful-apps">Other useful apps</h3>
+<ul>
+<li><strong>OBS Studio</strong> – Screen recording and streaming
+(excellent on Linux)</li>
+<li><strong>Flameshot</strong> or <strong>Spectacle</strong> – Better
+screenshots</li>
+<li><strong>KeePassXC</strong> – Password manager (highly
+recommended)</li>
+<li><strong>Bitwarden</strong> – Cloud-based password manager</li>
+</ul>
+<h3 id="gaming-related">Gaming-related</h3>
+<ul>
+<li>Steam</li>
+<li>Heroic Games Launcher</li>
+<li>Lutris</li>
+<li>ProtonUp-Qt</li>
+</ul>
+<h2 id="how-to-install-most-apps-flatpak-recommended">How to install
+most apps (Flatpak recommended)</h2>
+<p>The easiest and safest way in 2026:</p>
+<ol type="1">
+<li>Open the <strong>Software Center</strong></li>
+<li>Search for the program</li>
+<li>If there are multiple versions, choose the <strong>Flatpak</strong>
+version when possible</li>
+</ol>
+<figure>
+<img src="bilder/programvarebehandler.png"
+alt="The Software Manager in Linux Mint: featured apps like Audacity, Steam, and Calibre – the Flathub apps are marked with the Flatpak symbol (screenshot shows a Norwegian locale — yours will be in English)" />
+<figcaption aria-hidden="true">The Software Manager in Linux Mint:
+featured apps like Audacity, Steam, and Calibre – the Flathub apps are
+marked with the Flatpak symbol (screenshot shows a Norwegian locale —
+yours will be in English)</figcaption>
+</figure>
+<h2 id="creating-shortcuts-and-organizing-the-desktop">Creating
+shortcuts and organizing the desktop</h2>
+<ul>
+<li>You can drag apps to the taskbar / dock</li>
+<li>Right-click an app in the start menu → “Add to favorites”</li>
+<li>Many people use a “dock” at the bottom</li>
+</ul>
+<h2
+id="accessibility-for-older-readers-or-those-who-need-it">Accessibility
+(for older readers or those who need it)</h2>
+<p>Linux has good accessibility support:</p>
+<ul>
+<li>Go to <strong>Settings → Accessibility</strong> (or search for
+“Universal Access”).</li>
+<li>Increase the font size and cursor size.</li>
+<li>Turn on high contrast or the screen magnifier.</li>
+<li>Many people use this to make things easier for parents or
+grandparents.</li>
+</ul>
+<h2 id="advanced-optional-optional">Advanced (optional) 🟡 Optional</h2>
+<p>If you get more comfortable later:</p>
+<ul>
+<li>Change fonts system-wide</li>
+<li>Add custom keyboard shortcuts</li>
+<li>Write your own scripts</li>
+<li>Change startup applications</li>
+</ul>
+<h2 id="an-important-principle">An important principle</h2>
+<p><strong>Customize gradually.</strong></p>
+<p>It’s easy to get carried away and change everything at once. Start
+with 2–3 small changes you like, and leave the rest alone for a
+while.</p>
+<p>Once you’ve used the system for a few weeks, you’ll know exactly what
+you want to change.</p>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Customize gradually – not everything at once.</li>
+<li>Flatpak is often the easiest and safest choice for apps.</li>
+</ul></div>
+<p><strong>Golden path for customization:</strong></p>
+<ol type="1">
+<li>Change the wallpaper and theme via Settings.</li>
+<li>Install 3-4 apps you’re missing via the Software Center.</li>
+<li>Add favorites to the taskbar.</li>
+<li>Stop there – the rest will come once you’ve used the system for a
+while.</li>
+</ol>
+<p><strong>Try it yourself:</strong> Right-click on the desktop and
+change the wallpaper to a picture you like.</p>
+<hr />
+<p><strong>Next chapter:</strong> <a href="10-sikkerhet-backup.md">10 –
+Security, Backup, and Good Habits</a></p>
+</section>
+<section id="kap10" class="chapter">
+<h1 id="security-backups-and-good-habits">10. Security, backups, and
+good habits</h1>
+<p><em>Last updated: 2026-08-01</em></p>
+<p><strong>In this chapter you’ll learn:</strong></p>
+<ul>
+<li>Why regular updates are the most important security measure</li>
+<li>How to take system snapshots with Timeshift and back up your
+personal files</li>
+<li>Password managers and two-factor authentication (2FA)</li>
+<li>How to turn on the UFW firewall in 10 seconds</li>
+<li>Healthy skepticism: what to think about before you install
+something</li>
+<li>A simple five-step security routine</li>
+</ul>
+<hr />
+<p>Linux is generally more secure than Windows for several reasons:</p>
+<ul>
+<li>You don’t run as administrator all the time</li>
+<li>Programs are installed through controlled channels</li>
+<li>It’s harder for malicious software to run without you actively
+approving it</li>
+</ul>
+<p>But: security is still about good habits.</p>
+<h2 id="keep-your-system-updated">Keep your system updated</h2>
+<p>This is the most important thing you can do.</p>
+<ul>
+<li>Install updates regularly (weekly is best)</li>
+<li>Use both system updates and Flatpak updates</li>
+</ul>
+<p>Quick command:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> update <span class="at">-y</span></span></code></pre></div>
+<h2 id="make-regular-backups">Make regular backups</h2>
+<p>There are two kinds of backups you should think about:</p>
+<h3 id="system-snapshots-recovery-if-something-goes-wrong">1. System
+snapshots (recovery if something goes wrong)</h3>
+<p><strong>Install Timeshift</strong> – the best tool for most
+beginners.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span></code></pre></div>
+<p>After installing: open Timeshift and take a first snapshot.</p>
+<ul>
+<li>Take a snapshot before big changes</li>
+<li>You can roll back to a previously working system in a few
+minutes</li>
+</ul>
+<p>If you can, store your snapshots on a separate or external disk – a
+snapshot sitting on the same disk that dies won’t help you much the day
+that disk fails.</p>
+<p><strong>Recommendation:</strong> Take a snapshot after installation
+and once a week.</p>
+<h3 id="personal-files">2. Personal files</h3>
+<p>Recommended simple solutions:</p>
+<ul>
+<li><strong>Déjà Dup</strong> (simple graphical backup)</li>
+<li>Manual copying to an external hard drive</li>
+<li>rsync (powerful)</li>
+<li>Cloud services you trust (Proton Drive, Nextcloud, etc.)</li>
+</ul>
+<p><strong>Rule:</strong> Have at least one offline backup + one cloud
+backup if possible.</p>
+<h2 id="passwords-and-authentication">Passwords and authentication</h2>
+<ul>
+<li>Use a <strong>password manager</strong> (KeePassXC or
+Bitwarden)</li>
+<li>Create strong, unique passwords</li>
+<li>Enable two-factor authentication (2FA) wherever possible</li>
+</ul>
+<h2 id="firewall">Firewall</h2>
+<p>Most Linux distributions do <strong>not</strong> ship with the
+firewall enabled by default. That’s usually fine anyway, because you’re
+most likely sitting behind a home router that already blocks incoming
+traffic from the outside.</p>
+<p>But for extra security – especially on a laptop that goes with you to
+coffee shops, hotels, and public networks – I recommend turning on UFW
+(Uncomplicated Firewall). It takes 10 seconds:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ufw       <span class="co"># Install (if not already installed)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw enable            <span class="co"># Enable the firewall</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ufw status            <span class="co"># Check that it&#39;s active</span></span></code></pre></div>
+<p>UFW blocks all unwanted incoming traffic but lets outgoing traffic
+(web browsing, email, etc.) pass freely. You won’t notice any difference
+in daily use – it just protects you against unauthorized connections
+from other machines on the same network.</p>
+<h2 id="be-careful-about-what-you-install">Be careful about what you
+install</h2>
+<p>Good habits:</p>
+<ul>
+<li>Install mainly from the Software Center or Flatpak
+(flathub.org)</li>
+<li>Be skeptical of <code>.deb</code> files and <code>.sh</code> scripts
+from random websites</li>
+<li>Always read what a command does before running it with
+<code>sudo</code></li>
+</ul>
+<h2 id="browser-security">Browser security</h2>
+<ul>
+<li>Use Firefox or a Chromium-based browser</li>
+<li>Install uBlock Origin</li>
+<li>Be careful with extensions</li>
+</ul>
+<h2 id="what-about-viruses">What about viruses?</h2>
+<p>Linux has fewer viruses than Windows, but they do exist. Most
+problems come from users running random scripts they find on the
+internet.</p>
+<h2 id="recommended-security-routine">Recommended “security
+routine”</h2>
+<ol type="1">
+<li>Take a Timeshift snapshot before big changes</li>
+<li>Install updates weekly</li>
+<li>Keep an external backup of important files</li>
+<li>Use a password manager</li>
+<li>Don’t run commands you don’t understand</li>
+</ol>
+<h2 id="if-something-goes-wrong">If something goes wrong</h2>
+<ul>
+<li>Don’t panic</li>
+<li>Most problems are solved by a reboot + updates</li>
+<li>Worst case: restore from Timeshift</li>
+</ul>
+<hr />
+<div class="info-box"><p><strong>Key takeaways from this chapter</strong></p>
+<ul>
+<li>Linux is safe out of the box – good habits make it even safer.</li>
+<li>Updates and backups are the big two: keep the system updated, and
+have both Timeshift snapshots and an external copy of your files.</li>
+<li>A password manager and 2FA protect your accounts; UFW protects your
+machine on public networks.</li>
+<li>The security routine above is all you need – five simple habits, not
+a full-time project.</li>
+</ul></div>
+<p><strong>Try it yourself:</strong> Install Timeshift and take your
+first snapshot today. It only takes a few minutes – and gives you peace
+of mind that’s good to have.</p>
+<hr />
+<p><strong>Next chapter:</strong> <a href="11-hva-na.md">11 – What
+now?</a></p>
+</section>
+<section id="kap11" class="chapter">
+<h1 id="what-now-next-steps-and-resources">11. What now? Next steps and
+resources</h1>
+<p>Congratulations! You’ve made it through the most important part.</p>
+<p>You’re now at a point many beginners reach: “What do I do next?”</p>
+<p>The answer is: <strong>Take it easy.</strong> You don’t need to learn
+everything at once.</p>
+<h2 id="how-to-learn-more-without-getting-overwhelmed">How to learn more
+without getting overwhelmed</h2>
+<p>Most people who get overwhelmed are trying to learn too much too
+fast. Here’s a better approach:</p>
+<ol type="1">
+<li><strong>Use the system for what you need</strong> for a few weeks
+first</li>
+<li><strong>Solve problems as they come up</strong> – that’s the best
+way to learn</li>
+<li><strong>Learn one thing at a time</strong></li>
+<li><strong>Don’t compare yourself to people who’ve used Linux for 10
+years</strong></li>
+</ol>
+<h2 id="forums-and-communities">Forums and communities</h2>
+<ul>
+<li><strong>forums.linuxmint.com</strong> – The official Linux Mint
+forum, very beginner-friendly</li>
+<li><strong>Your distro’s own forum</strong> – Ubuntu, Pop!_OS, and
+Fedora all have active official forums</li>
+<li><strong>Local Linux User Groups (LUGs)</strong> – Many US cities and
+universities have one; search Meetup for “Linux” in your area</li>
+</ul>
+<p>Honestly: most of the action happens online, and the Reddit
+communities below are where you’ll get answers fastest. But a local LUG
+can be great for in-person help – and distro forums are the right place
+for questions specific to your exact system.</p>
+<h2 id="online-resources-these-are-gold">Online resources (these are
+gold)</h2>
+<h3 id="reddit-highly-recommended">Reddit (highly recommended)</h3>
+<ul>
+<li><strong>r/linux4noobs</strong> – Made specifically for beginners.
+Very friendly.</li>
+<li><strong>r/linuxquestions</strong></li>
+<li><strong>r/linuxmint</strong>, <strong>r/pop_os</strong>,
+<strong>r/Ubuntu</strong></li>
+</ul>
+<h3 id="youtube-channels-2026">YouTube channels (2026)</h3>
+<ul>
+<li>The Linux Experiment</li>
+<li>Brodie Robertson</li>
+<li>Mental Outlaw</li>
+<li>DistroTube</li>
+<li>System76 (for Pop!_OS)</li>
+<li>Linux Mint’s official channel</li>
+</ul>
+<h2 id="where-this-series-goes-next">Where this series goes next</h2>
+<p>This book has a sequel. Once the terminal has started to feel like a
+tool – not a threat – and you’re curious about what’s actually happening
+under the hood, <strong>Linux for Intermediate Users</strong> picks up
+exactly where this book leaves off: the terminal for real, shell
+scripting, SSH, and your own little home server. Everything builds on
+the habits you’ve already formed here – Timeshift snapshots, your update
+routine, and the rule about understanding a command before you run it.
+And for those who one day want to go all the way to the bottom,
+<strong>Linux for Experts</strong> waits beyond that. But there’s no
+rush – get your money’s worth out of this book first.</p>
+<h2 id="documentation-and-learning-tools">Documentation and learning
+tools</h2>
+<ul>
+<li>The official user guide for your distribution</li>
+<li><strong><a href="https://linuxjourney.com">Linux
+Journey</a></strong> – free, interactive online course that takes you
+from beginner to intermediate</li>
+<li><strong><a href="https://wiki.archlinux.org">Arch Wiki</a></strong>
+– the internet’s best Linux reference. Written for Arch, but most of it
+applies to all distributions. Gold when you’re troubleshooting.</li>
+<li><strong><a href="https://explainshell.com">ExplainShell</a></strong>
+– paste in a terminal command and get an explanation of what each part
+does. Perfect before running something you found online.</li>
+<li>Man pages in the terminal (<code>man command</code>)</li>
+</ul>
+<h2 id="ready-to-remove-windows-when-you-feel-confident-optional">Ready
+to remove Windows? (when you feel confident) 🟡 Optional</h2>
+<p>Did you choose dual boot, and have you now used Linux for a few
+months without missing Windows? Here’s how to free up that space:</p>
+<p><strong>Important first:</strong> Take a Timeshift snapshot AND a
+backup of your personal files. And start GParted from the <strong>live
+USB</strong> (the same USB you installed from) – you can’t modify
+partitions while the system is running from them.</p>
+<p><strong>Step 1: Delete the Windows partition</strong></p>
+<ol type="1">
+<li>Boot the machine from the live USB (like during installation)</li>
+<li>Open <strong>GParted</strong> (included in the live environment;
+otherwise <code>sudo apt install gparted</code>)</li>
+<li>Find the Windows partition – it’s labeled <strong>ntfs</strong> and
+is often the largest one</li>
+<li>Right-click → <strong>Delete</strong></li>
+</ol>
+<p><strong>Step 2: Expand the Linux partition</strong></p>
+<ol type="1">
+<li>Right-click the Linux partition (labeled <strong>ext4</strong>)</li>
+<li>Choose <strong>Resize/Move</strong> and drag the edge so it fills
+the free space</li>
+<li>Click <strong>Apply</strong> (may take a few minutes)</li>
+</ol>
+<blockquote>
+<p><strong>Patience:</strong> If the free space is <em>in front of</em>
+the Linux partition (which is common – Windows usually sat first on the
+disk), dragging the edge isn’t enough: GParted has to move the entire
+partition, and that can take several hours. That’s completely normal.
+Plug the laptop into power, don’t interrupt it, and leave the machine
+alone until GParted says it’s done.</p>
+</blockquote>
+<p><strong>Step 3: Clean up the boot menu</strong></p>
+<p>Boot the machine normally (without the USB) and run:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> update-grub</span></code></pre></div>
+<p>Windows will then disappear from the GRUB menu.</p>
+<blockquote>
+<p><strong>Warning:</strong> Double-check that you’re deleting the right
+partition – look at both the size and the filesystem (ntfs = Windows,
+ext4 = Linux). If in doubt, don’t delete.</p>
+</blockquote>
+<h2 id="practical-next-steps-you-can-take">Practical next steps you can
+take</h2>
+<ul>
+<li>Install Timeshift and take your first system snapshot</li>
+<li>Try installing 3–4 apps you miss</li>
+<li>Customize the desktop a little</li>
+<li>Learn 3 new terminal commands</li>
+<li>Install Steam and test one game</li>
+<li>Set up an automatic backup</li>
+</ul>
+<h2 id="become-part-of-the-community-optional">Become part of the
+community (optional)</h2>
+<p>Many people find it motivating to help other beginners once they’ve
+learned something themselves.</p>
+<h2 id="remember-this">Remember this</h2>
+<p>Linux isn’t something you “finish”. It’s a tool you gradually get
+better at using.</p>
+<p>Most people who’ve used Linux for many years say the same thing:</p>
+<blockquote>
+<p>“I don’t regret switching for a second.”</p>
+</blockquote>
+<h2 id="key-takeaways-from-this-chapter">Key takeaways from this
+chapter</h2>
+<ul>
+<li>Take it easy – use the system, solve problems as they come up, and
+learn one thing at a time</li>
+<li>If you get stuck, r/linux4noobs, Linux Journey, and the Arch Wiki
+are worth their weight in gold</li>
+<li>Wait to remove Windows until you’ve managed without it for a few
+months – and take a snapshot and backup first</li>
+<li>The day you want to go further, <em>Linux for Intermediate
+Users</em> is ready and continues where this book leaves off</li>
+</ul>
+<hr />
+<p><strong>Thank you for reading this book!</strong></p>
+<hr />
+<p><strong>Next:</strong> <a href="12-bonus-faq-myter.md">Bonus –
+Frequently asked questions</a></p>
+</section>
+<section id="kap12" class="chapter">
+<h1 id="bonus-frequently-asked-questions-and-myths-about-linux">Bonus:
+Frequently asked questions and myths about Linux</h1>
+<p>This chapter collects the questions and myths that come up most
+often.</p>
+<h2 id="myths-about-linux">Myths about Linux</h2>
+<h3 id="myth-1-linux-is-only-for-nerds-and-programmers">Myth 1: “Linux
+is only for nerds and programmers”</h3>
+<p><strong>Fact:</strong> 15 years ago, that was partly true. In 2026,
+it isn’t. There are distributions made specifically for ordinary people
+coming from Windows. You can use Linux for years without opening the
+terminal a single time.</p>
+<h3 id="myth-2-you-cant-play-games-on-linux">Myth 2: “You can’t play
+games on Linux”</h3>
+<p><strong>Fact:</strong> Most games on Steam now work via Proton. Many
+games run just as well or better on Linux than on Windows. There are
+still some exceptions (especially games with aggressive anti-cheat
+systems), but they’re getting fewer all the time.</p>
+<h3 id="myth-3-theres-no-software-for-linux">Myth 3: “There’s no
+software for Linux”</h3>
+<p><strong>Fact:</strong> Almost every popular program has either a
+Linux version, a Flatpak version, or a good alternative. On top of that,
+you can run many Windows programs via Wine/Bottles.</p>
+<h3 id="myth-4-linux-is-unstable-and-crashes-all-the-time">Myth 4:
+“Linux is unstable and crashes all the time”</h3>
+<p><strong>Fact:</strong> Many people find Linux more stable than
+Windows. The system rarely crashes. When there are problems, it’s almost
+always hardware drivers or user error.</p>
+<h3 id="myth-5-linux-is-free-so-it-must-be-bad">Myth 5: “Linux is free,
+so it must be bad”</h3>
+<p><strong>Fact:</strong> Linux runs on most of the world’s
+supercomputers, on Android phones, on servers all over the world, and on
+a growing number of laptops and desktops.</p>
+<h3 id="myth-6-you-have-to-use-the-terminal-for-everything">Myth 6: “You
+have to use the terminal for everything”</h3>
+<p><strong>Fact:</strong> You can, but you don’t have to. Most things
+can be done with the mouse and graphical programs.</p>
+<h3 id="myth-7-all-linux-distributions-are-the-same">Myth 7: “All Linux
+distributions are the same”</h3>
+<p><strong>Fact:</strong> The differences are enormous. Linux Mint and
+Arch Linux have about as much in common as Windows 11 and a Raspberry
+Pi.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="can-i-go-back-to-windows-if-i-dont-like-it">Can I go back to
+Windows if I don’t like it?</h3>
+<p>Yes. If you installed with dual boot, you can just pick Windows in
+the GRUB menu. If you deleted Windows, you can reinstall it from a
+Windows USB. Always make a backup first.</p>
+<h3 id="will-linux-work-on-my-machine">Will Linux work on my
+machine?</h3>
+<p>Probably yes. Most machines from the last 5–7 years work great. Older
+machines often run better on Linux than on newer Windows. The only thing
+that can be problematic is brand-new hardware components.</p>
+<h3 id="do-i-have-to-install-drivers-myself">Do I have to install
+drivers myself?</h3>
+<p>Often not. Most drivers are built in. For NVIDIA and some WiFi cards,
+you sometimes need to install extra drivers after installation.</p>
+<h3 id="is-dual-boot-safe">Is dual boot safe?</h3>
+<p>Yes, for most people. The risk is low if you follow the guides. The
+worst that usually happens is that Windows updates overwrite the
+bootloader, but that’s easy to fix.</p>
+<h3 id="why-are-there-so-many-different-distributions">Why are there so
+many different distributions?</h3>
+<p>Because people have different needs. Some want the simplest thing
+possible. Others want maximum control. It’s a strength.</p>
+<h3 id="whats-the-difference-between-ubuntu-mint-pop_os-etc.">What’s the
+difference between Ubuntu, Mint, Pop!_OS, etc.?</h3>
+<p>They’re all built on the same foundation but have different default
+programs, looks, and philosophy. Mint and Zorin are more “Windows-like”.
+Pop!_OS and Ubuntu are more modern.</p>
+<h3 id="will-updates-break-my-system">Will updates break my system?</h3>
+<p>Very rarely on LTS versions. Feel free to install Timeshift before
+big updates if you’re nervous.</p>
+<h3 id="is-linux-really-better-for-privacy">Is Linux really better for
+privacy?</h3>
+<p>Yes, by default. The operating system itself doesn’t track you the
+way Windows does. But if you install all the same services and log in
+everywhere, your privacy ends up about the same.</p>
+<h3 id="can-i-use-microsoft-office">Can I use Microsoft Office?</h3>
+<p>You can use Microsoft 365 in the browser. For local use, LibreOffice
+is the best alternative for most people.</p>
+<h3 id="what-about-photoshop-premiere-and-the-like">What about
+Photoshop, Premiere, and the like?</h3>
+<ul>
+<li>Photoshop → GIMP + Photopea (web)</li>
+<li>Premiere → DaVinci Resolve (has an official Linux version and is
+excellent), Kdenlive, or Shotcut</li>
+</ul>
+<h3 id="do-i-have-to-learn-to-program">Do I have to learn to
+program?</h3>
+<p>No. Absolutely not.</p>
+<h3 id="what-does-it-cost">What does it cost?</h3>
+<p>Nothing for the system itself. Most of the programs are free too.</p>
+<h3 id="how-long-does-it-take-to-get-used-to-it">How long does it take
+to get used to it?</h3>
+<p>Most people manage the basics after 1–3 days. After 2–4 weeks it
+feels normal.</p>
+<h3 id="can-i-get-help-if-i-get-stuck">Can I get help if I get
+stuck?</h3>
+<p>Yes. The community is generally very helpful. Describe in detail what
+you’re trying to do and what happens.</p>
+<h3 id="is-it-worth-it">Is it worth it?</h3>
+<p>Most people who’ve switched answer “yes” after a few weeks. You get
+more control, better privacy, often a faster system, no ads, and the
+feeling of actually owning your machine.</p>
+<h3 id="what-about-non-us-keyboard-layouts-and-special-characters">What
+about non-US keyboard layouts and special characters?</h3>
+<p>They work. Choose your keyboard layout during installation and
+everything – including accented and international characters – just
+works. Using a non-US layout? Some symbols hide behind AltGr – check
+your layout in Settings → Keyboard.</p>
+<h3 id="can-i-use-online-banking-and-payment-apps">Can I use online
+banking and payment apps?</h3>
+<p>Online banking: yes, it works great in the browser at virtually every
+bank (Chase, Bank of America, and the rest). Payment apps like Venmo,
+Zelle, and Cash App: the websites let you log in and see your history,
+but the payments themselves still happen on your phone – exactly like on
+a Windows PC. See chapter 6 for details.</p>
+<h3 id="what-if-i-have-a-brand-new-laptop-with-special-hardware">What if
+I have a brand-new laptop with special hardware?</h3>
+<p>Some brand-new machines can have issues (especially WiFi and GPU).
+Pop!_OS and Ubuntu often have the best support for new hardware. Check
+the forums before buying if you’re unsure.</p>
+<h3 id="can-i-run-android-apps-on-linux">Can I run Android apps on
+Linux?</h3>
+<p>Yes, with tools like Waydroid. It’s not as seamless as on Windows,
+but it works for many apps.</p>
+<h3
+id="whats-the-best-thing-about-linux-according-to-people-whove-switched">What’s
+the best thing about Linux according to people who’ve switched?</h3>
+<p>Common answers: - The feeling of control - That the machine feels
+faster and cleaner - That it’s free and stays free - That there are
+fewer “annoying” things</p>
+<h3 id="can-i-install-linux-on-a-mac">Can I install Linux on a Mac?</h3>
+<p>Yes, but it can be more complicated on newer Apple machines with ARM
+processors (M1/M2/M3). On older Intel-based Macs it often works
+well.</p>
+<h3 id="what-about-my-personal-files-from-windows">What about my
+personal files from Windows?</h3>
+<p>Most files (photos, documents, music, videos) work without any
+problems. Some old .exe files can’t be run directly.</p>
+<h3 id="how-often-should-i-update">How often should I update?</h3>
+<p>Most people recommend updating once a week or whenever a reminder
+pops up. Avoid skipping updates for long stretches.</p>
+<h3 id="can-i-have-multiple-distributions-on-the-same-machine">Can I
+have multiple distributions on the same machine?</h3>
+<p>Yes. You can have both Linux Mint and Ubuntu installed at the same
+time if you want to compare.</p>
+<h3 id="what-is-root">What is “root”?</h3>
+<p>Root is the superuser (administrator) on Linux. You normally don’t
+use root directly, but <code>sudo</code> when you need extra
+privileges.</p>
+<h3 id="why-is-it-called-linux-when-its-so-many-different-things">Why is
+it called “Linux” when it’s so many different things?</h3>
+<p>“Linux” really just refers to the kernel. When people talk about
+“Linux” in everyday speech, they almost always mean an entire
+distribution.</p>
+<h3 id="can-kids-use-linux">Can kids use Linux?</h3>
+<p>Yes. Many distributions are just as easy as Windows for kids. Some
+parents prefer Linux because there are fewer distractions and better
+privacy.</p>
+<h3 id="what-if-im-completely-new-to-computers">What if I’m completely
+new to computers?</h3>
+<p>Then Linux can actually be easier than Windows in some ways, because
+there are fewer unnecessary choices and no ads.</p>
+<hr />
+<p><strong>Thanks for reading!</strong></p>
+<p>You now have a solid foundation. Use this book as a reference
+whenever you need it.</p>
+</section>
+<section id="kap13" class="chapter">
+<h1 id="quick-reference">Quick reference</h1>
+<p>This is a quick lookup section you can flip to whenever you need
+it.</p>
+<h2 id="the-most-important-terminal-commands">The most important
+terminal commands</h2>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>Where am I?</td>
+</tr>
+<tr class="even">
+<td><code>ls</code></td>
+<td>List files</td>
+</tr>
+<tr class="odd">
+<td><code>ls -la</code></td>
+<td>List everything (incl. hidden)</td>
+</tr>
+<tr class="even">
+<td><code>cd folder</code></td>
+<td>Go to folder</td>
+</tr>
+<tr class="odd">
+<td><code>cd ..</code></td>
+<td>Go up one level</td>
+</tr>
+<tr class="even">
+<td><code>mkdir name</code></td>
+<td>Create folder</td>
+</tr>
+<tr class="odd">
+<td><code>cp file folder</code></td>
+<td>Copy file</td>
+</tr>
+<tr class="even">
+<td><code>mv file folder</code></td>
+<td>Move or rename</td>
+</tr>
+<tr class="odd">
+<td><code>rm file</code></td>
+<td>Delete file (careful!)</td>
+</tr>
+<tr class="even">
+<td><code>sudo apt update &amp;&amp; sudo apt upgrade</code></td>
+<td>Update system (Debian-based)</td>
+</tr>
+<tr class="odd">
+<td><code>flatpak update</code></td>
+<td>Update Flatpak apps</td>
+</tr>
+</tbody>
+</table>
+<h2 id="useful-shortcuts-most-distributions">Useful shortcuts (most
+distributions)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Super (Windows key)</td>
+<td>Open overview / start menu</td>
+</tr>
+<tr class="even">
+<td>Super + number</td>
+<td>Switch to program in the taskbar</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + T</td>
+<td>Open terminal</td>
+</tr>
+<tr class="even">
+<td>Alt + Tab</td>
+<td>Switch between windows</td>
+</tr>
+<tr class="odd">
+<td>Super + D</td>
+<td>Show the desktop</td>
+</tr>
+<tr class="even">
+<td>Super + L</td>
+<td>Lock the screen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="important-programs-to-install-early-with-commands">Important
+programs to install early (with commands)</h2>
+<h3 id="via-apt-debian-based">Via apt (Debian-based)</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install timeshift</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install vlc</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gimp</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install thunderbird</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install keepassxc</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install flameshot</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tlp tlp-rdw</span></code></pre></div>
+<h3 id="via-flatpak-recommended-for-many-apps">Via Flatpak (recommended
+for many apps)</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.videolan.VLC</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.spotify.Client</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.discordapp.Discord</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub com.valvesoftware.Steam</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.gimp.GIMP</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.keepassxc.KeePassXC</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">flatpak</span> install flathub org.mozilla.firefox</span></code></pre></div>
+<p><strong>LibreOffice</strong> is usually already installed, or:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install libreoffice</span></code></pre></div>
+<h3 id="how-do-i-find-the-right-flatpak-id">How do I find the right
+Flatpak ID?</h3>
+<ol type="1">
+<li>Go to <a href="https://flathub.org">https://flathub.org</a></li>
+<li>Search for the program</li>
+<li>Copy the “Install” command shown
+(e.g. <code>flatpak install flathub com.example.App</code>)</li>
+</ol>
+<h2 id="common-apps-with-commands-quick-table">Common apps with commands
+(quick table)</h2>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 34%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>App</th>
+<th>apt command</th>
+<th>Flatpak command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VLC</td>
+<td><code>sudo apt install vlc</code></td>
+<td><code>flatpak install flathub org.videolan.VLC</code></td>
+</tr>
+<tr class="even">
+<td>GIMP</td>
+<td><code>sudo apt install gimp</code></td>
+<td><code>flatpak install flathub org.gimp.GIMP</code></td>
+</tr>
+<tr class="odd">
+<td>Discord</td>
+<td>(not recommended)</td>
+<td><code>flatpak install flathub com.discordapp.Discord</code></td>
+</tr>
+<tr class="even">
+<td>Spotify</td>
+<td>-</td>
+<td><code>flatpak install flathub com.spotify.Client</code></td>
+</tr>
+<tr class="odd">
+<td>Steam</td>
+<td><code>sudo apt install steam</code></td>
+<td><code>flatpak install flathub com.valvesoftware.Steam</code></td>
+</tr>
+<tr class="even">
+<td>KeePassXC</td>
+<td><code>sudo apt install keepassxc</code></td>
+<td><code>flatpak install flathub org.keepassxc.KeePassXC</code></td>
+</tr>
+<tr class="odd">
+<td>Timeshift</td>
+<td><code>sudo apt install timeshift</code></td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>Flameshot</td>
+<td><code>sudo apt install flameshot</code></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-do-i-find-help">Where do I find help?</h2>
+<ul>
+<li><strong>Beginners:</strong> <a
+href="https://www.reddit.com/r/linux4noobs">reddit.com/r/linux4noobs</a></li>
+<li><strong>General questions:</strong> <a
+href="https://www.reddit.com/r/linuxquestions">reddit.com/r/linuxquestions</a></li>
+<li><strong>Distro-specific:</strong> Search for your distro + “forum”
+(e.g. forums.linuxmint.com)</li>
+</ul>
+<p><strong>Flathub (apps):</strong> <a
+href="https://flathub.org">https://flathub.org</a> <strong>ProtonDB
+(games):</strong> <a
+href="https://www.protondb.com">https://www.protondb.com</a></p>
+<h2 id="post-installation-checklist">Post-installation checklist</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Back up your important
+files</label></li>
+<li><label><input type="checkbox" />Install updates</label></li>
+<li><label><input type="checkbox" />Checked the multimedia codecs box
+during installation? (otherwise: Software Manager →
+mint-meta-codecs)</label></li>
+<li><label><input type="checkbox" />Install Timeshift and take your
+first snapshot</label></li>
+<li><label><input type="checkbox" />Install the programs you use
+most</label></li>
+<li><label><input type="checkbox" />Check that WiFi, sound, and printer
+work</label></li>
+<li><label><input type="checkbox" />Customize the look a little (theme /
+wallpaper)</label></li>
+<li><label><input type="checkbox" />Learn 3–4 terminal
+commands</label></li>
+</ul>
+<hr />
+<p>This is the end of the main content. Use the rest of the book as a
+reference!</p>
+</section>
+<section id="kap14" class="chapter">
+<h1 id="glossary">Glossary</h1>
+<p><strong>Bootable USB</strong><br />
+A USB stick that can be used to boot a computer and install or try out
+an operating system.</p>
+<p><strong>Distribution (Distro)</strong><br />
+A complete package of Linux that includes the kernel, desktop
+environment, programs, and tools. Examples: Linux Mint, Ubuntu,
+Pop!_OS.</p>
+<p><strong>Dual boot</strong><br />
+When two operating systems (e.g. Windows and Linux) are installed on the
+same machine and you can choose which one to start.</p>
+<p><strong>Flatpak</strong><br />
+A modern system for distributing apps on Linux. Apps are sandboxed and
+work across distributions.</p>
+<p><strong>GRUB</strong><br />
+The bootloader that lets you choose which operating system to start when
+the machine powers on.</p>
+<p><strong>ISO file</strong><br />
+An image file containing the entire operating system. It’s used to
+create a bootable USB.</p>
+<p><strong>Kernel</strong><br />
+The core of the operating system. In Linux, this is the “Linux
+kernel”.</p>
+<p><strong>LTS (Long Term Support)</strong><br />
+A version that receives updates for a long time (usually 5 years).
+Recommended for beginners.</p>
+<p><strong>Software Center</strong><br />
+The graphical program where you search for and install apps.</p>
+<p><strong>Repository</strong><br />
+An official store of programs that your distribution pulls apps and
+updates from.</p>
+<p><strong>Secure Boot</strong><br />
+A security feature in BIOS/UEFI that can prevent unapproved operating
+systems from starting. Sometimes needs to be temporarily disabled during
+installation.</p>
+<p><strong>Snapshot</strong><br />
+A point-in-time image of your system. Used in Timeshift so you can roll
+back to an earlier state.</p>
+<p><strong>Sudo</strong><br />
+Command that lets you run programs with administrator privileges.</p>
+<p><strong>Terminal</strong><br />
+Text-based interface where you type commands.</p>
+<p><strong>Timeshift</strong><br />
+Program that creates system snapshots, similar to System Restore in
+Windows.</p>
+<p><strong>Wine</strong><br />
+A layer that lets you run many Windows programs on Linux.</p>
+<p><strong>BIOS / UEFI</strong><br />
+The software that starts the computer before the operating system. UEFI
+is the modern version.</p>
+<p><strong>Partition</strong><br />
+A division of the hard drive. You can have multiple partitions, e.g. for
+Windows and Linux side by side.</p>
+<p><strong>Live mode</strong><br />
+Running Linux directly from a USB without installing it. Perfect for
+testing.</p>
+<p><strong>Bootloader</strong><br />
+The program that chooses which operating system to start
+(e.g. GRUB).</p>
+<p><strong>apt</strong><br />
+The package manager used in Ubuntu-based distributions to install and
+update programs.</p>
+<p><strong>Package</strong><br />
+A ready-made program or tool that can be installed via apt or
+Flatpak.</p>
+<p><strong>Driver</strong><br />
+Software that makes hardware (WiFi, graphics, printer) work.</p>
+<p><strong>Open source</strong><br />
+Software whose source code is public, so anyone can view, modify, and
+share it.</p>
+<p><strong>GNOME / Cinnamon / KDE / COSMIC</strong><br />
+Popular desktop environments (the visual layer you click on). Cinnamon
+is the most Windows-like. COSMIC is Pop!_OS’s own desktop.</p>
+<p><strong>Proton</strong><br />
+Tool from Valve that lets most Windows games run on Linux via Steam.</p>
+<p><strong>Root</strong><br />
+The administrator user on Linux, with full access to the entire
+system.</p>
+<p><strong>Home folder</strong><br />
+The folder where your personal files live (<code>/home/username</code>,
+abbreviated <code>~</code>).</p>
+<p><strong>Wayland / X11</strong><br />
+Two different ways Linux draws graphics on the screen. Ubuntu/GNOME,
+KDE, and COSMIC use Wayland by default; Linux Mint Cinnamon still uses
+X11.</p>
+<p><strong>Snap</strong><br />
+Canonical’s (Ubuntu’s) package format – an alternative to Flatpak.
+Mostly used in Ubuntu.</p>
+<p><strong>AppImage</strong><br />
+A program packaged as a single file: download it, make it executable,
+and run it. No installation, but no automatic updates either.</p>
+<p><strong>PipeWire</strong><br />
+The sound server most modern distributions use. Handles audio and video
+in the background.</p>
+<hr />
+<h2 id="quick-term-list">Quick term list</h2>
+<p>Handy when you’re searching for help or navigating menus and
+forums:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kernel</td>
+<td>The core of the operating system</td>
+</tr>
+<tr class="even">
+<td>Distribution (distro)</td>
+<td>A complete Linux package (Mint, Ubuntu, …)</td>
+</tr>
+<tr class="odd">
+<td>Desktop environment</td>
+<td>The visual layer you click on (Cinnamon, GNOME, …)</td>
+</tr>
+<tr class="even">
+<td>Software center</td>
+<td>Graphical app store for installing programs</td>
+</tr>
+<tr class="odd">
+<td>File manager</td>
+<td>The program you browse files and folders with</td>
+</tr>
+<tr class="even">
+<td>Taskbar / panel</td>
+<td>The bar with open programs and the menu</td>
+</tr>
+<tr class="odd">
+<td>Shortcut</td>
+<td>A key combination or launcher icon</td>
+</tr>
+<tr class="even">
+<td>Backup</td>
+<td>A safety copy of your files or system</td>
+</tr>
+<tr class="odd">
+<td>Settings</td>
+<td>Where you configure the system</td>
+</tr>
+<tr class="even">
+<td>Firewall</td>
+<td>Blocks unwanted incoming network traffic</td>
+</tr>
+<tr class="odd">
+<td>GPU / graphics card</td>
+<td>The hardware that draws graphics on screen</td>
+</tr>
+<tr class="even">
+<td>Refresh rate</td>
+<td>How many times per second the screen updates (Hz)</td>
+</tr>
+</tbody>
+</table>
+</section>
+      <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.9rem; color: #666;">
+        <p>This book is meant as a practical guide. Good luck with Linux!</p>
+        <p><small>Generated automatically by <code>bygg.py</code> &ndash; edit the chapters, not this file.</small></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
