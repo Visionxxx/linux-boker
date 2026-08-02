@@ -2,7 +2,7 @@
 
 **Oppfølgeren – for deg som har brukt Linux en stund og vil forstå og mestre systemet ditt.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-01.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
 
 ## Innhold
 

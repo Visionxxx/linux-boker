@@ -59,3 +59,13 @@ EPUB-en er den anbefalte leseopplevelsen – den inneholder alle skjermbilder og
 ---
 
 *Bøkene er skrevet på norsk (bokmål). Innhold og verktøyanbefalinger er oppdatert for 2026–2027.*
+
+---
+
+## 🇺🇸 In English
+
+The complete series is also available in a US-adapted English edition — not just translated, but localized (services, prices, ISPs, keyboard layouts):
+
+- **Linux for Beginners 2026** — [EPUB](en/beginner/linux-for-beginners-2026.epub) · [PDF](en/beginner/linux-for-beginners-2026.pdf) · [Markdown](en/beginner/linux-for-beginners-2026-collected.md)
+- **Linux for Intermediate Users 2026** — [EPUB](en/intermediate/linux-for-intermediate-users-2026.epub) · [PDF](en/intermediate/linux-for-intermediate-users-2026.pdf) · [Markdown](en/intermediate/linux-for-intermediate-users-2026-collected.md)
+- **Linux for Experts 2027** — [EPUB](en/expert/linux-for-experts-2027.epub) · [PDF](en/expert/linux-for-experts-2027.pdf) · [Markdown](en/expert/linux-for-experts-2027-collected.md)

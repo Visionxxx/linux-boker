@@ -2,7 +2,7 @@
 
 **En praktisk og vennlig guide for deg som vil bytte fra Windows til Linux.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-01.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
 
 ## Innhold
 

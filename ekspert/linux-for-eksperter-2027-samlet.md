@@ -2,7 +2,7 @@
 
 **Tredje bok i serien – for deg som vil mestre systemet på kildenivå og drifte egen infrastruktur som en proff.**
 
-*Samlet utgave – alle kapitler i én fil. Generert 2026-08-01.*
+*Samlet utgave – alle kapitler i én fil. Generert 2026-08-02.*
 
 ## Innhold
 
